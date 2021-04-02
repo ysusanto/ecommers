@@ -1,20 +1,19 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.4.11-MariaDB - mariadb.org binary distribution
+-- Server version:               10.4.18-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
--- HeidiSQL Version:             9.5.0.5196
+-- HeidiSQL Version:             9.2.0.4947
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
 
 -- Dumping database structure for ecommers
 CREATE DATABASE IF NOT EXISTS `ecommers` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `ecommers`;
+
 
 -- Dumping structure for table ecommers.tbl_addresses
 CREATE TABLE IF NOT EXISTS `tbl_addresses` (
@@ -23,9 +22,11 @@ CREATE TABLE IF NOT EXISTS `tbl_addresses` (
   `pincode` varchar(10) NOT NULL,
   `building_name` varchar(100) NOT NULL,
   `road_area_colony` text NOT NULL,
+  `id_ro_city` varchar(5) NOT NULL,
   `city` varchar(100) NOT NULL,
   `district` varchar(100) NOT NULL,
   `state` varchar(100) NOT NULL,
+  `id_ro_province` varchar(5) NOT NULL,
   `country` varchar(100) NOT NULL,
   `landmark` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -41,9 +42,10 @@ CREATE TABLE IF NOT EXISTS `tbl_addresses` (
 -- Dumping data for table ecommers.tbl_addresses: ~1 rows (approximately)
 DELETE FROM `tbl_addresses`;
 /*!40000 ALTER TABLE `tbl_addresses` DISABLE KEYS */;
-INSERT INTO `tbl_addresses` (`id`, `user_id`, `pincode`, `building_name`, `road_area_colony`, `city`, `district`, `state`, `country`, `landmark`, `name`, `email`, `mobile_no`, `alter_mobile_no`, `address_type`, `is_default`, `created_at`) VALUES
-	(1, 1, '11891', 'jl keselamatan no 1a', 'tebet', 'jakarta selatan', '', 'tebet', 'Indonesia', '', 'ari', 'yohanes.ari90@gmail.com', '082112585009', '', '1', 'true', '1617249089');
+INSERT INTO `tbl_addresses` (`id`, `user_id`, `pincode`, `building_name`, `road_area_colony`, `id_ro_city`, `city`, `district`, `state`, `id_ro_province`, `country`, `landmark`, `name`, `email`, `mobile_no`, `alter_mobile_no`, `address_type`, `is_default`, `created_at`) VALUES
+	(1, 1, '11891', 'jl keselamatan no 1a', 'tebet', '', 'jakarta selatan', '', 'tebet', '', 'Indonesia', '', 'ari', 'yohanes.ari90@gmail.com', '082112585009', '', '1', 'true', '1617249089');
 /*!40000 ALTER TABLE `tbl_addresses` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_admin
 CREATE TABLE IF NOT EXISTS `tbl_admin` (
@@ -55,12 +57,13 @@ CREATE TABLE IF NOT EXISTS `tbl_admin` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_admin: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_admin: ~1 rows (approximately)
 DELETE FROM `tbl_admin`;
 /*!40000 ALTER TABLE `tbl_admin` DISABLE KEYS */;
 INSERT INTO `tbl_admin` (`id`, `username`, `password`, `email`, `image`) VALUES
 	(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'ravi.viavi1@gmail.com', '29102020094838_89371_24092019015612_71951_user.png');
 /*!40000 ALTER TABLE `tbl_admin` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_android_settings
 CREATE TABLE IF NOT EXISTS `tbl_android_settings` (
@@ -91,12 +94,13 @@ CREATE TABLE IF NOT EXISTS `tbl_android_settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_android_settings: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_android_settings: ~1 rows (approximately)
 DELETE FROM `tbl_android_settings`;
 /*!40000 ALTER TABLE `tbl_android_settings` DISABLE KEYS */;
 INSERT INTO `tbl_android_settings` (`id`, `onesignal_app_id`, `onesignal_rest_key`, `api_all_order_by`, `api_home_limit`, `api_page_limit`, `api_cat_order_by`, `api_cat_post_order_by`, `publisher_id`, `interstital_ad`, `interstital_ad_id`, `interstital_ad_click`, `banner_ad`, `banner_ad_id`, `banner_ad_type`, `banner_facebook_id`, `interstital_ad_type`, `interstital_facebook_id`, `native_ad`, `app_update_status`, `app_new_version`, `app_update_desc`, `app_redirect_url`, `cancel_update_status`) VALUES
 	(1, '', '', 'ASC', 5, 20, 'category_name', 'DESC', 'pub-3940256099942544', 'false', 'ca-app-pub-3940256099942544/1033173712', '3', 'false', 'ca-app-pub-3940256099942544/6300978111', 'admob', 'IMG_16_9_APP_INSTALL#288347782353524_288349185686717', 'admob', 'IMG_16_9_APP_INSTALL#293685261999350_293698135331396', 'false', 'false', 2, 'kindly you can update new version app', 'https://play.google.com/store/apps/developer?id=Viaan+Parmar', 'false');
 /*!40000 ALTER TABLE `tbl_android_settings` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_applied_coupon
 CREATE TABLE IF NOT EXISTS `tbl_applied_coupon` (
@@ -107,12 +111,13 @@ CREATE TABLE IF NOT EXISTS `tbl_applied_coupon` (
   `coupon_id` int(10) NOT NULL,
   `applied_on` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table ecommers.tbl_applied_coupon: ~0 rows (approximately)
 DELETE FROM `tbl_applied_coupon`;
 /*!40000 ALTER TABLE `tbl_applied_coupon` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_applied_coupon` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_bank_details
 CREATE TABLE IF NOT EXISTS `tbl_bank_details` (
@@ -134,6 +139,7 @@ CREATE TABLE IF NOT EXISTS `tbl_bank_details` (
 DELETE FROM `tbl_bank_details`;
 /*!40000 ALTER TABLE `tbl_bank_details` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_bank_details` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_banner
 CREATE TABLE IF NOT EXISTS `tbl_banner` (
@@ -159,6 +165,7 @@ INSERT INTO `tbl_banner` (`id`, `banner_title`, `banner_slug`, `banner_desc`, `b
 	(7, 'Get Discount And Mega Savings!', 'get-discount-and-mega-savings', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry.</p>\r\n', '07102020041256_47520.jpg', '50,43,38,36,35,34,9,8,5,1', 1, '1578721023', 1);
 /*!40000 ALTER TABLE `tbl_banner` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_brands
 CREATE TABLE IF NOT EXISTS `tbl_brands` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -169,9 +176,9 @@ CREATE TABLE IF NOT EXISTS `tbl_brands` (
   `created_at` varchar(150) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_brands: ~23 rows (approximately)
+-- Dumping data for table ecommers.tbl_brands: ~25 rows (approximately)
 DELETE FROM `tbl_brands`;
 /*!40000 ALTER TABLE `tbl_brands` DISABLE KEYS */;
 INSERT INTO `tbl_brands` (`id`, `category_id`, `brand_name`, `brand_slug`, `brand_image`, `created_at`, `status`) VALUES
@@ -197,8 +204,11 @@ INSERT INTO `tbl_brands` (`id`, `category_id`, `brand_name`, `brand_slug`, `bran
 	(20, '10', 'Adidas', 'adidas', '23012020024612_53790.jpg', '1579770972', 1),
 	(21, '10', 'Fitze', 'fitze', '23012020033040_43717.jpg', '1579773640', 1),
 	(22, '10', 'Nike', 'nike', '23012020035705_58840.jpg', '1579775225', 1),
-	(23, '10', 'Beonza', 'beonza', '', '1579781611', 1);
+	(23, '10', 'Beonza', 'beonza', '', '1579781611', 1),
+	(27, '', '', '', '', '', 1),
+	(28, '', '', '', '', '', 1);
 /*!40000 ALTER TABLE `tbl_brands` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_cart
 CREATE TABLE IF NOT EXISTS `tbl_cart` (
@@ -207,18 +217,22 @@ CREATE TABLE IF NOT EXISTS `tbl_cart` (
   `user_id` int(10) NOT NULL,
   `product_qty` int(5) NOT NULL DEFAULT 1,
   `product_size` varchar(10) NOT NULL DEFAULT '0',
+  `weight` int(11) NOT NULL DEFAULT 0,
   `created_at` varchar(150) NOT NULL,
   `cart_status` int(2) NOT NULL DEFAULT 1,
   `last_update` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_cart: ~1 rows (approximately)
+-- Dumping data for table ecommers.tbl_cart: ~3 rows (approximately)
 DELETE FROM `tbl_cart`;
 /*!40000 ALTER TABLE `tbl_cart` DISABLE KEYS */;
-INSERT INTO `tbl_cart` (`id`, `product_id`, `user_id`, `product_qty`, `product_size`, `created_at`, `cart_status`, `last_update`) VALUES
-	(1, 32, 1, 2, ' M', '1617248925', 1, '');
+INSERT INTO `tbl_cart` (`id`, `product_id`, `user_id`, `product_qty`, `product_size`, `weight`, `created_at`, `cart_status`, `last_update`) VALUES
+	(1, 32, 1, 2, ' M', 0, '1617248925', 1, '1617372069'),
+	(2, 84, 1, 2, '', 0, '1617372106', 1, '1617372124'),
+	(3, 74, 1, 2, '', 0, '1617372290', 1, '');
 /*!40000 ALTER TABLE `tbl_cart` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_cart_tmp
 CREATE TABLE IF NOT EXISTS `tbl_cart_tmp` (
@@ -227,18 +241,20 @@ CREATE TABLE IF NOT EXISTS `tbl_cart_tmp` (
   `user_id` int(10) NOT NULL,
   `product_qty` int(5) NOT NULL DEFAULT 1,
   `product_size` varchar(10) NOT NULL DEFAULT '0',
+  `weight` int(11) NOT NULL DEFAULT 0,
   `created_at` varchar(150) NOT NULL,
   `cart_status` int(1) NOT NULL DEFAULT 1,
   `cart_unique_id` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_cart_tmp: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_cart_tmp: ~1 rows (approximately)
 DELETE FROM `tbl_cart_tmp`;
 /*!40000 ALTER TABLE `tbl_cart_tmp` DISABLE KEYS */;
-INSERT INTO `tbl_cart_tmp` (`id`, `product_id`, `user_id`, `product_qty`, `product_size`, `created_at`, `cart_status`, `cart_unique_id`) VALUES
-	(1, 4, 2, 2, ' M', '1612429610', 1, 'chkref_601bb926a3e40');
+INSERT INTO `tbl_cart_tmp` (`id`, `product_id`, `user_id`, `product_qty`, `product_size`, `weight`, `created_at`, `cart_status`, `cart_unique_id`) VALUES
+	(1, 4, 2, 2, ' M', 0, '1612429610', 1, 'chkref_601bb926a3e40');
 /*!40000 ALTER TABLE `tbl_cart_tmp` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_category
 CREATE TABLE IF NOT EXISTS `tbl_category` (
@@ -266,19 +282,526 @@ INSERT INTO `tbl_category` (`id`, `category_name`, `category_slug`, `category_im
 	(13, 'Food & Nutrition', 'food-nutrition', '23012020044452_57023.jpg', 'color,size', 0, '1579778059', 1);
 /*!40000 ALTER TABLE `tbl_category` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_city_ro
 CREATE TABLE IF NOT EXISTS `tbl_city_ro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_ro_province` varchar(5) DEFAULT NULL,
   `id_ro_city` varchar(5) NOT NULL DEFAULT '0',
   `city` varchar(100) NOT NULL DEFAULT '0',
+  `type` varchar(50) NOT NULL DEFAULT '0',
+  `pcode` varchar(20) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=502 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table ecommers.tbl_city_ro: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_city_ro: ~501 rows (approximately)
 DELETE FROM `tbl_city_ro`;
 /*!40000 ALTER TABLE `tbl_city_ro` DISABLE KEYS */;
+INSERT INTO `tbl_city_ro` (`id`, `id_ro_province`, `id_ro_city`, `city`, `type`, `pcode`, `created_at`) VALUES
+	(1, '1', '17', 'Badung', 'Kabupaten', '80351', '2021-04-02 11:37:00'),
+	(2, '1', '32', 'Bangli', 'Kabupaten', '80619', '2021-04-02 11:37:00'),
+	(3, '1', '94', 'Buleleng', 'Kabupaten', '81111', '2021-04-02 11:37:00'),
+	(4, '1', '114', 'Denpasar', 'Kota', '80227', '2021-04-02 11:37:00'),
+	(5, '1', '128', 'Gianyar', 'Kabupaten', '80519', '2021-04-02 11:37:00'),
+	(6, '1', '161', 'Jembrana', 'Kabupaten', '82251', '2021-04-02 11:37:00'),
+	(7, '1', '170', 'Karangasem', 'Kabupaten', '80819', '2021-04-02 11:37:00'),
+	(8, '1', '197', 'Klungkung', 'Kabupaten', '80719', '2021-04-02 11:37:00'),
+	(9, '1', '447', 'Tabanan', 'Kabupaten', '82119', '2021-04-02 11:37:00'),
+	(10, '2', '27', 'Bangka', 'Kabupaten', '33212', '2021-04-02 11:37:03'),
+	(11, '2', '28', 'Bangka Barat', 'Kabupaten', '33315', '2021-04-02 11:37:03'),
+	(12, '2', '29', 'Bangka Selatan', 'Kabupaten', '33719', '2021-04-02 11:37:03'),
+	(13, '2', '30', 'Bangka Tengah', 'Kabupaten', '33613', '2021-04-02 11:37:03'),
+	(14, '2', '56', 'Belitung', 'Kabupaten', '33419', '2021-04-02 11:37:03'),
+	(15, '2', '57', 'Belitung Timur', 'Kabupaten', '33519', '2021-04-02 11:37:03'),
+	(16, '2', '334', 'Pangkal Pinang', 'Kota', '33115', '2021-04-02 11:37:03'),
+	(17, '3', '106', 'Cilegon', 'Kota', '42417', '2021-04-02 11:37:04'),
+	(18, '3', '232', 'Lebak', 'Kabupaten', '42319', '2021-04-02 11:37:04'),
+	(19, '3', '331', 'Pandeglang', 'Kabupaten', '42212', '2021-04-02 11:37:04'),
+	(20, '3', '402', 'Serang', 'Kabupaten', '42182', '2021-04-02 11:37:04'),
+	(21, '3', '403', 'Serang', 'Kota', '42111', '2021-04-02 11:37:04'),
+	(22, '3', '455', 'Tangerang', 'Kabupaten', '15914', '2021-04-02 11:37:04'),
+	(23, '3', '456', 'Tangerang', 'Kota', '15111', '2021-04-02 11:37:04'),
+	(24, '3', '457', 'Tangerang Selatan', 'Kota', '15332', '2021-04-02 11:37:04'),
+	(25, '4', '62', 'Bengkulu', 'Kota', '38229', '2021-04-02 11:37:05'),
+	(26, '4', '63', 'Bengkulu Selatan', 'Kabupaten', '38519', '2021-04-02 11:37:05'),
+	(27, '4', '64', 'Bengkulu Tengah', 'Kabupaten', '38319', '2021-04-02 11:37:05'),
+	(28, '4', '65', 'Bengkulu Utara', 'Kabupaten', '38619', '2021-04-02 11:37:05'),
+	(29, '4', '175', 'Kaur', 'Kabupaten', '38911', '2021-04-02 11:37:05'),
+	(30, '4', '183', 'Kepahiang', 'Kabupaten', '39319', '2021-04-02 11:37:05'),
+	(31, '4', '233', 'Lebong', 'Kabupaten', '39264', '2021-04-02 11:37:05'),
+	(32, '4', '294', 'Muko Muko', 'Kabupaten', '38715', '2021-04-02 11:37:05'),
+	(33, '4', '379', 'Rejang Lebong', 'Kabupaten', '39112', '2021-04-02 11:37:05'),
+	(34, '4', '397', 'Seluma', 'Kabupaten', '38811', '2021-04-02 11:37:05'),
+	(35, '5', '39', 'Bantul', 'Kabupaten', '55715', '2021-04-02 11:37:07'),
+	(36, '5', '135', 'Gunung Kidul', 'Kabupaten', '55812', '2021-04-02 11:37:07'),
+	(37, '5', '210', 'Kulon Progo', 'Kabupaten', '55611', '2021-04-02 11:37:07'),
+	(38, '5', '419', 'Sleman', 'Kabupaten', '55513', '2021-04-02 11:37:07'),
+	(39, '5', '501', 'Yogyakarta', 'Kota', '55111', '2021-04-02 11:37:07'),
+	(40, '6', '151', 'Jakarta Barat', 'Kota', '11220', '2021-04-02 11:37:09'),
+	(41, '6', '152', 'Jakarta Pusat', 'Kota', '10540', '2021-04-02 11:37:09'),
+	(42, '6', '153', 'Jakarta Selatan', 'Kota', '12230', '2021-04-02 11:37:09'),
+	(43, '6', '154', 'Jakarta Timur', 'Kota', '13330', '2021-04-02 11:37:09'),
+	(44, '6', '155', 'Jakarta Utara', 'Kota', '14140', '2021-04-02 11:37:09'),
+	(45, '6', '189', 'Kepulauan Seribu', 'Kabupaten', '14550', '2021-04-02 11:37:09'),
+	(46, '7', '77', 'Boalemo', 'Kabupaten', '96319', '2021-04-02 11:37:11'),
+	(47, '7', '88', 'Bone Bolango', 'Kabupaten', '96511', '2021-04-02 11:37:11'),
+	(48, '7', '129', 'Gorontalo', 'Kabupaten', '96218', '2021-04-02 11:37:11'),
+	(49, '7', '130', 'Gorontalo', 'Kota', '96115', '2021-04-02 11:37:11'),
+	(50, '7', '131', 'Gorontalo Utara', 'Kabupaten', '96611', '2021-04-02 11:37:11'),
+	(51, '7', '361', 'Pohuwato', 'Kabupaten', '96419', '2021-04-02 11:37:11'),
+	(52, '8', '50', 'Batang Hari', 'Kabupaten', '36613', '2021-04-02 11:37:13'),
+	(53, '8', '97', 'Bungo', 'Kabupaten', '37216', '2021-04-02 11:37:13'),
+	(54, '8', '156', 'Jambi', 'Kota', '36111', '2021-04-02 11:37:13'),
+	(55, '8', '194', 'Kerinci', 'Kabupaten', '37167', '2021-04-02 11:37:13'),
+	(56, '8', '280', 'Merangin', 'Kabupaten', '37319', '2021-04-02 11:37:13'),
+	(57, '8', '293', 'Muaro Jambi', 'Kabupaten', '36311', '2021-04-02 11:37:13'),
+	(58, '8', '393', 'Sarolangun', 'Kabupaten', '37419', '2021-04-02 11:37:13'),
+	(59, '8', '442', 'Sungaipenuh', 'Kota', '37113', '2021-04-02 11:37:13'),
+	(60, '8', '460', 'Tanjung Jabung Barat', 'Kabupaten', '36513', '2021-04-02 11:37:13'),
+	(61, '8', '461', 'Tanjung Jabung Timur', 'Kabupaten', '36719', '2021-04-02 11:37:13'),
+	(62, '8', '471', 'Tebo', 'Kabupaten', '37519', '2021-04-02 11:37:13'),
+	(63, '9', '22', 'Bandung', 'Kabupaten', '40311', '2021-04-02 11:37:15'),
+	(64, '9', '23', 'Bandung', 'Kota', '40111', '2021-04-02 11:37:15'),
+	(65, '9', '24', 'Bandung Barat', 'Kabupaten', '40721', '2021-04-02 11:37:15'),
+	(66, '9', '34', 'Banjar', 'Kota', '46311', '2021-04-02 11:37:15'),
+	(67, '9', '54', 'Bekasi', 'Kabupaten', '17837', '2021-04-02 11:37:15'),
+	(68, '9', '55', 'Bekasi', 'Kota', '17121', '2021-04-02 11:37:15'),
+	(69, '9', '78', 'Bogor', 'Kabupaten', '16911', '2021-04-02 11:37:15'),
+	(70, '9', '79', 'Bogor', 'Kota', '16119', '2021-04-02 11:37:15'),
+	(71, '9', '103', 'Ciamis', 'Kabupaten', '46211', '2021-04-02 11:37:15'),
+	(72, '9', '104', 'Cianjur', 'Kabupaten', '43217', '2021-04-02 11:37:15'),
+	(73, '9', '107', 'Cimahi', 'Kota', '40512', '2021-04-02 11:37:15'),
+	(74, '9', '108', 'Cirebon', 'Kabupaten', '45611', '2021-04-02 11:37:15'),
+	(75, '9', '109', 'Cirebon', 'Kota', '45116', '2021-04-02 11:37:15'),
+	(76, '9', '115', 'Depok', 'Kota', '16416', '2021-04-02 11:37:15'),
+	(77, '9', '126', 'Garut', 'Kabupaten', '44126', '2021-04-02 11:37:15'),
+	(78, '9', '149', 'Indramayu', 'Kabupaten', '45214', '2021-04-02 11:37:15'),
+	(79, '9', '171', 'Karawang', 'Kabupaten', '41311', '2021-04-02 11:37:15'),
+	(80, '9', '211', 'Kuningan', 'Kabupaten', '45511', '2021-04-02 11:37:15'),
+	(81, '9', '252', 'Majalengka', 'Kabupaten', '45412', '2021-04-02 11:37:15'),
+	(82, '9', '332', 'Pangandaran', 'Kabupaten', '46511', '2021-04-02 11:37:15'),
+	(83, '9', '376', 'Purwakarta', 'Kabupaten', '41119', '2021-04-02 11:37:15'),
+	(84, '9', '428', 'Subang', 'Kabupaten', '41215', '2021-04-02 11:37:15'),
+	(85, '9', '430', 'Sukabumi', 'Kabupaten', '43311', '2021-04-02 11:37:15'),
+	(86, '9', '431', 'Sukabumi', 'Kota', '43114', '2021-04-02 11:37:15'),
+	(87, '9', '440', 'Sumedang', 'Kabupaten', '45326', '2021-04-02 11:37:15'),
+	(88, '9', '468', 'Tasikmalaya', 'Kabupaten', '46411', '2021-04-02 11:37:15'),
+	(89, '9', '469', 'Tasikmalaya', 'Kota', '46116', '2021-04-02 11:37:15'),
+	(90, '10', '37', 'Banjarnegara', 'Kabupaten', '53419', '2021-04-02 11:37:17'),
+	(91, '10', '41', 'Banyumas', 'Kabupaten', '53114', '2021-04-02 11:37:17'),
+	(92, '10', '49', 'Batang', 'Kabupaten', '51211', '2021-04-02 11:37:17'),
+	(93, '10', '76', 'Blora', 'Kabupaten', '58219', '2021-04-02 11:37:17'),
+	(94, '10', '91', 'Boyolali', 'Kabupaten', '57312', '2021-04-02 11:37:17'),
+	(95, '10', '92', 'Brebes', 'Kabupaten', '52212', '2021-04-02 11:37:17'),
+	(96, '10', '105', 'Cilacap', 'Kabupaten', '53211', '2021-04-02 11:37:17'),
+	(97, '10', '113', 'Demak', 'Kabupaten', '59519', '2021-04-02 11:37:17'),
+	(98, '10', '134', 'Grobogan', 'Kabupaten', '58111', '2021-04-02 11:37:17'),
+	(99, '10', '163', 'Jepara', 'Kabupaten', '59419', '2021-04-02 11:37:17'),
+	(100, '10', '169', 'Karanganyar', 'Kabupaten', '57718', '2021-04-02 11:37:17'),
+	(101, '10', '177', 'Kebumen', 'Kabupaten', '54319', '2021-04-02 11:37:17'),
+	(102, '10', '181', 'Kendal', 'Kabupaten', '51314', '2021-04-02 11:37:17'),
+	(103, '10', '196', 'Klaten', 'Kabupaten', '57411', '2021-04-02 11:37:17'),
+	(104, '10', '209', 'Kudus', 'Kabupaten', '59311', '2021-04-02 11:37:17'),
+	(105, '10', '249', 'Magelang', 'Kabupaten', '56519', '2021-04-02 11:37:17'),
+	(106, '10', '250', 'Magelang', 'Kota', '56133', '2021-04-02 11:37:17'),
+	(107, '10', '344', 'Pati', 'Kabupaten', '59114', '2021-04-02 11:37:17'),
+	(108, '10', '348', 'Pekalongan', 'Kabupaten', '51161', '2021-04-02 11:37:17'),
+	(109, '10', '349', 'Pekalongan', 'Kota', '51122', '2021-04-02 11:37:17'),
+	(110, '10', '352', 'Pemalang', 'Kabupaten', '52319', '2021-04-02 11:37:17'),
+	(111, '10', '375', 'Purbalingga', 'Kabupaten', '53312', '2021-04-02 11:37:17'),
+	(112, '10', '377', 'Purworejo', 'Kabupaten', '54111', '2021-04-02 11:37:17'),
+	(113, '10', '380', 'Rembang', 'Kabupaten', '59219', '2021-04-02 11:37:17'),
+	(114, '10', '386', 'Salatiga', 'Kota', '50711', '2021-04-02 11:37:17'),
+	(115, '10', '398', 'Semarang', 'Kabupaten', '50511', '2021-04-02 11:37:17'),
+	(116, '10', '399', 'Semarang', 'Kota', '50135', '2021-04-02 11:37:17'),
+	(117, '10', '427', 'Sragen', 'Kabupaten', '57211', '2021-04-02 11:37:17'),
+	(118, '10', '433', 'Sukoharjo', 'Kabupaten', '57514', '2021-04-02 11:37:17'),
+	(119, '10', '445', 'Surakarta (Solo)', 'Kota', '57113', '2021-04-02 11:37:17'),
+	(120, '10', '472', 'Tegal', 'Kabupaten', '52419', '2021-04-02 11:37:17'),
+	(121, '10', '473', 'Tegal', 'Kota', '52114', '2021-04-02 11:37:17'),
+	(122, '10', '476', 'Temanggung', 'Kabupaten', '56212', '2021-04-02 11:37:17'),
+	(123, '10', '497', 'Wonogiri', 'Kabupaten', '57619', '2021-04-02 11:37:17'),
+	(124, '10', '498', 'Wonosobo', 'Kabupaten', '56311', '2021-04-02 11:37:17'),
+	(125, '11', '31', 'Bangkalan', 'Kabupaten', '69118', '2021-04-02 11:37:19'),
+	(126, '11', '42', 'Banyuwangi', 'Kabupaten', '68416', '2021-04-02 11:37:19'),
+	(127, '11', '51', 'Batu', 'Kota', '65311', '2021-04-02 11:37:19'),
+	(128, '11', '74', 'Blitar', 'Kabupaten', '66171', '2021-04-02 11:37:19'),
+	(129, '11', '75', 'Blitar', 'Kota', '66124', '2021-04-02 11:37:19'),
+	(130, '11', '80', 'Bojonegoro', 'Kabupaten', '62119', '2021-04-02 11:37:19'),
+	(131, '11', '86', 'Bondowoso', 'Kabupaten', '68219', '2021-04-02 11:37:19'),
+	(132, '11', '133', 'Gresik', 'Kabupaten', '61115', '2021-04-02 11:37:19'),
+	(133, '11', '160', 'Jember', 'Kabupaten', '68113', '2021-04-02 11:37:19'),
+	(134, '11', '164', 'Jombang', 'Kabupaten', '61415', '2021-04-02 11:37:19'),
+	(135, '11', '178', 'Kediri', 'Kabupaten', '64184', '2021-04-02 11:37:19'),
+	(136, '11', '179', 'Kediri', 'Kota', '64125', '2021-04-02 11:37:19'),
+	(137, '11', '222', 'Lamongan', 'Kabupaten', '64125', '2021-04-02 11:37:19'),
+	(138, '11', '243', 'Lumajang', 'Kabupaten', '67319', '2021-04-02 11:37:19'),
+	(139, '11', '247', 'Madiun', 'Kabupaten', '63153', '2021-04-02 11:37:19'),
+	(140, '11', '248', 'Madiun', 'Kota', '63122', '2021-04-02 11:37:19'),
+	(141, '11', '251', 'Magetan', 'Kabupaten', '63314', '2021-04-02 11:37:19'),
+	(142, '11', '255', 'Malang', 'Kabupaten', '65163', '2021-04-02 11:37:19'),
+	(143, '11', '256', 'Malang', 'Kota', '65112', '2021-04-02 11:37:19'),
+	(144, '11', '289', 'Mojokerto', 'Kabupaten', '61382', '2021-04-02 11:37:19'),
+	(145, '11', '290', 'Mojokerto', 'Kota', '61316', '2021-04-02 11:37:19'),
+	(146, '11', '305', 'Nganjuk', 'Kabupaten', '64414', '2021-04-02 11:37:19'),
+	(147, '11', '306', 'Ngawi', 'Kabupaten', '63219', '2021-04-02 11:37:19'),
+	(148, '11', '317', 'Pacitan', 'Kabupaten', '63512', '2021-04-02 11:37:19'),
+	(149, '11', '330', 'Pamekasan', 'Kabupaten', '69319', '2021-04-02 11:37:19'),
+	(150, '11', '342', 'Pasuruan', 'Kabupaten', '67153', '2021-04-02 11:37:19'),
+	(151, '11', '343', 'Pasuruan', 'Kota', '67118', '2021-04-02 11:37:19'),
+	(152, '11', '363', 'Ponorogo', 'Kabupaten', '63411', '2021-04-02 11:37:19'),
+	(153, '11', '369', 'Probolinggo', 'Kabupaten', '67282', '2021-04-02 11:37:19'),
+	(154, '11', '370', 'Probolinggo', 'Kota', '67215', '2021-04-02 11:37:19'),
+	(155, '11', '390', 'Sampang', 'Kabupaten', '69219', '2021-04-02 11:37:19'),
+	(156, '11', '409', 'Sidoarjo', 'Kabupaten', '61219', '2021-04-02 11:37:19'),
+	(157, '11', '418', 'Situbondo', 'Kabupaten', '68316', '2021-04-02 11:37:19'),
+	(158, '11', '441', 'Sumenep', 'Kabupaten', '69413', '2021-04-02 11:37:19'),
+	(159, '11', '444', 'Surabaya', 'Kota', '60119', '2021-04-02 11:37:19'),
+	(160, '11', '487', 'Trenggalek', 'Kabupaten', '66312', '2021-04-02 11:37:19'),
+	(161, '11', '489', 'Tuban', 'Kabupaten', '62319', '2021-04-02 11:37:19'),
+	(162, '11', '492', 'Tulungagung', 'Kabupaten', '66212', '2021-04-02 11:37:19'),
+	(163, '12', '61', 'Bengkayang', 'Kabupaten', '79213', '2021-04-02 11:37:23'),
+	(164, '12', '168', 'Kapuas Hulu', 'Kabupaten', '78719', '2021-04-02 11:37:23'),
+	(165, '12', '176', 'Kayong Utara', 'Kabupaten', '78852', '2021-04-02 11:37:23'),
+	(166, '12', '195', 'Ketapang', 'Kabupaten', '78874', '2021-04-02 11:37:23'),
+	(167, '12', '208', 'Kubu Raya', 'Kabupaten', '78311', '2021-04-02 11:37:23'),
+	(168, '12', '228', 'Landak', 'Kabupaten', '78319', '2021-04-02 11:37:23'),
+	(169, '12', '279', 'Melawi', 'Kabupaten', '78619', '2021-04-02 11:37:23'),
+	(170, '12', '364', 'Pontianak', 'Kabupaten', '78971', '2021-04-02 11:37:23'),
+	(171, '12', '365', 'Pontianak', 'Kota', '78112', '2021-04-02 11:37:23'),
+	(172, '12', '388', 'Sambas', 'Kabupaten', '79453', '2021-04-02 11:37:23'),
+	(173, '12', '391', 'Sanggau', 'Kabupaten', '78557', '2021-04-02 11:37:23'),
+	(174, '12', '395', 'Sekadau', 'Kabupaten', '79583', '2021-04-02 11:37:23'),
+	(175, '12', '415', 'Singkawang', 'Kota', '79117', '2021-04-02 11:37:23'),
+	(176, '12', '417', 'Sintang', 'Kabupaten', '78619', '2021-04-02 11:37:23'),
+	(177, '13', '18', 'Balangan', 'Kabupaten', '71611', '2021-04-02 11:37:26'),
+	(178, '13', '33', 'Banjar', 'Kabupaten', '70619', '2021-04-02 11:37:26'),
+	(179, '13', '35', 'Banjarbaru', 'Kota', '70712', '2021-04-02 11:37:26'),
+	(180, '13', '36', 'Banjarmasin', 'Kota', '70117', '2021-04-02 11:37:26'),
+	(181, '13', '43', 'Barito Kuala', 'Kabupaten', '70511', '2021-04-02 11:37:26'),
+	(182, '13', '143', 'Hulu Sungai Selatan', 'Kabupaten', '71212', '2021-04-02 11:37:26'),
+	(183, '13', '144', 'Hulu Sungai Tengah', 'Kabupaten', '71313', '2021-04-02 11:37:26'),
+	(184, '13', '145', 'Hulu Sungai Utara', 'Kabupaten', '71419', '2021-04-02 11:37:26'),
+	(185, '13', '203', 'Kotabaru', 'Kabupaten', '72119', '2021-04-02 11:37:26'),
+	(186, '13', '446', 'Tabalong', 'Kabupaten', '71513', '2021-04-02 11:37:26'),
+	(187, '13', '452', 'Tanah Bumbu', 'Kabupaten', '72211', '2021-04-02 11:37:26'),
+	(188, '13', '454', 'Tanah Laut', 'Kabupaten', '70811', '2021-04-02 11:37:26'),
+	(189, '13', '466', 'Tapin', 'Kabupaten', '71119', '2021-04-02 11:37:26'),
+	(190, '14', '44', 'Barito Selatan', 'Kabupaten', '73711', '2021-04-02 11:37:28'),
+	(191, '14', '45', 'Barito Timur', 'Kabupaten', '73671', '2021-04-02 11:37:28'),
+	(192, '14', '46', 'Barito Utara', 'Kabupaten', '73881', '2021-04-02 11:37:28'),
+	(193, '14', '136', 'Gunung Mas', 'Kabupaten', '74511', '2021-04-02 11:37:28'),
+	(194, '14', '167', 'Kapuas', 'Kabupaten', '73583', '2021-04-02 11:37:28'),
+	(195, '14', '174', 'Katingan', 'Kabupaten', '74411', '2021-04-02 11:37:28'),
+	(196, '14', '205', 'Kotawaringin Barat', 'Kabupaten', '74119', '2021-04-02 11:37:28'),
+	(197, '14', '206', 'Kotawaringin Timur', 'Kabupaten', '74364', '2021-04-02 11:37:28'),
+	(198, '14', '221', 'Lamandau', 'Kabupaten', '74611', '2021-04-02 11:37:28'),
+	(199, '14', '296', 'Murung Raya', 'Kabupaten', '73911', '2021-04-02 11:37:28'),
+	(200, '14', '326', 'Palangka Raya', 'Kota', '73112', '2021-04-02 11:37:28'),
+	(201, '14', '371', 'Pulang Pisau', 'Kabupaten', '74811', '2021-04-02 11:37:28'),
+	(202, '14', '405', 'Seruyan', 'Kabupaten', '74211', '2021-04-02 11:37:28'),
+	(203, '14', '432', 'Sukamara', 'Kabupaten', '74712', '2021-04-02 11:37:28'),
+	(204, '15', '19', 'Balikpapan', 'Kota', '76111', '2021-04-02 11:37:30'),
+	(205, '15', '66', 'Berau', 'Kabupaten', '77311', '2021-04-02 11:37:30'),
+	(206, '15', '89', 'Bontang', 'Kota', '75313', '2021-04-02 11:37:30'),
+	(207, '15', '214', 'Kutai Barat', 'Kabupaten', '75711', '2021-04-02 11:37:30'),
+	(208, '15', '215', 'Kutai Kartanegara', 'Kabupaten', '75511', '2021-04-02 11:37:30'),
+	(209, '15', '216', 'Kutai Timur', 'Kabupaten', '75611', '2021-04-02 11:37:30'),
+	(210, '15', '341', 'Paser', 'Kabupaten', '76211', '2021-04-02 11:37:30'),
+	(211, '15', '354', 'Penajam Paser Utara', 'Kabupaten', '76311', '2021-04-02 11:37:30'),
+	(212, '15', '387', 'Samarinda', 'Kota', '75133', '2021-04-02 11:37:30'),
+	(213, '16', '96', 'Bulungan (Bulongan)', 'Kabupaten', '77211', '2021-04-02 11:37:32'),
+	(214, '16', '257', 'Malinau', 'Kabupaten', '77511', '2021-04-02 11:37:32'),
+	(215, '16', '311', 'Nunukan', 'Kabupaten', '77421', '2021-04-02 11:37:32'),
+	(216, '16', '450', 'Tana Tidung', 'Kabupaten', '77611', '2021-04-02 11:37:32'),
+	(217, '16', '467', 'Tarakan', 'Kota', '77114', '2021-04-02 11:37:32'),
+	(218, '17', '48', 'Batam', 'Kota', '29413', '2021-04-02 11:37:33'),
+	(219, '17', '71', 'Bintan', 'Kabupaten', '29135', '2021-04-02 11:37:33'),
+	(220, '17', '172', 'Karimun', 'Kabupaten', '29611', '2021-04-02 11:37:33'),
+	(221, '17', '184', 'Kepulauan Anambas', 'Kabupaten', '29991', '2021-04-02 11:37:33'),
+	(222, '17', '237', 'Lingga', 'Kabupaten', '29811', '2021-04-02 11:37:33'),
+	(223, '17', '302', 'Natuna', 'Kabupaten', '29711', '2021-04-02 11:37:33'),
+	(224, '17', '462', 'Tanjung Pinang', 'Kota', '29111', '2021-04-02 11:37:33'),
+	(225, '18', '21', 'Bandar Lampung', 'Kota', '35139', '2021-04-02 11:37:35'),
+	(226, '18', '223', 'Lampung Barat', 'Kabupaten', '34814', '2021-04-02 11:37:35'),
+	(227, '18', '224', 'Lampung Selatan', 'Kabupaten', '35511', '2021-04-02 11:37:35'),
+	(228, '18', '225', 'Lampung Tengah', 'Kabupaten', '34212', '2021-04-02 11:37:35'),
+	(229, '18', '226', 'Lampung Timur', 'Kabupaten', '34319', '2021-04-02 11:37:35'),
+	(230, '18', '227', 'Lampung Utara', 'Kabupaten', '34516', '2021-04-02 11:37:35'),
+	(231, '18', '282', 'Mesuji', 'Kabupaten', '34911', '2021-04-02 11:37:35'),
+	(232, '18', '283', 'Metro', 'Kota', '34111', '2021-04-02 11:37:35'),
+	(233, '18', '355', 'Pesawaran', 'Kabupaten', '35312', '2021-04-02 11:37:35'),
+	(234, '18', '356', 'Pesisir Barat', 'Kabupaten', '35974', '2021-04-02 11:37:35'),
+	(235, '18', '368', 'Pringsewu', 'Kabupaten', '35719', '2021-04-02 11:37:35'),
+	(236, '18', '458', 'Tanggamus', 'Kabupaten', '35619', '2021-04-02 11:37:35'),
+	(237, '18', '490', 'Tulang Bawang', 'Kabupaten', '34613', '2021-04-02 11:37:35'),
+	(238, '18', '491', 'Tulang Bawang Barat', 'Kabupaten', '34419', '2021-04-02 11:37:35'),
+	(239, '18', '496', 'Way Kanan', 'Kabupaten', '34711', '2021-04-02 11:37:35'),
+	(240, '19', '14', 'Ambon', 'Kota', '97222', '2021-04-02 11:37:37'),
+	(241, '19', '99', 'Buru', 'Kabupaten', '97371', '2021-04-02 11:37:37'),
+	(242, '19', '100', 'Buru Selatan', 'Kabupaten', '97351', '2021-04-02 11:37:37'),
+	(243, '19', '185', 'Kepulauan Aru', 'Kabupaten', '97681', '2021-04-02 11:37:37'),
+	(244, '19', '258', 'Maluku Barat Daya', 'Kabupaten', '97451', '2021-04-02 11:37:37'),
+	(245, '19', '259', 'Maluku Tengah', 'Kabupaten', '97513', '2021-04-02 11:37:37'),
+	(246, '19', '260', 'Maluku Tenggara', 'Kabupaten', '97651', '2021-04-02 11:37:37'),
+	(247, '19', '261', 'Maluku Tenggara Barat', 'Kabupaten', '97465', '2021-04-02 11:37:37'),
+	(248, '19', '400', 'Seram Bagian Barat', 'Kabupaten', '97561', '2021-04-02 11:37:37'),
+	(249, '19', '401', 'Seram Bagian Timur', 'Kabupaten', '97581', '2021-04-02 11:37:37'),
+	(250, '19', '488', 'Tual', 'Kota', '97612', '2021-04-02 11:37:37'),
+	(251, '20', '138', 'Halmahera Barat', 'Kabupaten', '97757', '2021-04-02 11:37:39'),
+	(252, '20', '139', 'Halmahera Selatan', 'Kabupaten', '97911', '2021-04-02 11:37:39'),
+	(253, '20', '140', 'Halmahera Tengah', 'Kabupaten', '97853', '2021-04-02 11:37:39'),
+	(254, '20', '141', 'Halmahera Timur', 'Kabupaten', '97862', '2021-04-02 11:37:39'),
+	(255, '20', '142', 'Halmahera Utara', 'Kabupaten', '97762', '2021-04-02 11:37:39'),
+	(256, '20', '191', 'Kepulauan Sula', 'Kabupaten', '97995', '2021-04-02 11:37:39'),
+	(257, '20', '372', 'Pulau Morotai', 'Kabupaten', '97771', '2021-04-02 11:37:39'),
+	(258, '20', '477', 'Ternate', 'Kota', '97714', '2021-04-02 11:37:39'),
+	(259, '20', '478', 'Tidore Kepulauan', 'Kota', '97815', '2021-04-02 11:37:39'),
+	(260, '21', '1', 'Aceh Barat', 'Kabupaten', '23681', '2021-04-02 11:37:40'),
+	(261, '21', '2', 'Aceh Barat Daya', 'Kabupaten', '23764', '2021-04-02 11:37:40'),
+	(262, '21', '3', 'Aceh Besar', 'Kabupaten', '23951', '2021-04-02 11:37:40'),
+	(263, '21', '4', 'Aceh Jaya', 'Kabupaten', '23654', '2021-04-02 11:37:40'),
+	(264, '21', '5', 'Aceh Selatan', 'Kabupaten', '23719', '2021-04-02 11:37:40'),
+	(265, '21', '6', 'Aceh Singkil', 'Kabupaten', '24785', '2021-04-02 11:37:40'),
+	(266, '21', '7', 'Aceh Tamiang', 'Kabupaten', '24476', '2021-04-02 11:37:40'),
+	(267, '21', '8', 'Aceh Tengah', 'Kabupaten', '24511', '2021-04-02 11:37:40'),
+	(268, '21', '9', 'Aceh Tenggara', 'Kabupaten', '24611', '2021-04-02 11:37:40'),
+	(269, '21', '10', 'Aceh Timur', 'Kabupaten', '24454', '2021-04-02 11:37:40'),
+	(270, '21', '11', 'Aceh Utara', 'Kabupaten', '24382', '2021-04-02 11:37:40'),
+	(271, '21', '20', 'Banda Aceh', 'Kota', '23238', '2021-04-02 11:37:40'),
+	(272, '21', '59', 'Bener Meriah', 'Kabupaten', '24581', '2021-04-02 11:37:40'),
+	(273, '21', '72', 'Bireuen', 'Kabupaten', '24219', '2021-04-02 11:37:40'),
+	(274, '21', '127', 'Gayo Lues', 'Kabupaten', '24653', '2021-04-02 11:37:40'),
+	(275, '21', '230', 'Langsa', 'Kota', '24412', '2021-04-02 11:37:40'),
+	(276, '21', '235', 'Lhokseumawe', 'Kota', '24352', '2021-04-02 11:37:40'),
+	(277, '21', '300', 'Nagan Raya', 'Kabupaten', '23674', '2021-04-02 11:37:40'),
+	(278, '21', '358', 'Pidie', 'Kabupaten', '24116', '2021-04-02 11:37:40'),
+	(279, '21', '359', 'Pidie Jaya', 'Kabupaten', '24186', '2021-04-02 11:37:40'),
+	(280, '21', '384', 'Sabang', 'Kota', '23512', '2021-04-02 11:37:40'),
+	(281, '21', '414', 'Simeulue', 'Kabupaten', '23891', '2021-04-02 11:37:40'),
+	(282, '21', '429', 'Subulussalam', 'Kota', '24882', '2021-04-02 11:37:40'),
+	(283, '22', '68', 'Bima', 'Kabupaten', '84171', '2021-04-02 11:37:42'),
+	(284, '22', '69', 'Bima', 'Kota', '84139', '2021-04-02 11:37:42'),
+	(285, '22', '118', 'Dompu', 'Kabupaten', '84217', '2021-04-02 11:37:42'),
+	(286, '22', '238', 'Lombok Barat', 'Kabupaten', '83311', '2021-04-02 11:37:42'),
+	(287, '22', '239', 'Lombok Tengah', 'Kabupaten', '83511', '2021-04-02 11:37:42'),
+	(288, '22', '240', 'Lombok Timur', 'Kabupaten', '83612', '2021-04-02 11:37:42'),
+	(289, '22', '241', 'Lombok Utara', 'Kabupaten', '83711', '2021-04-02 11:37:42'),
+	(290, '22', '276', 'Mataram', 'Kota', '83131', '2021-04-02 11:37:42'),
+	(291, '22', '438', 'Sumbawa', 'Kabupaten', '84315', '2021-04-02 11:37:42'),
+	(292, '22', '439', 'Sumbawa Barat', 'Kabupaten', '84419', '2021-04-02 11:37:42'),
+	(293, '23', '13', 'Alor', 'Kabupaten', '85811', '2021-04-02 11:37:45'),
+	(294, '23', '58', 'Belu', 'Kabupaten', '85711', '2021-04-02 11:37:45'),
+	(295, '23', '122', 'Ende', 'Kabupaten', '86351', '2021-04-02 11:37:45'),
+	(296, '23', '125', 'Flores Timur', 'Kabupaten', '86213', '2021-04-02 11:37:45'),
+	(297, '23', '212', 'Kupang', 'Kabupaten', '85362', '2021-04-02 11:37:45'),
+	(298, '23', '213', 'Kupang', 'Kota', '85119', '2021-04-02 11:37:45'),
+	(299, '23', '234', 'Lembata', 'Kabupaten', '86611', '2021-04-02 11:37:45'),
+	(300, '23', '269', 'Manggarai', 'Kabupaten', '86551', '2021-04-02 11:37:45'),
+	(301, '23', '270', 'Manggarai Barat', 'Kabupaten', '86711', '2021-04-02 11:37:45'),
+	(302, '23', '271', 'Manggarai Timur', 'Kabupaten', '86811', '2021-04-02 11:37:45'),
+	(303, '23', '301', 'Nagekeo', 'Kabupaten', '86911', '2021-04-02 11:37:45'),
+	(304, '23', '304', 'Ngada', 'Kabupaten', '86413', '2021-04-02 11:37:45'),
+	(305, '23', '383', 'Rote Ndao', 'Kabupaten', '85982', '2021-04-02 11:37:45'),
+	(306, '23', '385', 'Sabu Raijua', 'Kabupaten', '85391', '2021-04-02 11:37:45'),
+	(307, '23', '412', 'Sikka', 'Kabupaten', '86121', '2021-04-02 11:37:45'),
+	(308, '23', '434', 'Sumba Barat', 'Kabupaten', '87219', '2021-04-02 11:37:45'),
+	(309, '23', '435', 'Sumba Barat Daya', 'Kabupaten', '87453', '2021-04-02 11:37:45'),
+	(310, '23', '436', 'Sumba Tengah', 'Kabupaten', '87358', '2021-04-02 11:37:45'),
+	(311, '23', '437', 'Sumba Timur', 'Kabupaten', '87112', '2021-04-02 11:37:45'),
+	(312, '23', '479', 'Timor Tengah Selatan', 'Kabupaten', '85562', '2021-04-02 11:37:45'),
+	(313, '23', '480', 'Timor Tengah Utara', 'Kabupaten', '85612', '2021-04-02 11:37:45'),
+	(314, '24', '16', 'Asmat', 'Kabupaten', '99777', '2021-04-02 11:37:47'),
+	(315, '24', '67', 'Biak Numfor', 'Kabupaten', '98119', '2021-04-02 11:37:47'),
+	(316, '24', '90', 'Boven Digoel', 'Kabupaten', '99662', '2021-04-02 11:37:47'),
+	(317, '24', '111', 'Deiyai (Deliyai)', 'Kabupaten', '98784', '2021-04-02 11:37:47'),
+	(318, '24', '117', 'Dogiyai', 'Kabupaten', '98866', '2021-04-02 11:37:47'),
+	(319, '24', '150', 'Intan Jaya', 'Kabupaten', '98771', '2021-04-02 11:37:47'),
+	(320, '24', '157', 'Jayapura', 'Kabupaten', '99352', '2021-04-02 11:37:47'),
+	(321, '24', '158', 'Jayapura', 'Kota', '99114', '2021-04-02 11:37:47'),
+	(322, '24', '159', 'Jayawijaya', 'Kabupaten', '99511', '2021-04-02 11:37:47'),
+	(323, '24', '180', 'Keerom', 'Kabupaten', '99461', '2021-04-02 11:37:47'),
+	(324, '24', '193', 'Kepulauan Yapen (Yapen Waropen)', 'Kabupaten', '98211', '2021-04-02 11:37:47'),
+	(325, '24', '231', 'Lanny Jaya', 'Kabupaten', '99531', '2021-04-02 11:37:47'),
+	(326, '24', '263', 'Mamberamo Raya', 'Kabupaten', '99381', '2021-04-02 11:37:47'),
+	(327, '24', '264', 'Mamberamo Tengah', 'Kabupaten', '99553', '2021-04-02 11:37:47'),
+	(328, '24', '274', 'Mappi', 'Kabupaten', '99853', '2021-04-02 11:37:47'),
+	(329, '24', '281', 'Merauke', 'Kabupaten', '99613', '2021-04-02 11:37:47'),
+	(330, '24', '284', 'Mimika', 'Kabupaten', '99962', '2021-04-02 11:37:47'),
+	(331, '24', '299', 'Nabire', 'Kabupaten', '98816', '2021-04-02 11:37:47'),
+	(332, '24', '303', 'Nduga', 'Kabupaten', '99541', '2021-04-02 11:37:47'),
+	(333, '24', '335', 'Paniai', 'Kabupaten', '98765', '2021-04-02 11:37:47'),
+	(334, '24', '347', 'Pegunungan Bintang', 'Kabupaten', '99573', '2021-04-02 11:37:47'),
+	(335, '24', '373', 'Puncak', 'Kabupaten', '98981', '2021-04-02 11:37:47'),
+	(336, '24', '374', 'Puncak Jaya', 'Kabupaten', '98979', '2021-04-02 11:37:47'),
+	(337, '24', '392', 'Sarmi', 'Kabupaten', '99373', '2021-04-02 11:37:47'),
+	(338, '24', '443', 'Supiori', 'Kabupaten', '98164', '2021-04-02 11:37:47'),
+	(339, '24', '484', 'Tolikara', 'Kabupaten', '99411', '2021-04-02 11:37:47'),
+	(340, '24', '495', 'Waropen', 'Kabupaten', '98269', '2021-04-02 11:37:47'),
+	(341, '24', '499', 'Yahukimo', 'Kabupaten', '99041', '2021-04-02 11:37:47'),
+	(342, '24', '500', 'Yalimo', 'Kabupaten', '99481', '2021-04-02 11:37:47'),
+	(343, '25', '124', 'Fakfak', 'Kabupaten', '98651', '2021-04-02 11:37:48'),
+	(344, '25', '165', 'Kaimana', 'Kabupaten', '98671', '2021-04-02 11:37:48'),
+	(345, '25', '272', 'Manokwari', 'Kabupaten', '98311', '2021-04-02 11:37:48'),
+	(346, '25', '273', 'Manokwari Selatan', 'Kabupaten', '98355', '2021-04-02 11:37:48'),
+	(347, '25', '277', 'Maybrat', 'Kabupaten', '98051', '2021-04-02 11:37:48'),
+	(348, '25', '346', 'Pegunungan Arfak', 'Kabupaten', '98354', '2021-04-02 11:37:48'),
+	(349, '25', '378', 'Raja Ampat', 'Kabupaten', '98489', '2021-04-02 11:37:48'),
+	(350, '25', '424', 'Sorong', 'Kabupaten', '98431', '2021-04-02 11:37:48'),
+	(351, '25', '425', 'Sorong', 'Kota', '98411', '2021-04-02 11:37:48'),
+	(352, '25', '426', 'Sorong Selatan', 'Kabupaten', '98454', '2021-04-02 11:37:48'),
+	(353, '25', '449', 'Tambrauw', 'Kabupaten', '98475', '2021-04-02 11:37:48'),
+	(354, '25', '474', 'Teluk Bintuni', 'Kabupaten', '98551', '2021-04-02 11:37:48'),
+	(355, '25', '475', 'Teluk Wondama', 'Kabupaten', '98591', '2021-04-02 11:37:48'),
+	(356, '26', '60', 'Bengkalis', 'Kabupaten', '28719', '2021-04-02 11:37:49'),
+	(357, '26', '120', 'Dumai', 'Kota', '28811', '2021-04-02 11:37:49'),
+	(358, '26', '147', 'Indragiri Hilir', 'Kabupaten', '29212', '2021-04-02 11:37:49'),
+	(359, '26', '148', 'Indragiri Hulu', 'Kabupaten', '29319', '2021-04-02 11:37:49'),
+	(360, '26', '166', 'Kampar', 'Kabupaten', '28411', '2021-04-02 11:37:49'),
+	(361, '26', '187', 'Kepulauan Meranti', 'Kabupaten', '28791', '2021-04-02 11:37:49'),
+	(362, '26', '207', 'Kuantan Singingi', 'Kabupaten', '29519', '2021-04-02 11:37:49'),
+	(363, '26', '350', 'Pekanbaru', 'Kota', '28112', '2021-04-02 11:37:49'),
+	(364, '26', '351', 'Pelalawan', 'Kabupaten', '28311', '2021-04-02 11:37:49'),
+	(365, '26', '381', 'Rokan Hilir', 'Kabupaten', '28992', '2021-04-02 11:37:49'),
+	(366, '26', '382', 'Rokan Hulu', 'Kabupaten', '28511', '2021-04-02 11:37:49'),
+	(367, '26', '406', 'Siak', 'Kabupaten', '28623', '2021-04-02 11:37:49'),
+	(368, '27', '253', 'Majene', 'Kabupaten', '91411', '2021-04-02 11:37:51'),
+	(369, '27', '262', 'Mamasa', 'Kabupaten', '91362', '2021-04-02 11:37:51'),
+	(370, '27', '265', 'Mamuju', 'Kabupaten', '91519', '2021-04-02 11:37:51'),
+	(371, '27', '266', 'Mamuju Utara', 'Kabupaten', '91571', '2021-04-02 11:37:51'),
+	(372, '27', '362', 'Polewali Mandar', 'Kabupaten', '91311', '2021-04-02 11:37:51'),
+	(373, '28', '38', 'Bantaeng', 'Kabupaten', '92411', '2021-04-02 11:37:52'),
+	(374, '28', '47', 'Barru', 'Kabupaten', '90719', '2021-04-02 11:37:52'),
+	(375, '28', '87', 'Bone', 'Kabupaten', '92713', '2021-04-02 11:37:52'),
+	(376, '28', '95', 'Bulukumba', 'Kabupaten', '92511', '2021-04-02 11:37:52'),
+	(377, '28', '123', 'Enrekang', 'Kabupaten', '91719', '2021-04-02 11:37:52'),
+	(378, '28', '132', 'Gowa', 'Kabupaten', '92111', '2021-04-02 11:37:52'),
+	(379, '28', '162', 'Jeneponto', 'Kabupaten', '92319', '2021-04-02 11:37:52'),
+	(380, '28', '244', 'Luwu', 'Kabupaten', '91994', '2021-04-02 11:37:52'),
+	(381, '28', '245', 'Luwu Timur', 'Kabupaten', '92981', '2021-04-02 11:37:52'),
+	(382, '28', '246', 'Luwu Utara', 'Kabupaten', '92911', '2021-04-02 11:37:52'),
+	(383, '28', '254', 'Makassar', 'Kota', '90111', '2021-04-02 11:37:52'),
+	(384, '28', '275', 'Maros', 'Kabupaten', '90511', '2021-04-02 11:37:52'),
+	(385, '28', '328', 'Palopo', 'Kota', '91911', '2021-04-02 11:37:52'),
+	(386, '28', '333', 'Pangkajene Kepulauan', 'Kabupaten', '90611', '2021-04-02 11:37:52'),
+	(387, '28', '336', 'Parepare', 'Kota', '91123', '2021-04-02 11:37:52'),
+	(388, '28', '360', 'Pinrang', 'Kabupaten', '91251', '2021-04-02 11:37:52'),
+	(389, '28', '396', 'Selayar (Kepulauan Selayar)', 'Kabupaten', '92812', '2021-04-02 11:37:52'),
+	(390, '28', '408', 'Sidenreng Rappang/Rapang', 'Kabupaten', '91613', '2021-04-02 11:37:52'),
+	(391, '28', '416', 'Sinjai', 'Kabupaten', '92615', '2021-04-02 11:37:52'),
+	(392, '28', '423', 'Soppeng', 'Kabupaten', '90812', '2021-04-02 11:37:52'),
+	(393, '28', '448', 'Takalar', 'Kabupaten', '92212', '2021-04-02 11:37:52'),
+	(394, '28', '451', 'Tana Toraja', 'Kabupaten', '91819', '2021-04-02 11:37:52'),
+	(395, '28', '486', 'Toraja Utara', 'Kabupaten', '91831', '2021-04-02 11:37:52'),
+	(396, '28', '493', 'Wajo', 'Kabupaten', '90911', '2021-04-02 11:37:52'),
+	(397, '29', '25', 'Banggai', 'Kabupaten', '94711', '2021-04-02 11:37:53'),
+	(398, '29', '26', 'Banggai Kepulauan', 'Kabupaten', '94881', '2021-04-02 11:37:53'),
+	(399, '29', '98', 'Buol', 'Kabupaten', '94564', '2021-04-02 11:37:53'),
+	(400, '29', '119', 'Donggala', 'Kabupaten', '94341', '2021-04-02 11:37:53'),
+	(401, '29', '291', 'Morowali', 'Kabupaten', '94911', '2021-04-02 11:37:53'),
+	(402, '29', '329', 'Palu', 'Kota', '94111', '2021-04-02 11:37:53'),
+	(403, '29', '338', 'Parigi Moutong', 'Kabupaten', '94411', '2021-04-02 11:37:53'),
+	(404, '29', '366', 'Poso', 'Kabupaten', '94615', '2021-04-02 11:37:53'),
+	(405, '29', '410', 'Sigi', 'Kabupaten', '94364', '2021-04-02 11:37:53'),
+	(406, '29', '482', 'Tojo Una-Una', 'Kabupaten', '94683', '2021-04-02 11:37:53'),
+	(407, '29', '483', 'Toli-Toli', 'Kabupaten', '94542', '2021-04-02 11:37:53'),
+	(408, '30', '53', 'Bau-Bau', 'Kota', '93719', '2021-04-02 11:37:55'),
+	(409, '30', '85', 'Bombana', 'Kabupaten', '93771', '2021-04-02 11:37:55'),
+	(410, '30', '101', 'Buton', 'Kabupaten', '93754', '2021-04-02 11:37:55'),
+	(411, '30', '102', 'Buton Utara', 'Kabupaten', '93745', '2021-04-02 11:37:55'),
+	(412, '30', '182', 'Kendari', 'Kota', '93126', '2021-04-02 11:37:55'),
+	(413, '30', '198', 'Kolaka', 'Kabupaten', '93511', '2021-04-02 11:37:55'),
+	(414, '30', '199', 'Kolaka Utara', 'Kabupaten', '93911', '2021-04-02 11:37:55'),
+	(415, '30', '200', 'Konawe', 'Kabupaten', '93411', '2021-04-02 11:37:55'),
+	(416, '30', '201', 'Konawe Selatan', 'Kabupaten', '93811', '2021-04-02 11:37:55'),
+	(417, '30', '202', 'Konawe Utara', 'Kabupaten', '93311', '2021-04-02 11:37:55'),
+	(418, '30', '295', 'Muna', 'Kabupaten', '93611', '2021-04-02 11:37:55'),
+	(419, '30', '494', 'Wakatobi', 'Kabupaten', '93791', '2021-04-02 11:37:55'),
+	(420, '31', '73', 'Bitung', 'Kota', '95512', '2021-04-02 11:37:57'),
+	(421, '31', '81', 'Bolaang Mongondow (Bolmong)', 'Kabupaten', '95755', '2021-04-02 11:37:57'),
+	(422, '31', '82', 'Bolaang Mongondow Selatan', 'Kabupaten', '95774', '2021-04-02 11:37:57'),
+	(423, '31', '83', 'Bolaang Mongondow Timur', 'Kabupaten', '95783', '2021-04-02 11:37:57'),
+	(424, '31', '84', 'Bolaang Mongondow Utara', 'Kabupaten', '95765', '2021-04-02 11:37:57'),
+	(425, '31', '188', 'Kepulauan Sangihe', 'Kabupaten', '95819', '2021-04-02 11:37:57'),
+	(426, '31', '190', 'Kepulauan Siau Tagulandang Biaro (Sitaro)', 'Kabupaten', '95862', '2021-04-02 11:37:57'),
+	(427, '31', '192', 'Kepulauan Talaud', 'Kabupaten', '95885', '2021-04-02 11:37:57'),
+	(428, '31', '204', 'Kotamobagu', 'Kota', '95711', '2021-04-02 11:37:57'),
+	(429, '31', '267', 'Manado', 'Kota', '95247', '2021-04-02 11:37:57'),
+	(430, '31', '285', 'Minahasa', 'Kabupaten', '95614', '2021-04-02 11:37:57'),
+	(431, '31', '286', 'Minahasa Selatan', 'Kabupaten', '95914', '2021-04-02 11:37:57'),
+	(432, '31', '287', 'Minahasa Tenggara', 'Kabupaten', '95995', '2021-04-02 11:37:57'),
+	(433, '31', '288', 'Minahasa Utara', 'Kabupaten', '95316', '2021-04-02 11:37:57'),
+	(434, '31', '485', 'Tomohon', 'Kota', '95416', '2021-04-02 11:37:57'),
+	(435, '32', '12', 'Agam', 'Kabupaten', '26411', '2021-04-02 11:37:59'),
+	(436, '32', '93', 'Bukittinggi', 'Kota', '26115', '2021-04-02 11:37:59'),
+	(437, '32', '116', 'Dharmasraya', 'Kabupaten', '27612', '2021-04-02 11:37:59'),
+	(438, '32', '186', 'Kepulauan Mentawai', 'Kabupaten', '25771', '2021-04-02 11:37:59'),
+	(439, '32', '236', 'Lima Puluh Koto/Kota', 'Kabupaten', '26671', '2021-04-02 11:37:59'),
+	(440, '32', '318', 'Padang', 'Kota', '25112', '2021-04-02 11:37:59'),
+	(441, '32', '321', 'Padang Panjang', 'Kota', '27122', '2021-04-02 11:37:59'),
+	(442, '32', '322', 'Padang Pariaman', 'Kabupaten', '25583', '2021-04-02 11:37:59'),
+	(443, '32', '337', 'Pariaman', 'Kota', '25511', '2021-04-02 11:37:59'),
+	(444, '32', '339', 'Pasaman', 'Kabupaten', '26318', '2021-04-02 11:37:59'),
+	(445, '32', '340', 'Pasaman Barat', 'Kabupaten', '26511', '2021-04-02 11:37:59'),
+	(446, '32', '345', 'Payakumbuh', 'Kota', '26213', '2021-04-02 11:37:59'),
+	(447, '32', '357', 'Pesisir Selatan', 'Kabupaten', '25611', '2021-04-02 11:37:59'),
+	(448, '32', '394', 'Sawah Lunto', 'Kota', '27416', '2021-04-02 11:37:59'),
+	(449, '32', '411', 'Sijunjung (Sawah Lunto Sijunjung)', 'Kabupaten', '27511', '2021-04-02 11:37:59'),
+	(450, '32', '420', 'Solok', 'Kabupaten', '27365', '2021-04-02 11:37:59'),
+	(451, '32', '421', 'Solok', 'Kota', '27315', '2021-04-02 11:37:59'),
+	(452, '32', '422', 'Solok Selatan', 'Kabupaten', '27779', '2021-04-02 11:37:59'),
+	(453, '32', '453', 'Tanah Datar', 'Kabupaten', '27211', '2021-04-02 11:37:59'),
+	(454, '33', '40', 'Banyuasin', 'Kabupaten', '30911', '2021-04-02 11:38:01'),
+	(455, '33', '121', 'Empat Lawang', 'Kabupaten', '31811', '2021-04-02 11:38:01'),
+	(456, '33', '220', 'Lahat', 'Kabupaten', '31419', '2021-04-02 11:38:01'),
+	(457, '33', '242', 'Lubuk Linggau', 'Kota', '31614', '2021-04-02 11:38:01'),
+	(458, '33', '292', 'Muara Enim', 'Kabupaten', '31315', '2021-04-02 11:38:01'),
+	(459, '33', '297', 'Musi Banyuasin', 'Kabupaten', '30719', '2021-04-02 11:38:01'),
+	(460, '33', '298', 'Musi Rawas', 'Kabupaten', '31661', '2021-04-02 11:38:01'),
+	(461, '33', '312', 'Ogan Ilir', 'Kabupaten', '30811', '2021-04-02 11:38:01'),
+	(462, '33', '313', 'Ogan Komering Ilir', 'Kabupaten', '30618', '2021-04-02 11:38:01'),
+	(463, '33', '314', 'Ogan Komering Ulu', 'Kabupaten', '32112', '2021-04-02 11:38:01'),
+	(464, '33', '315', 'Ogan Komering Ulu Selatan', 'Kabupaten', '32211', '2021-04-02 11:38:01'),
+	(465, '33', '316', 'Ogan Komering Ulu Timur', 'Kabupaten', '32312', '2021-04-02 11:38:01'),
+	(466, '33', '324', 'Pagar Alam', 'Kota', '31512', '2021-04-02 11:38:01'),
+	(467, '33', '327', 'Palembang', 'Kota', '30111', '2021-04-02 11:38:01'),
+	(468, '33', '367', 'Prabumulih', 'Kota', '31121', '2021-04-02 11:38:01'),
+	(469, '34', '15', 'Asahan', 'Kabupaten', '21214', '2021-04-02 11:38:03'),
+	(470, '34', '52', 'Batu Bara', 'Kabupaten', '21655', '2021-04-02 11:38:03'),
+	(471, '34', '70', 'Binjai', 'Kota', '20712', '2021-04-02 11:38:03'),
+	(472, '34', '110', 'Dairi', 'Kabupaten', '22211', '2021-04-02 11:38:03'),
+	(473, '34', '112', 'Deli Serdang', 'Kabupaten', '20511', '2021-04-02 11:38:03'),
+	(474, '34', '137', 'Gunungsitoli', 'Kota', '22813', '2021-04-02 11:38:03'),
+	(475, '34', '146', 'Humbang Hasundutan', 'Kabupaten', '22457', '2021-04-02 11:38:03'),
+	(476, '34', '173', 'Karo', 'Kabupaten', '22119', '2021-04-02 11:38:03'),
+	(477, '34', '217', 'Labuhan Batu', 'Kabupaten', '21412', '2021-04-02 11:38:03'),
+	(478, '34', '218', 'Labuhan Batu Selatan', 'Kabupaten', '21511', '2021-04-02 11:38:03'),
+	(479, '34', '219', 'Labuhan Batu Utara', 'Kabupaten', '21711', '2021-04-02 11:38:03'),
+	(480, '34', '229', 'Langkat', 'Kabupaten', '20811', '2021-04-02 11:38:03'),
+	(481, '34', '268', 'Mandailing Natal', 'Kabupaten', '22916', '2021-04-02 11:38:03'),
+	(482, '34', '278', 'Medan', 'Kota', '20228', '2021-04-02 11:38:03'),
+	(483, '34', '307', 'Nias', 'Kabupaten', '22876', '2021-04-02 11:38:03'),
+	(484, '34', '308', 'Nias Barat', 'Kabupaten', '22895', '2021-04-02 11:38:03'),
+	(485, '34', '309', 'Nias Selatan', 'Kabupaten', '22865', '2021-04-02 11:38:03'),
+	(486, '34', '310', 'Nias Utara', 'Kabupaten', '22856', '2021-04-02 11:38:03'),
+	(487, '34', '319', 'Padang Lawas', 'Kabupaten', '22763', '2021-04-02 11:38:03'),
+	(488, '34', '320', 'Padang Lawas Utara', 'Kabupaten', '22753', '2021-04-02 11:38:03'),
+	(489, '34', '323', 'Padang Sidempuan', 'Kota', '22727', '2021-04-02 11:38:03'),
+	(490, '34', '325', 'Pakpak Bharat', 'Kabupaten', '22272', '2021-04-02 11:38:03'),
+	(491, '34', '353', 'Pematang Siantar', 'Kota', '21126', '2021-04-02 11:38:03'),
+	(492, '34', '389', 'Samosir', 'Kabupaten', '22392', '2021-04-02 11:38:03'),
+	(493, '34', '404', 'Serdang Bedagai', 'Kabupaten', '20915', '2021-04-02 11:38:03'),
+	(494, '34', '407', 'Sibolga', 'Kota', '22522', '2021-04-02 11:38:03'),
+	(495, '34', '413', 'Simalungun', 'Kabupaten', '21162', '2021-04-02 11:38:03'),
+	(496, '34', '459', 'Tanjung Balai', 'Kota', '21321', '2021-04-02 11:38:03'),
+	(497, '34', '463', 'Tapanuli Selatan', 'Kabupaten', '22742', '2021-04-02 11:38:03'),
+	(498, '34', '464', 'Tapanuli Tengah', 'Kabupaten', '22611', '2021-04-02 11:38:03'),
+	(499, '34', '465', 'Tapanuli Utara', 'Kabupaten', '22414', '2021-04-02 11:38:03'),
+	(500, '34', '470', 'Tebing Tinggi', 'Kota', '20632', '2021-04-02 11:38:03'),
+	(501, '34', '481', 'Toba Samosir', 'Kabupaten', '22316', '2021-04-02 11:38:03');
 /*!40000 ALTER TABLE `tbl_city_ro` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_contact_list
 CREATE TABLE IF NOT EXISTS `tbl_contact_list` (
@@ -295,6 +818,7 @@ CREATE TABLE IF NOT EXISTS `tbl_contact_list` (
 DELETE FROM `tbl_contact_list`;
 /*!40000 ALTER TABLE `tbl_contact_list` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_contact_list` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_contact_sub
 CREATE TABLE IF NOT EXISTS `tbl_contact_sub` (
@@ -313,6 +837,7 @@ INSERT INTO `tbl_contact_sub` (`id`, `title`, `title_slug`, `status`, `created_a
 	(1, 'Order Cancellation', 'order-cancellation', 1, ''),
 	(2, 'Order Payment', 'order-payment', 1, '');
 /*!40000 ALTER TABLE `tbl_contact_sub` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_coupon
 CREATE TABLE IF NOT EXISTS `tbl_coupon` (
@@ -341,6 +866,7 @@ INSERT INTO `tbl_coupon` (`id`, `coupon_desc`, `coupon_code`, `coupon_image`, `c
 	(3, '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s.</p>\r\n', '300RSOFF', '27072020020949_79264.jpg', 0, 10, 'false', 0, 'false', '3000', 10, '1595839189', 1);
 /*!40000 ALTER TABLE `tbl_coupon` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_faq
 CREATE TABLE IF NOT EXISTS `tbl_faq` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -367,6 +893,7 @@ INSERT INTO `tbl_faq` (`id`, `faq_question`, `faq_answer`, `type`, `created_at`,
 	(14, 'How does the COD payment option work?', 'While making your purchase, select the Cash on Delivery payment option; you can then pay in cash when our logistics partner delivers your order to you. Please note that this option is only available at select PIN codes.', 'payment', '1580361984', 1);
 /*!40000 ALTER TABLE `tbl_faq` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_logs
 CREATE TABLE IF NOT EXISTS `tbl_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -386,6 +913,7 @@ CREATE TABLE IF NOT EXISTS `tbl_logs` (
 DELETE FROM `tbl_logs`;
 /*!40000 ALTER TABLE `tbl_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_logs` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_offers
 CREATE TABLE IF NOT EXISTS `tbl_offers` (
@@ -411,6 +939,7 @@ INSERT INTO `tbl_offers` (`id`, `offer_title`, `offer_slug`, `offer_desc`, `offe
 	(5, 'Flat 20% OFF Super Sale (Limited Time Offer)', 'flat-20-off-super-sale-limited-time-offer', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n', 20, '11012020102342_61736.jpg', '1578718422', 1),
 	(6, 'Sale 30% OFF', 'sale-30-off', '', 30, '11012020110932_78016.jpg', '1578721172', 1);
 /*!40000 ALTER TABLE `tbl_offers` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_order_details
 CREATE TABLE IF NOT EXISTS `tbl_order_details` (
@@ -452,6 +981,7 @@ DELETE FROM `tbl_order_details`;
 /*!40000 ALTER TABLE `tbl_order_details` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_order_details` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_order_items
 CREATE TABLE IF NOT EXISTS `tbl_order_items` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -475,6 +1005,7 @@ DELETE FROM `tbl_order_items`;
 /*!40000 ALTER TABLE `tbl_order_items` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_order_items` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_order_status
 CREATE TABLE IF NOT EXISTS `tbl_order_status` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
@@ -492,6 +1023,7 @@ DELETE FROM `tbl_order_status`;
 /*!40000 ALTER TABLE `tbl_order_status` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_order_status` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_password_reset
 CREATE TABLE IF NOT EXISTS `tbl_password_reset` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -508,6 +1040,7 @@ CREATE TABLE IF NOT EXISTS `tbl_password_reset` (
 DELETE FROM `tbl_password_reset`;
 /*!40000 ALTER TABLE `tbl_password_reset` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_password_reset` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_product
 CREATE TABLE IF NOT EXISTS `tbl_product` (
@@ -620,6 +1153,7 @@ INSERT INTO `tbl_product` (`id`, `category_id`, `sub_category_id`, `brand_id`, `
 	(92, 1, 20, 0, 5, 'Asus ROG Strix G Core i7 9th Gen - (16 GB/512 GB SSD/Windows 10 Home/4 GB Graphics/NVIDIA Geforce GTX 1650) G531GT-AL018T Gaming Laptop  (15.6 inch, Black, 2.4 kg)', 'asus-rog-strix-g-core-i7-9th-gen-16-gb512-gb-ssdwindows-10-home4-gb-graphicsnvidia-geforce-gtx-1650-g531gt-al018t-gaming-laptop-156-inch-black-24-kg', 'This ASUS Core i7 9th Gen Gaming Laptop is equipped with the NVIDIA GeForce GTX 1650 Graphics Processor and enables stunning visuals, which make you lose yourself in your favourite game. Its dedicated GPU power helps you engage in creative multitasking so that you can be your productive best.', '<h3>General</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Sales Package</td>\r\n   <td>\r\n   <ul>\r\n    <li>Laptop, Power Adaptor, User Guide, Warranty Documents</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Model Number</td>\r\n   <td>\r\n   <ul>\r\n    <li>G531GT-AL018T</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Part Number</td>\r\n   <td>\r\n   <ul>\r\n    <li>90NR01L3-M03820</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Series</td>\r\n   <td>\r\n   <ul>\r\n    <li>ROG Strix G</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Color</td>\r\n   <td>\r\n   <ul>\r\n    <li>Black</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>Gaming Laptop</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Suitable For</td>\r\n   <td>\r\n   <ul>\r\n    <li>Gaming, Processing & Multitasking</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Power Supply</td>\r\n   <td>\r\n   <ul>\r\n    <li>150 W AC Adapter</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Battery Cell</td>\r\n   <td>\r\n   <ul>\r\n    <li>3 cell</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>MS Office Provided</td>\r\n   <td>\r\n   <ul>\r\n    <li>No</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Processor And Memory Features</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Dedicated Graphic Memory Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>GDDR5</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Dedicated Graphic Memory Capacity</td>\r\n   <td>\r\n   <ul>\r\n    <li>4 GB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Processor Brand</td>\r\n   <td>\r\n   <ul>\r\n    <li>Intel</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Processor Name</td>\r\n   <td>\r\n   <ul>\r\n    <li>Core i7</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Processor Generation</td>\r\n   <td>\r\n   <ul>\r\n    <li>9th Gen</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>SSD</td>\r\n   <td>\r\n   <ul>\r\n    <li>Yes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>SSD Capacity</td>\r\n   <td>\r\n   <ul>\r\n    <li>512 GB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>RAM</td>\r\n   <td>\r\n   <ul>\r\n    <li>16 GB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>RAM Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>DDR4</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Processor Variant</td>\r\n   <td>\r\n   <ul>\r\n    <li>9750H</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Chipset</td>\r\n   <td>\r\n   <ul>\r\n    <li>Intel HM370 Express</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Clock Speed</td>\r\n   <td>\r\n   <ul>\r\n    <li>2.6 GHz with Turbo Boost Upto 4.5 GHz</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Memory Slots</td>\r\n   <td>\r\n   <ul>\r\n    <li>2 Slots</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Expandable Memory</td>\r\n   <td>\r\n   <ul>\r\n    <li>Upto 32 GB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>RAM Frequency</td>\r\n   <td>\r\n   <ul>\r\n    <li>2666 MHz</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Cache</td>\r\n   <td>\r\n   <ul>\r\n    <li>12 MB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Graphic Processor</td>\r\n   <td>\r\n   <ul>\r\n    <li>NVIDIA Geforce GTX 1650</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Number of Cores</td>\r\n   <td>\r\n   <ul>\r\n    <li>6</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Operating System</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>OS Architecture</td>\r\n   <td>\r\n   <ul>\r\n    <li>64 bit</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Operating System</td>\r\n   <td>\r\n   <ul>\r\n    <li>Windows 10 Home</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>System Architecture</td>\r\n   <td>\r\n   <ul>\r\n    <li>64 bit</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Port And Slot Features</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Mic In</td>\r\n   <td>\r\n   <ul>\r\n    <li>Yes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>RJ45</td>\r\n   <td>\r\n   <ul>\r\n    <li>Yes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>USB Port</td>\r\n   <td>\r\n   <ul>\r\n    <li>3 x USB 3.1</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>HDMI Port</td>\r\n   <td>\r\n   <ul>\r\n    <li>1 x HDMI Port (v2.0)</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Display And Audio Features</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Touchscreen</td>\r\n   <td>\r\n   <ul>\r\n    <li>No</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Screen Size</td>\r\n   <td>\r\n   <ul>\r\n    <li>39.62 cm (15.6 inch)</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Screen Resolution</td>\r\n   <td>\r\n   <ul>\r\n    <li>1920 x 1080 Pixel</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Screen Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>Full HD LED Backlit Anti-glare IPS Display (With 120 Hz Refresh Rate)</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Speakers</td>\r\n   <td>\r\n   <ul>\r\n    <li>Built-in Dual Speakers</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Internal Mic</td>\r\n   <td>\r\n   <ul>\r\n    <li>Built-in Array Microphone</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Sound Properties</td>\r\n   <td>\r\n   <ul>\r\n    <li>2 x 1.5 W Speakers</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Connectivity Features</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Wireless LAN</td>\r\n   <td>\r\n   <ul>\r\n    <li>IEEE 802.11ac</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Bluetooth</td>\r\n   <td>\r\n   <ul>\r\n    <li>v5.0</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Ethernet</td>\r\n   <td>\r\n   <ul>\r\n    <li>10/100/1000 Mbps</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Dimensions</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Dimensions</td>\r\n   <td>\r\n   <ul>\r\n    <li>360 x 275 x 25.8 mm</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Weight</td>\r\n   <td>\r\n   <ul>\r\n    <li>2.4 kg</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Additional Features</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Disk Drive</td>\r\n   <td>\r\n   <ul>\r\n    <li>Not Available</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Keyboard</td>\r\n   <td>\r\n   <ul>\r\n    <li>Illuminated Chiclet RGB Keyboard</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Backlit Keyboard</td>\r\n   <td>\r\n   <ul>\r\n    <li>Yes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Pointer Device</td>\r\n   <td>\r\n   <ul>\r\n    <li>Touchpad</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Included Software</td>\r\n   <td>\r\n   <ul>\r\n    <li>GameFirst, GameVisual, Sonic Studio</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Additional Features</td>\r\n   <td>\r\n   <ul>\r\n    <li>Li-ion Battery</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Warranty</h3>\r\n\r\n<table border="\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Warranty Summary</td>\r\n   <td>\r\n   <ul>\r\n    <li>1 Year Limited International Hardware Warranty</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Warranty Service Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>Onsite</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Covered in Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>Manufacturing Defects</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Not Covered in Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>Physical Damage</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Domestic Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>1 Year</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>International Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>1 Year</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n', '02022021121811_92031.png', '02022021124051_9882_2.png', '', 300, 240, 60, 20, '', 'Black/000000', '', 0, 1, 0, 0, '0', 0, 0, 0, 0, '0', 0, '1612248361', 'Asus ROG Strix G Core i7 9th Gen - (16 GB/512 GB SSD/Windows 10 Home/4 GB Graphics/NVIDIA Geforce GTX 1650) G531GT-AL018T Gaming Laptop  (15.6 inch, B', 'Asus ROG Strix G Core i7 9th Gen - (16 GB/512 GB SSD/Windows 10 Home/4 GB Graphics/NVIDIA Geforce GTX 1650) G531GT-AL018T Gaming Laptop  (15.6 inch, Black, 2.4 kg)', 'Asus ROG Strix G Core i7 9th Gen - (16 GB/512 GB SSD/Windows 10 Home/4 GB Graphics/NVIDIA Geforce GTX 1650) G531GT-AL018T Gaming Laptop  (15.6 inch, Black, 2.4 kg)', 1),
 	(93, 1, 20, 0, 5, 'Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra) MQD32HN/A A1466  (13.3 inch, Silver, 1.35 kg)', 'apple-macbook-air-core-i5-5th-gen-8-gb128-gb-ssdmac-os-sierra-mqd32hna-a1466-133-inch-silver-135-kg', 'It is fun to use, it is powerful and it looks incredible, meet the Apple MacBook Air. This Sleek and Lightweight laptop is powered by Intel Core i5 5th Gen processor with 8 GB DDR3 RAM and 128 GB of SSD capacity to make multitasking smooth and easy. It is designed with a Backlit Keyboard and its Multi-Touch Trackpad will be an absolute pleasure to use.', '<h3>General</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Sales Package</td>\r\n   <td>\r\n   <ul>\r\n    <li>Laptop, Battery, Power Adaptor, User Guide, Warranty Documents</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Model Number</td>\r\n   <td>\r\n   <ul>\r\n    <li>MQD32HN/A A1466</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Part Number</td>\r\n   <td>\r\n   <ul>\r\n    <li>MQD32HN/A</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Series</td>\r\n   <td>\r\n   <ul>\r\n    <li>MacBook Air</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Color</td>\r\n   <td>\r\n   <ul>\r\n    <li>Silver</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>Thin and Light Laptop</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Suitable For</td>\r\n   <td>\r\n   <ul>\r\n    <li>Travel & Business, Processing & Multitasking</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Battery Backup</td>\r\n   <td>\r\n   <ul>\r\n    <li>Upto 12 hours</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Power Supply</td>\r\n   <td>\r\n   <ul>\r\n    <li>45 W MagSafe 2 Power Adapter</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>MS Office Provided</td>\r\n   <td>\r\n   <ul>\r\n    <li>No</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Processor And Memory Features</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Processor Brand</td>\r\n   <td>\r\n   <ul>\r\n    <li>Intel</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Processor Name</td>\r\n   <td>\r\n   <ul>\r\n    <li>Core i5</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Processor Generation</td>\r\n   <td>\r\n   <ul>\r\n    <li>5th Gen</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>SSD</td>\r\n   <td>\r\n   <ul>\r\n    <li>Yes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>SSD Capacity</td>\r\n   <td>\r\n   <ul>\r\n    <li>128 GB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>RAM</td>\r\n   <td>\r\n   <ul>\r\n    <li>8 GB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>RAM Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>DDR3</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Clock Speed</td>\r\n   <td>\r\n   <ul>\r\n    <li>1.8 GHz with Turbo Boost Upto 2.9 GHz</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>RAM Frequency</td>\r\n   <td>\r\n   <ul>\r\n    <li>1600 MHz</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Cache</td>\r\n   <td>\r\n   <ul>\r\n    <li>3 MB</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Graphic Processor</td>\r\n   <td>\r\n   <ul>\r\n    <li>Intel Integrated HD 6000</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Operating System</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>OS Architecture</td>\r\n   <td>\r\n   <ul>\r\n    <li>64 bit</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Operating System</td>\r\n   <td>\r\n   <ul>\r\n    <li>Mac OS Sierra</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>System Architecture</td>\r\n   <td>\r\n   <ul>\r\n    <li>64 bit</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Port And Slot Features</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Mic In</td>\r\n   <td>\r\n   <ul>\r\n    <li>Yes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>USB Port</td>\r\n   <td>\r\n   <ul>\r\n    <li>2 x USB 3.0, 2 x Thunderbolt 2.0</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Multi Card Slot</td>\r\n   <td>\r\n   <ul>\r\n    <li>SDXC Card Reader</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Display And Audio Features</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Touchscreen</td>\r\n   <td>\r\n   <ul>\r\n    <li>No</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Screen Size</td>\r\n   <td>\r\n   <ul>\r\n    <li>33.78 cm (13.3 inch)</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Screen Resolution</td>\r\n   <td>\r\n   <ul>\r\n    <li>1440 x 900 Pixel</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Screen Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>HD+ LED Backlit Display</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Speakers</td>\r\n   <td>\r\n   <ul>\r\n    <li>Built-in Speakers</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Internal Mic</td>\r\n   <td>\r\n   <ul>\r\n    <li>Dual Microphones</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Sound Properties</td>\r\n   <td>\r\n   <ul>\r\n    <li>Stereo Speakers</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Connectivity Features</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Wireless LAN</td>\r\n   <td>\r\n   <ul>\r\n    <li>IEEE 802.11ac</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Bluetooth</td>\r\n   <td>\r\n   <ul>\r\n    <li>v4.0</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Dimensions</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Dimensions</td>\r\n   <td>\r\n   <ul>\r\n    <li>325 x 227 x 17 mm</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Weight</td>\r\n   <td>\r\n   <ul>\r\n    <li>1.35 kg</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Additional Features</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Disk Drive</td>\r\n   <td>\r\n   <ul>\r\n    <li>Not Available</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Web Camera</td>\r\n   <td>\r\n   <ul>\r\n    <li>720p FaceTime HD Camera</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Keyboard</td>\r\n   <td>\r\n   <ul>\r\n    <li>Full-size Backlit Keyboard</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Backlit Keyboard</td>\r\n   <td>\r\n   <ul>\r\n    <li>Yes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Pointer Device</td>\r\n   <td>\r\n   <ul>\r\n    <li>Multi-touch Trackpad</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Included Software</td>\r\n   <td>\r\n   <ul>\r\n    <li>Built-in Apps: Siri, Safari, App Store, iMovie, GarageBand, Keynote, FaceTime, iBooks, iTunes</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Additional Features</td>\r\n   <td>\r\n   <ul>\r\n    <li>Lithium Polymer Battery</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n\r\n<h3>Warranty</h3>\r\n\r\n<table border="\\\\\\\\">\r\n <tbody>\r\n  <tr>\r\n   <td>Warranty Summary</td>\r\n   <td>\r\n   <ul>\r\n    <li>1 Year Carry In Warranty</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Warranty Service Type</td>\r\n   <td>\r\n   <ul>\r\n    <li>Carry In</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Covered in Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>Manufacturing Defects</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Not Covered in Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>Physical Damages</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>Domestic Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>1 Year</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n  <tr>\r\n   <td>International Warranty</td>\r\n   <td>\r\n   <ul>\r\n    <li>1 Year</li>\r\n   </ul>\r\n   </td>\r\n  </tr>\r\n </tbody>\r\n</table>\r\n', '02022021123955_3153.png', '02022021123955_31531.png', '', 200, 160, 40, 20, '', 'White/FFFFFF', '', 0, 1, 0, 0, '0', 0, 0, 0, 0, '0', 0, '1612249795', 'Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra) MQD32HN/A A1466  (13.3 inch, Silver, 1.35 kg)', 'Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra) MQD32HN/A A1466  (13.3 inch, Silver, 1.35 kg)', 'Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra) MQD32HN/A A1466  (13.3 inch, Silver, 1.35 kg)', 1);
 /*!40000 ALTER TABLE `tbl_product` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_product_images
 CREATE TABLE IF NOT EXISTS `tbl_product_images` (
@@ -939,6 +1473,7 @@ INSERT INTO `tbl_product_images` (`id`, `parent_id`, `image_file`, `type`, `stat
 	(456, 93, '02022021123955_41773_2.png', 'product', 1);
 /*!40000 ALTER TABLE `tbl_product_images` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_province_ro
 CREATE TABLE IF NOT EXISTS `tbl_province_ro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -946,12 +1481,48 @@ CREATE TABLE IF NOT EXISTS `tbl_province_ro` (
   `name` varchar(100) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table ecommers.tbl_province_ro: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_province_ro: ~34 rows (approximately)
 DELETE FROM `tbl_province_ro`;
 /*!40000 ALTER TABLE `tbl_province_ro` DISABLE KEYS */;
+INSERT INTO `tbl_province_ro` (`id`, `id_ro_province`, `name`, `created_at`) VALUES
+	(1, '1', 'Bali', '2021-04-02 11:36:57'),
+	(2, '2', 'Bangka Belitung', '2021-04-02 11:36:57'),
+	(3, '3', 'Banten', '2021-04-02 11:36:57'),
+	(4, '4', 'Bengkulu', '2021-04-02 11:36:57'),
+	(5, '5', 'DI Yogyakarta', '2021-04-02 11:36:57'),
+	(6, '6', 'DKI Jakarta', '2021-04-02 11:36:57'),
+	(7, '7', 'Gorontalo', '2021-04-02 11:36:57'),
+	(8, '8', 'Jambi', '2021-04-02 11:36:57'),
+	(9, '9', 'Jawa Barat', '2021-04-02 11:36:57'),
+	(10, '10', 'Jawa Tengah', '2021-04-02 11:36:57'),
+	(11, '11', 'Jawa Timur', '2021-04-02 11:36:57'),
+	(12, '12', 'Kalimantan Barat', '2021-04-02 11:36:57'),
+	(13, '13', 'Kalimantan Selatan', '2021-04-02 11:36:57'),
+	(14, '14', 'Kalimantan Tengah', '2021-04-02 11:36:57'),
+	(15, '15', 'Kalimantan Timur', '2021-04-02 11:36:57'),
+	(16, '16', 'Kalimantan Utara', '2021-04-02 11:36:57'),
+	(17, '17', 'Kepulauan Riau', '2021-04-02 11:36:57'),
+	(18, '18', 'Lampung', '2021-04-02 11:36:57'),
+	(19, '19', 'Maluku', '2021-04-02 11:36:57'),
+	(20, '20', 'Maluku Utara', '2021-04-02 11:36:57'),
+	(21, '21', 'Nanggroe Aceh Darussalam (NAD)', '2021-04-02 11:36:57'),
+	(22, '22', 'Nusa Tenggara Barat (NTB)', '2021-04-02 11:36:57'),
+	(23, '23', 'Nusa Tenggara Timur (NTT)', '2021-04-02 11:36:57'),
+	(24, '24', 'Papua', '2021-04-02 11:36:57'),
+	(25, '25', 'Papua Barat', '2021-04-02 11:36:57'),
+	(26, '26', 'Riau', '2021-04-02 11:36:57'),
+	(27, '27', 'Sulawesi Barat', '2021-04-02 11:36:57'),
+	(28, '28', 'Sulawesi Selatan', '2021-04-02 11:36:57'),
+	(29, '29', 'Sulawesi Tengah', '2021-04-02 11:36:57'),
+	(30, '30', 'Sulawesi Tenggara', '2021-04-02 11:36:57'),
+	(31, '31', 'Sulawesi Utara', '2021-04-02 11:36:57'),
+	(32, '32', 'Sumatera Barat', '2021-04-02 11:36:57'),
+	(33, '33', 'Sumatera Selatan', '2021-04-02 11:36:57'),
+	(34, '34', 'Sumatera Utara', '2021-04-02 11:36:57');
 /*!40000 ALTER TABLE `tbl_province_ro` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_rating
 CREATE TABLE IF NOT EXISTS `tbl_rating` (
@@ -970,6 +1541,7 @@ DELETE FROM `tbl_rating`;
 /*!40000 ALTER TABLE `tbl_rating` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_rating` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_recent_viewed
 CREATE TABLE IF NOT EXISTS `tbl_recent_viewed` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
@@ -983,6 +1555,7 @@ CREATE TABLE IF NOT EXISTS `tbl_recent_viewed` (
 DELETE FROM `tbl_recent_viewed`;
 /*!40000 ALTER TABLE `tbl_recent_viewed` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_recent_viewed` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_refund
 CREATE TABLE IF NOT EXISTS `tbl_refund` (
@@ -1014,6 +1587,7 @@ INSERT INTO `tbl_refund` (`id`, `bank_id`, `user_id`, `order_id`, `order_unique_
 	(4, 1, 2, 4, 'ORDN2Flsq00462', 31, 'Skinny Men Black Jeans', 81.2, 40.59, 40.61, 'stripe', 'I can\'t effort this product.', '1612350362', 0, 0, '1612350362'),
 	(5, 1, 2, 5, 'ORDG2LpebG1710', 92, 'Asus ROG Strix G Core i7 9th Gen - (16 GB/512 GB SSD/Windows 10 Home/4 GB Graphics/NVIDIA Geforce GTX 1650) G531GT-AL018T Gaming Laptop  (15.6 inch, B', 240, 234, 6, 'stripe', 'I can\'t effort this product.', '1612416475', 1, 0, '1612350465');
 /*!40000 ALTER TABLE `tbl_refund` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_settings
 CREATE TABLE IF NOT EXISTS `tbl_settings` (
@@ -1077,12 +1651,13 @@ CREATE TABLE IF NOT EXISTS `tbl_settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_settings: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_settings: ~1 rows (approximately)
 DELETE FROM `tbl_settings`;
 /*!40000 ALTER TABLE `tbl_settings` DISABLE KEYS */;
 INSERT INTO `tbl_settings` (`id`, `app_order_email`, `app_name`, `app_email`, `app_version`, `app_logo`, `web_favicon`, `app_author`, `app_contact`, `app_website`, `app_description`, `app_developed_by`, `facebook_url`, `twitter_url`, `youtube_url`, `instagram_url`, `app_privacy_policy`, `app_currency_code`, `app_currency_html_code`, `email_otp_op_status`, `cod_status`, `paypal_status`, `paypal_mode`, `paypal_client_id`, `paypal_secret_key`, `stripe_status`, `stripe_key`, `stripe_secret`, `razorpay_status`, `razorpay_key`, `razorpay_secret`, `razorpay_theme_color`, `google_login_status`, `google_client_id`, `google_secret_key`, `facebook_status`, `facebook_app_id`, `facebook_app_secret`, `home_slider_opt`, `home_brand_opt`, `home_category_opt`, `home_offer_opt`, `home_flase_opt`, `home_latest_opt`, `home_top_rated_opt`, `min_rate`, `home_cat_wise_opt`, `home_recent_opt`, `app_home_slider_opt`, `app_home_brand_opt`, `app_home_category_opt`, `app_home_offer_opt`, `app_home_flase_opt`, `app_home_latest_opt`, `app_home_top_rated_opt`, `app_home_cat_wise_opt`, `app_home_recent_opt`) VALUES
 	(1, 'user.viaviweb@gmail.com', 'Online Shopping CMS', 'user.viaviweb@gmail.com', '1.0.0', '28092020025412_64200.png', '28092020025555_42487.png', 'viaviwebtech', '+91 922 7777 522', 'http://www.viaviweb.com/', '<p>Ecommerce App for Online Selling Product | Add to Cart | Ecommerce Script | Checkout With Payment Gateway | Paypal Payment Mode | Stripe Payment Mode | Razorpay Payment Mode</p>\r\n\r\n<p>Website: <a href="http://www.viaviweb.com">www.viaviweb.com</a></p>\r\n\r\n<p>We also develop custom applications, if you need any kind of custom application contact us on given Email or Contact No.</p>\r\n\r\n<p><strong>Email:</strong> viaviwebtech@gmail.com<br>\r\n<strong>WhatsApp:</strong> +919227777522<br>\r\n<strong>Website:</strong> <a href="http://www.viaviweb.com">www.viaviweb.com</a></p>\r\n', 'Viavi Webtech', 'https://www.facebook.com/viaviwebtech', 'https://twitter.com/viaviwebtech', 'https://www.youtube.com/viaviwebtech', 'https://www.instagram.com/viaviwebtech/', '<p><strong>We are committed to protecting your privacy</strong></p>\n\n<p>We collect the minimum amount of information about you that is commensurate with providing you with a satisfactory service. This policy indicates the type of processes that may result in data being collected about you. Your use of this website gives us the right to collect that information.&nbsp;</p>\n\n<p><strong>Information Collected</strong></p>\n\n<p>We may collect any or all of the information that you give us depending on the type of transaction you enter into, including your name, address, telephone number, and email address, together with data about your use of the website. Other information that may be needed from time to time to process a request may also be collected as indicated on the website.</p>\n\n<p><strong>Information Use</strong></p>\n\n<p>We use the information collected primarily to process the task for which you visited the website. Data collected in the UK is held in accordance with the Data Protection Act. All reasonable precautions are taken to prevent unauthorised access to this information. This safeguard may require you to provide additional forms of identity should you wish to obtain information about your account details.</p>\n\n<p><strong>Cookies</strong></p>\n\n<p>Your Internet browser has the in-built facility for storing small files - &quot;cookies&quot; - that hold information which allows a website to recognise your account. Our website takes advantage of this facility to enhance your experience. You have the ability to prevent your computer from accepting cookies but, if you do, certain functionality on the website may be impaired.</p>\n\n<p><strong>Disclosing Information</strong></p>\n\n<p>We do not disclose any personal information obtained about you from this website to third parties unless you permit us to do so by ticking the relevant boxes in registration or competition forms. We may also use the information to keep in contact with you and inform you of developments associated with us. You will be given the opportunity to remove yourself from any mailing list or similar device. If at any time in the future we should wish to disclose information collected on this website to any third party, it would only be with your knowledge and consent.&nbsp;</p>\n\n<p>We may from time to time provide information of a general nature to third parties - for example, the number of individuals visiting our website or completing a registration form, but we will not use any information that could identify those individuals.&nbsp;</p>\n\n<p>In addition Dummy may work with third parties for the purpose of delivering targeted behavioural advertising to the Dummy website. Through the use of cookies, anonymous information about your use of our websites and other websites will be used to provide more relevant adverts about goods and services of interest to you. For more information on online behavioural advertising and about how to turn this feature off, please visit youronlinechoices.com/opt-out.</p>\n\n<p><strong>Changes to this Policy</strong></p>\n\n<p>Any changes to our Privacy Policy will be placed here and will supersede this version of our policy. We will take reasonable steps to draw your attention to any changes in our policy. However, to be on the safe side, we suggest that you read this document each time you use the website to ensure that it still meets with your approval.</p>\n\n<p><strong>Contacting Us</strong></p>\n\n<p>If you have any questions about our Privacy Policy, or if you want to know what information we have collected about you, please email us at hd@dummy.com. You can also correct any factual errors in that information or require us to remove your details form any list under our control.</p>\n', 'INR', 'Rs.', 'true', 'true', 'false', 'sandbox', '', '', 'false', '', '', 'false', '', '', 'FF5252', 'false', '', '', 'false', '', '', 'true', 'true', 'true', 'true', 'true', 'true', 'true', 3, 'true', 'true', 'true', 'true', 'true', 'true', 'true', 'true', 'true', 'true', 'true');
 /*!40000 ALTER TABLE `tbl_settings` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_smtp_settings
 CREATE TABLE IF NOT EXISTS `tbl_smtp_settings` (
@@ -1102,12 +1677,13 @@ CREATE TABLE IF NOT EXISTS `tbl_smtp_settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_smtp_settings: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_smtp_settings: ~1 rows (approximately)
 DELETE FROM `tbl_smtp_settings`;
 /*!40000 ALTER TABLE `tbl_smtp_settings` DISABLE KEYS */;
 INSERT INTO `tbl_smtp_settings` (`id`, `smtp_library`, `smtp_type`, `smtp_host`, `smtp_email`, `smtp_password`, `smtp_secure`, `port_no`, `smtp_ghost`, `smtp_gemail`, `smtp_gpassword`, `smtp_gsecure`, `gport_no`) VALUES
 	(1, 'ci', 'gmail', 'ssl://smtp.gmail.com', 'emailuntukproject@gmail.com', '@project123', 'tls', '465', 'smtp.gmail.com', 'emailuntukproject@gmail.com', '@project123', 'ssl', 465);
 /*!40000 ALTER TABLE `tbl_smtp_settings` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_status_title
 CREATE TABLE IF NOT EXISTS `tbl_status_title` (
@@ -1127,6 +1703,7 @@ INSERT INTO `tbl_status_title` (`id`, `title`, `status`) VALUES
 	(4, 'Delivered', 1),
 	(5, 'Cancelled', 1);
 /*!40000 ALTER TABLE `tbl_status_title` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_sub_category
 CREATE TABLE IF NOT EXISTS `tbl_sub_category` (
@@ -1166,6 +1743,7 @@ INSERT INTO `tbl_sub_category` (`id`, `category_id`, `sub_category_name`, `sub_c
 	(27, 11, 'Hair Care And Accessory', 'hair-care-and-accessory', '23012020050156_59241.jpg', '1579779116', 1, 1);
 /*!40000 ALTER TABLE `tbl_sub_category` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_transaction
 CREATE TABLE IF NOT EXISTS `tbl_transaction` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1186,6 +1764,7 @@ CREATE TABLE IF NOT EXISTS `tbl_transaction` (
 DELETE FROM `tbl_transaction`;
 /*!40000 ALTER TABLE `tbl_transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_transaction` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_users
 CREATE TABLE IF NOT EXISTS `tbl_users` (
@@ -1212,6 +1791,7 @@ INSERT INTO `tbl_users` (`id`, `user_type`, `user_name`, `user_email`, `user_pho
 	(1, 'Normal', 'ari', 'yohanes.ari90@gmail.com', '082112585009', '4adc0949994563e8028a0291a26465da', '', '', '0', '1617248855', NULL, 'web', 1);
 /*!40000 ALTER TABLE `tbl_users` ENABLE KEYS */;
 
+
 -- Dumping structure for table ecommers.tbl_verify
 CREATE TABLE IF NOT EXISTS `tbl_verify` (
   `id` int(2) NOT NULL AUTO_INCREMENT,
@@ -1228,12 +1808,13 @@ CREATE TABLE IF NOT EXISTS `tbl_verify` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_verify: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_verify: ~1 rows (approximately)
 DELETE FROM `tbl_verify`;
 /*!40000 ALTER TABLE `tbl_verify` DISABLE KEYS */;
 INSERT INTO `tbl_verify` (`id`, `web_envato_buyer_name`, `web_envato_purchase_code`, `web_envato_buyer_email`, `web_url`, `web_envato_purchased_status`, `android_envato_buyer_name`, `android_envato_purchase_code`, `android_envato_buyer_email`, `package_name`, `android_envato_purchased_status`) VALUES
 	(1, 'ivanbethan', '4cd8e204-e3c5-4793-8b13-4c825cce771b', '-', '', 1, 'ivanbethan', '', '-', 'com.example.ecommerceapp', 0);
 /*!40000 ALTER TABLE `tbl_verify` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_verify_code
 CREATE TABLE IF NOT EXISTS `tbl_verify_code` (
@@ -1252,6 +1833,7 @@ INSERT INTO `tbl_verify_code` (`id`, `user_email`, `verify_code`, `created_at`, 
 	(1, 'yohanes.warindyo@gmail.com', '4385', '1617247965', 0),
 	(2, 'yohanes.ari90@gmail.com', '3632', '1617248832', 1);
 /*!40000 ALTER TABLE `tbl_verify_code` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_web_settings
 CREATE TABLE IF NOT EXISTS `tbl_web_settings` (
@@ -1308,15 +1890,18 @@ CREATE TABLE IF NOT EXISTS `tbl_web_settings` (
   `g_captcha_site_key` text NOT NULL,
   `g_captcha_secret_key` text NOT NULL,
   `is_raja_ongkir` tinyint(4) NOT NULL DEFAULT 1,
+  `url_rajaongkir` varchar(255) NOT NULL,
+  `key_rajaongkir` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Dumping data for table ecommers.tbl_web_settings: ~0 rows (approximately)
+-- Dumping data for table ecommers.tbl_web_settings: ~1 rows (approximately)
 DELETE FROM `tbl_web_settings`;
 /*!40000 ALTER TABLE `tbl_web_settings` DISABLE KEYS */;
-INSERT INTO `tbl_web_settings` (`id`, `site_name`, `site_description`, `site_keywords`, `copyright_text`, `web_logo_1`, `web_logo_2`, `web_favicon`, `about_page_title`, `about_content`, `about_status`, `faq_content`, `privacy_page_title`, `privacy_content`, `privacy_page_status`, `terms_of_use_page_title`, `terms_of_use_content`, `terms_of_use_page_status`, `refund_return_policy_page_title`, `refund_return_policy`, `refund_return_policy_status`, `cancellation_page_title`, `cancellation_content`, `cancellation_page_status`, `payments_page_title`, `payments_content`, `payments_page_status`, `contact_page_title`, `address`, `id_ro_subdistrict`, `subdistrict`, `id_ro_district`, `district`, `id_ro_city`, `city`, `id_ro_province`, `province`, `pcode`, `contact_number`, `contact_email`, `home_ad`, `home_banner_ad`, `product_ad`, `product_banner_ad`, `android_app_url`, `ios_app_url`, `header_code`, `footer_code`, `libraries_load_from`, `g_captcha`, `g_captcha_site_key`, `g_captcha_secret_key`, `is_raja_ongkir`) VALUES
-	(1, 'Online Shopping CMS (eCommerce System,  eCommerce Marketplace, Buy, Sell, PayPal, Stripe, Razorpay, COD)', 'Ecommerce App is Best Script for Online Selling Product | Add to Cart | Ecommerce Script | Checkout With Payment Gateway | Paypal Payment Mode | Stripe Payment Mode | Razorpay Payment Mode', 'Online Shopping CMS,eCommerce System, PayPal, Stripe,Razorpay,COD,Checkout With Payment Gateway', 'Copyright © 2021 <a href="http://www.viaviweb.com" target="_blank">Viaviweb.com</a>. All Rights Reserved.', '28092020034501_21635.png', '28092020034819_672312.png', '28092020025610_50141.png', 'About Us', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', '<h3>1) What kind of customer service do you offer?</h3>\r\n\r\n<p>Our ecommerce consultants are here to answer your questions. In addition to FREE phone support, you can contact our consultants via email or live chat.</p>\r\n\r\n<h3>2) Can I build my new Ecommerce site while my other website is still live?</h3>\r\n\r\n<p>Yes! When you purchase one of our ecommerce solutions you will get a standard 3rd level domain to use while you are building your new website. When you are ready to begin hosting your new online store, you simply change your DNS settings to point your existing domain name to your new site.</p>\r\n\r\n<h3>3) Can I use my own domain name?</h3>\r\n\r\n<p>Absolutely! Simply point your domain directly to your new Network Solutions Ecommerce. You do not need to use a subdomain or any other temporary domain name placeholder.</p>\r\n\r\n<h3>4) Are there any system requirements?</h3>\r\n\r\n<p>To access your Ecommerce control panel, you must have Internet access and use a JavaScript enabled browser. The newest version of Internet Explorer, Firefox, Safari or Chrome are recommended.</p>\r\n', 'Privacy', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', 'Terms of Use', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n\r\n<p> </p>\r\n', 'true', 'Refund Return Policy', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', 'Cancellation Policy', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', '', '', 'true', 'Contact Us', '3rd floor, Shyam Complex, Parivar Park, Near Mayani Chowk, Rajkot - 360005', '', 'Manggarai', '', 'Tebet', '', 'Jakarta Selatan', '', 'DKI Jakarta', '1098', '+91 922 7777 522', 'info@viaviweb.com', 'false', '', 'false', '', 'https://play.google.com/store/apps/dev?id=7157478532572017100', 'https://apps.apple.com/in/developer/vishal-pamar/id1141291247', '', '', 'local', 'false', '', '', 1);
+INSERT INTO `tbl_web_settings` (`id`, `site_name`, `site_description`, `site_keywords`, `copyright_text`, `web_logo_1`, `web_logo_2`, `web_favicon`, `about_page_title`, `about_content`, `about_status`, `faq_content`, `privacy_page_title`, `privacy_content`, `privacy_page_status`, `terms_of_use_page_title`, `terms_of_use_content`, `terms_of_use_page_status`, `refund_return_policy_page_title`, `refund_return_policy`, `refund_return_policy_status`, `cancellation_page_title`, `cancellation_content`, `cancellation_page_status`, `payments_page_title`, `payments_content`, `payments_page_status`, `contact_page_title`, `address`, `id_ro_subdistrict`, `subdistrict`, `id_ro_district`, `district`, `id_ro_city`, `city`, `id_ro_province`, `province`, `pcode`, `contact_number`, `contact_email`, `home_ad`, `home_banner_ad`, `product_ad`, `product_banner_ad`, `android_app_url`, `ios_app_url`, `header_code`, `footer_code`, `libraries_load_from`, `g_captcha`, `g_captcha_site_key`, `g_captcha_secret_key`, `is_raja_ongkir`, `url_rajaongkir`, `key_rajaongkir`) VALUES
+	(1, 'Online Shopping CMS (eCommerce System,  eCommerce Marketplace, Buy, Sell, PayPal, Stripe, Razorpay, COD)', 'Ecommerce App is Best Script for Online Selling Product | Add to Cart | Ecommerce Script | Checkout With Payment Gateway | Paypal Payment Mode | Stripe Payment Mode | Razorpay Payment Mode', 'Online Shopping CMS,eCommerce System, PayPal, Stripe,Razorpay,COD,Checkout With Payment Gateway', 'Copyright © 2021 <a href="http://www.viaviweb.com" target="_blank">Viaviweb.com</a>. All Rights Reserved.', '28092020034501_21635.png', '28092020034819_672312.png', '28092020025610_50141.png', 'About Us', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', '<h3>1) What kind of customer service do you offer?</h3>\r\n\r\n<p>Our ecommerce consultants are here to answer your questions. In addition to FREE phone support, you can contact our consultants via email or live chat.</p>\r\n\r\n<h3>2) Can I build my new Ecommerce site while my other website is still live?</h3>\r\n\r\n<p>Yes! When you purchase one of our ecommerce solutions you will get a standard 3rd level domain to use while you are building your new website. When you are ready to begin hosting your new online store, you simply change your DNS settings to point your existing domain name to your new site.</p>\r\n\r\n<h3>3) Can I use my own domain name?</h3>\r\n\r\n<p>Absolutely! Simply point your domain directly to your new Network Solutions Ecommerce. You do not need to use a subdomain or any other temporary domain name placeholder.</p>\r\n\r\n<h3>4) Are there any system requirements?</h3>\r\n\r\n<p>To access your Ecommerce control panel, you must have Internet access and use a JavaScript enabled browser. The newest version of Internet Explorer, Firefox, Safari or Chrome are recommended.</p>\r\n', 'Privacy', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', 'Terms of Use', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n\r\n<p> </p>\r\n', 'true', 'Refund Return Policy', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', 'Cancellation Policy', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n\r\n<h2>Where does it come from?</h2>\r\n\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>\r\n', 'true', '', '', 'true', 'Contact Us', '3rd floor, Shyam Complex, Parivar Park, Near Mayani Chowk, Rajkot - 360005', '', '', '', '', '153', 'Jakarta Selatan', '6', 'DKI Jakarta', '12230', '+91 922 7777 522', 'info@viaviweb.com', 'false', '', 'false', '', 'https://play.google.com/store/apps/dev?id=7157478532572017100', 'https://apps.apple.com/in/developer/vishal-pamar/id1141291247', '', '', 'local', 'false', '', '', 1, 'adad', 'dada');
 /*!40000 ALTER TABLE `tbl_web_settings` ENABLE KEYS */;
+
 
 -- Dumping structure for table ecommers.tbl_wishlist
 CREATE TABLE IF NOT EXISTS `tbl_wishlist` (
@@ -1331,7 +1916,6 @@ CREATE TABLE IF NOT EXISTS `tbl_wishlist` (
 DELETE FROM `tbl_wishlist`;
 /*!40000 ALTER TABLE `tbl_wishlist` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_wishlist` ENABLE KEYS */;
-
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
