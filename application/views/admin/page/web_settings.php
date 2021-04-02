@@ -175,7 +175,30 @@
 
                         </div>
                         <div class="col-md-2">
-                          <button type="button" id="btnsyncro" onclick="clicksyncro()" class="btn btn-info">Sync Data Raja Ongkir</button>
+
+                        </div>
+                      </div>
+                      <br />
+                      <div class="container-fluid rajaongkir">
+                        <div style="border: 1px solid #ccc;padding:10px">
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">Url :-</label>
+                            <div class="col-md-6">
+                              <input type="text" name="url_rajaongkir" id="url_rajaongkir" value='<?php echo $web_settings_row->url_rajaongkir; ?>' class="form-control" required="required">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-md-4 control-label"><?= $this->lang->line('paypal_client_id_lbl') ?> :-</label>
+                            <div class="col-md-6">
+                              <input type="text" name="key_rajaongkir" id="key_rajaongkir" value='<?php echo $web_settings_row->key_rajaongkir; ?>' class="form-control" required="required">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-md-4 control-label"></label>
+                            <div class="col-md-6">
+                              <button type="button" id="btnsyncro" onclick="clicksyncro()" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Sync" class="btn btn-info btn-sm">Sync Data Raja Ongkir</button>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
@@ -337,31 +360,23 @@
                           <input type="text" name="address" id="address" value="<?php echo $web_settings_row->address; ?>" class="form-control">
                         </div>
                       </div>
-
-                      <div class="form-group">
-                        <label class="col-md-3 control-label"><?= $this->lang->line('web_address_subdistric_lbl') ?>:-</label>
-                        <div class="col-md-4">
-                          <input type="text" name="web_subdistric" id="web_subdistric" value="<?php echo $web_settings_row->subdistrict; ?>" class="form-control" required="required">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-md-3 control-label"><?= $this->lang->line('web_address_distric_lbl') ?>:-</label>
-                        <div class="col-md-4">
-                          <input type="text" name="web_distric" id="web_distric" value="<?php echo $web_settings_row->district; ?>" class="form-control" required="required">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-md-3 control-label"><?= $this->lang->line('web_address_city_lbl') ?>:-</label>
-                        <div class="col-md-4">
-                          <input type="text" name="web_city" id="web_city" value="<?php echo $web_settings_row->city; ?>" class="form-control" required="required">
-                        </div>
-                      </div>
                       <div class="form-group">
                         <label class="col-md-3 control-label"><?= $this->lang->line('web_address_province_lbl') ?>:-</label>
                         <div class="col-md-4">
+                          <input type="hidden" id="id_web_province" name="id_web_province" value="<?php echo $web_settings_row->id_ro_province; ?>">
                           <input type="text" name="web_province" id="web_province" value="<?php echo $web_settings_row->province; ?>" class="form-control" required="required">
                         </div>
                       </div>
+
+                      <div class="form-group">
+                        <label class="col-md-3 control-label"><?= $this->lang->line('web_address_city_lbl') . "/" . $this->lang->line('web_address_distric_lbl') ?>:-</label>
+                        <div class="col-md-4">
+                          <input type="hidden" id="id_web_city" name="id_web_city" value="<?php echo $web_settings_row->id_ro_city; ?>">
+                          <input type="text" name="web_city" id="web_city" value="<?php echo $web_settings_row->city; ?>" class="form-control" required="required">
+                        </div>
+                      </div>
+
+
                       <div class="form-group">
                         <label class="col-md-3 control-label"><?= $this->lang->line('web_address_pcode_lbl') ?>:-</label>
                         <div class="col-md-4">
@@ -727,6 +742,102 @@
 <!-- End -->
 
 <script type="text/javascript">
+  $(document).ready(function() {
+    $("#web_province").autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: "<?= base_url() ?>admin/getprovinceautocomplete",
+          data: {
+            "searchTerm": request.term,
+
+          },
+          datatype: "json",
+          type: "GET",
+          success: function(data) {
+            if (data.total == 0) {
+
+              var result = [{
+                label: 'No matches found',
+                value: response.term
+              }];
+              response(result);
+              $("#btnsubmiteventmember").attr("disabled", true);
+            } else {
+              $("#btnsubmiteventmember").attr("disabled", false);
+              response($.map(JSON.parse(data), function(item) {
+                return item;
+              }))
+            }
+
+          },
+          error: function(response) {
+            alert(response.responseText);
+          },
+          failure: function(response) {
+            alert(response.responseText);
+          }
+        });
+      },
+      select: function(e, i) {
+        $("#id_web_province").val(i.item.val);
+
+
+      },
+      minLength: 3
+    });
+
+    $("#web_city").autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: "<?= base_url() ?>admin/getcityautocomplete",
+          data: {
+            "searchTerm": request.term,
+            "id_province": $("#id_web_province").val()
+          },
+          datatype: "json",
+          type: "GET",
+          success: function(data) {
+            if (data.total == 0) {
+
+              var result = [{
+                label: 'No matches found',
+                value: response.term
+              }];
+              response(result);
+
+            } else {
+
+              response($.map(JSON.parse(data), function(item) {
+                return item;
+              }))
+            }
+
+          },
+          error: function(response) {
+            alert(response.responseText);
+          },
+          failure: function(response) {
+            alert(response.responseText);
+          }
+        });
+      },
+      select: function(e, i) {
+        $("#id_web_city").val(i.item.val);
+        $("#web_pcode").val(i.item.postal_code);
+      },
+      minLength: 3
+    });
+    $("#cbx_is_raja_ongkir").on("change", function() {
+
+      if (this.checked) {
+        $(".rajaongkir").fadeIn("slow");
+
+      } else {
+        $(".rajaongkir").fadeOut("slow");
+      }
+    });
+  });
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -807,14 +918,20 @@
     $.ajax({
       type: 'GET',
       url: href,
+      beforeSend: function() {
+        $('#btnsyncro').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').attr('disabled', true);
+
+      },
       success: function(res) {
+        $('#btnsyncro').html('Sync Data Raja Ongkir').attr('disabled', false);
         if ($.trim(res) == 'success') {
           swal({
-            title: "<?= $this->lang->line('deleted_lbl') ?>",
-            text: "<?= $this->lang->line('deleted_data_lbl') ?>",
+            title: "Success",
+            text: "Sync Raja Ongkir Success",
             type: "success"
           }, function() {
-            $(btn).closest('.item_holder').fadeOut("200");
+            swal.close()
+            // $(btn).closest('.item_holder').fadeOut("200");
           });
         } else {
           swal.close();

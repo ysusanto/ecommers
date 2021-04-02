@@ -1278,6 +1278,7 @@ class Site extends CI_Controller
 
         $data['page_title'] = $this->lang->line('shoppingcart_lbl');
         $data['current_page'] = $this->lang->line('shoppingcart_lbl');
+        $data["is_rajaongkir"] = $this->Setting_model->get_web_details()->is_raja_ongkir;
         $data['my_cart'] = $this->api_model->get_cart($this->user_id);
         $this->template->load('site/template2', 'site/pages/my_cart', $data);
     }
@@ -1383,7 +1384,7 @@ class Site extends CI_Controller
         $data['my_cart'] = $this->api_model->get_cart($this->user_id, '', '', '', array('cart_status' => 1));
         $data['addresses'] = $this->common_model->get_addresses($this->user_id);
         $data['buy_now'] = 'false';
-
+        $data["is_rajaongkir"] = $this->Setting_model->get_web_details()->is_raja_ongkir;
         $where = array('user_id' => $this->user_id, 'cart_type' => 'main_cart');
 
         $rowCoupon = $this->common_model->selectByids($where, 'tbl_applied_coupon');

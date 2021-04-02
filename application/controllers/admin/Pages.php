@@ -1123,6 +1123,8 @@ class Pages extends CI_Controller
                     'header_code'  =>  htmlentities(trim($this->input->post('header_code'))),
                     'footer_code'  =>  htmlentities(trim($this->input->post('footer_code'))),
                     'is_raja_ongkir'  =>  trim($this->input->post('is_raja_ongkir')) == "true" ? 1 : 0,
+                    'url_rajaongkir'  =>  trim($this->input->post('url_rajaongkir')),
+                    'key_rajaongkir'  =>  trim($this->input->post('key_rajaongkir')),
                 );
 
                 if ($_FILES['web_logo_1']['error'] != 4) {
@@ -1388,7 +1390,9 @@ class Pages extends CI_Controller
                     'address'  => trim($this->input->post('address')),
                     'subdistrict'  => trim($this->input->post('web_subdistric')),
                     'district'  => trim($this->input->post('web_distric')),
+                    'id_ro_city' => trim($this->input->post('id_web_city')),
                     'city'  => trim($this->input->post('web_city')),
+                    'id_ro_province' => trim($this->input->post('id_web_province')),
                     'province'  => trim($this->input->post('web_province')),
                     'pcode'  => trim($this->input->post('web_pcode')),
                     'contact_number'  => trim($this->input->post('contact_number')),

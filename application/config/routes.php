@@ -134,7 +134,10 @@ $route['admin/logout'] = 'auth/logout';
 $route['admin/login'] = 'auth/login';
 $route['admin/forgot_passoword_form'] = 'auth/forgot_password_form';
 $route['admin/forgot-password'] = 'auth/forgot_password';
+
 $route['admin/syncdataro'] = 'admin/shipping/syncdataro';
+$route['admin/getprovinceautocomplete']= 'admin/shipping/getprovinceautocomplete';
+$route['admin/getcityautocomplete'] = 'admin/shipping/getcityautocomplete';
 
 $route['admin'] = 'auth';
 
