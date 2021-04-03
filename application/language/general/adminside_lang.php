@@ -131,6 +131,8 @@ $lang['settings_lbl'] = "Settings";
 $lang['android_app_lbl'] = "Android App";
 
 $lang['home_content_lbl'] = "Web/App Home Content";
+$lang['shipping_content_lbl'] = "Shipping";
+
 
 $lang['section_title_lbl'] = "Section Title";
 $lang['for_web_lbl'] = "For Website";

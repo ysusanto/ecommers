@@ -14,7 +14,7 @@ class Pages extends CI_Controller
         $this->load->model('Setting_model');
         $this->load->model('common_model');
         $this->load->model('Api_model', 'api_model');
-
+        $this->load->model('Shipping_model');
         $app_setting = $this->api_model->app_details();
 
         $this->app_name = $app_setting->app_name;
@@ -319,7 +319,8 @@ class Pages extends CI_Controller
 
         $data['category_list'] = $this->api_model->category_list();
         $data['home_category'] = $this->common_model->selectByids(array('set_on_home' => 1), 'tbl_category');
-
+        $data["is_rajaongkir"] = $this->Setting_model->get_web_details()->is_raja_ongkir;
+        $data["courier"] = $this->Shipping_model->get_list_Courier();
         $data["redirectUrl"] = $this->redirectUrl;
 
         $this->template->load('admin/template', 'admin/page/settings', $data); // :blush:

@@ -179,4 +179,46 @@ class Shipping_model extends CI_Model
         $this->db->order_by($sortBy, $sort);
         return $this->db->get()->result();
     }
+    public function get_list_Courier()
+    {
+        $list_courier = array();
+        $get_mst_courier = $this->get_mst_courier("0");
+        if (count($get_mst_courier) > 0) {
+            foreach ($get_mst_courier as $value) {
+                # code...
+                $list_child = array();
+                $get_mst_child = $this->get_mst_courier($value->id);
+                if (count($get_mst_child) > 0) {
+                    foreach ($get_mst_child as $v) {
+                        # code...
+                        $child = array(
+                            "id" => $v->id,
+                            "name" => $v->name,
+                            "code"=>$v->code
+                        );
+                        array_push($list_child, $child);
+                    }
+                } else {
+                    continue;
+                }
+                $mst = array(
+                    "id" => $value->id,
+                    "name" => $value->name,
+                    "code"=>$value->code,
+                    "child"=>$list_child
+                );
+                array_push($list_courier, $mst);
+            }
+        }
+        return $list_courier;
+    }
+    public function get_mst_courier($parent)
+    {
+        $order = $parent == "0" ? "name" : "id";
+        $this->db->select('*');
+        $this->db->from('tbl_mst_courier');
+        $this->db->where('parent', $parent);
+        $this->db->order_by($order, "asc");
+        return $this->db->get()->result();
+    }
 }
