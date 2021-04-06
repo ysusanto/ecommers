@@ -884,7 +884,6 @@ foreach ($home_category as $key => $value) {
                                             </li>
                                         <?php    }
                                         } ?>
-
                                       </ul>
                                     </div>
                                   </div>
