@@ -1,12 +1,12 @@
 // Doument ready stage
-$(window).on("load",function() {
+$(window).on("load", function() {
     // Animate loader off screen
     $(".se-pre-con").fadeOut("slow");
 });
 
 function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
-    if (charCode != 43 && charCode > 31 && (charCode < 48 || charCode > 57)){
+    if (charCode != 43 && charCode > 31 && (charCode < 48 || charCode > 57)) {
         return false;
     }
     return true;
@@ -20,9 +20,9 @@ $(document).ready(function(event) {
 
     // for search form
 
-    $("#search_form").on("submit",function(e){
-        if($(this).find("select").val()==''){
-            $(this).find("select").attr("disabled",true);
+    $("#search_form").on("submit", function(e) {
+        if ($(this).find("select").val() == '') {
+            $(this).find("select").attr("disabled", true);
         }
     });
 
@@ -34,12 +34,12 @@ $(document).ready(function(event) {
 
     // end search form
 
-    $(".unavailable_override").hover(function(event){
-      $(this).parent(".single-product3").hover();
-  });
+    $(".unavailable_override").hover(function(event) {
+        $(this).parent(".single-product3").hover();
+    });
 
     // add to cart
-    $(".btn_cart").on("click",function(e) {
+    $(".btn_cart").on("click", function(e) {
         e.preventDefault();
         var btn = $(this);
         var _id = $(this).data("id");
@@ -49,7 +49,9 @@ $(document).ready(function(event) {
 
         $.ajax({
             url: href,
-            data: {"product_id": _id},
+            data: {
+                "product_id": _id
+            },
             type: 'post',
             success: function(res) {
                 if ($.trim(res) == 'login_now') {
@@ -60,39 +62,40 @@ $(document).ready(function(event) {
                     $("#cartModal .modal-body").html(obj.html_code);
                     $("#cartModal").modal("show");
 
-                    $('.radio-group .radio_btn').on("click",function() {
+                    $('.radio-group .radio_btn').on("click", function() {
                         $(this).parent().find('.radio_btn').removeClass('selected');
                         $(this).addClass('selected');
                         var val = $(this).attr('data-value');
                         $(this).parent().find('input').val(val);
                     });
 
-                    var max_unit_buy=$(".quantity").find(".max_unit_buy").val();
+                    var max_unit_buy = $(".quantity").find(".max_unit_buy").val();
 
                     $(".plus").on("click", function(event) {
 
                         var qty = parseInt($(this).parents().parents(".quantity").find(".product_qty").val());
 
-                        if(qty <= 0){
+                        if (qty <= 0) {
                             $(this).parents().parents(".quantity").find(".product_qty").val(1);
-                        }
-                        else{
-                            qty=qty+1;
+                        } else {
+                            qty = qty + 1;
 
-                            if(qty > max_unit_buy){
+                            if (qty > max_unit_buy) {
 
-                                var limit_items=Settings.err_cart_item_buy;
+                                var limit_items = Settings.err_cart_item_buy;
 
                                 $('.notifyjs-corner').empty();
-                                $.notify(limit_items.replace("###", $(".max_unit_buy").val()), { position:"top center",className: 'error' }); 
+                                $.notify(limit_items.replace("###", $(".max_unit_buy").val()), {
+                                    position: "top center",
+                                    className: 'error'
+                                });
 
-                                $(this).parents().parents(".quantity").find(".product_qty").val(max_unit_buy);  
-                            }
-                            else{
+                                $(this).parents().parents(".quantity").find(".product_qty").val(max_unit_buy);
+                            } else {
 
                                 $("#buy_now_form").find("input[name='qty']").val(qty);
 
-                                $(this).parents().parents(".quantity").find(".product_qty").val(qty);   
+                                $(this).parents().parents(".quantity").find(".product_qty").val(qty);
                             }
                         }
                     });
@@ -101,13 +104,12 @@ $(document).ready(function(event) {
 
                         var qty = parseInt($(this).parents().parents(".quantity").find(".product_qty").val());
 
-                        qty=qty-1;
+                        qty = qty - 1;
 
-                        if(qty <= 0){
+                        if (qty <= 0) {
                             $("#buy_now_form").find("input[name='qty']").val(1);
                             $(this).parents().parents(".quantity").find(".product_qty").val(1);
-                        }
-                        else{
+                        } else {
                             $("#buy_now_form").find("input[name='qty']").val(qty);
                             $(this).parents().parents(".quantity").find(".product_qty").val(qty);
                         }
@@ -115,24 +117,22 @@ $(document).ready(function(event) {
 
                     // for size chart modal open
 
-                    $(".size_chart").click(function(e){
+                    $(".size_chart").click(function(e) {
                         e.preventDefault();
                         $(".size_chart_img").hide();
                         $(".no_data").hide();
 
-                        if($(this).data("img")==''){
+                        if ($(this).data("img") == '') {
                             $(".no_data").show();
-                        }
-                        else{
+                        } else {
                             $(".size_chart_img").show();
-                            $(".size_chart_img").attr("src",$(this).data("img"));
+                            $(".size_chart_img").attr("src", $(this).data("img"));
                         }
-                        
+
                         $("#size_chart").modal("show")
                     });
 
-                    $("#cartForm").submit(function(event) 
-                    {
+                    $("#cartForm").submit(function(event) {
                         event.preventDefault();
                         $(".process_loader").show();
 
@@ -140,16 +140,86 @@ $(document).ready(function(event) {
                         var _form = $(this);
 
                         $.ajax({
+                                type: 'POST',
+                                url: base_url + 'site/add_to_cart',
+                                data: formData
+                            })
+                            .done(function(response) {
+
+                                var res = $.parseJSON(response);
+                                $(".process_loader").hide();
+                                $("#cartModal").modal("hide");
+                                if (res.success == '1') {
+                                    swal({
+                                        title: res.lbl_title,
+                                        text: res.msg,
+                                        type: "success"
+                                    }, function() {
+                                        location.reload();
+                                    });
+                                } else {
+                                    swal({
+                                        title: Settings.err_something_went_wrong,
+                                        text: res.msg,
+                                        type: "error"
+                                    }, function() {
+                                        location.reload();
+                                    });
+                                }
+                            })
+                            .fail(function(response) {
+                                $(".process_loader").hide();
+                                swal({
+                                    title: Settings.err_something_went_wrong,
+                                    text: res.msg,
+                                    type: "error"
+                                }, function() {
+                                    location.reload();
+                                });
+                            });
+
+                    });
+
+                }
+            },
+            error: function(res) {
+                swal({
+                    title: Settings.err_something_went_wrong,
+                    text: res,
+                    type: "error"
+                });
+            }
+        });
+    });
+
+    $(".btn_remove_cart").on("click", function(e) {
+        e.preventDefault();
+        var href = $(this).attr("href");
+
+        swal({
+                title: Settings.confirm_msg,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                cancelButtonClass: "btn-warning",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
                             type: 'POST',
-                            url: base_url + 'site/add_to_cart',
-                            data: formData
+                            url: href
                         })
                         .done(function(response) {
 
                             var res = $.parseJSON(response);
                             $(".process_loader").hide();
-                            $("#cartModal").modal("hide");
-                            if(res.success == '1') {
+                            if (res.success == '1') {
                                 swal({
                                     title: res.lbl_title,
                                     text: res.msg,
@@ -157,8 +227,7 @@ $(document).ready(function(event) {
                                 }, function() {
                                     location.reload();
                                 });
-                            }
-                            else{
+                            } else {
                                 swal({
                                     title: Settings.err_something_went_wrong,
                                     text: res.msg,
@@ -167,95 +236,29 @@ $(document).ready(function(event) {
                                     location.reload();
                                 });
                             }
+
                         })
                         .fail(function(response) {
                             $(".process_loader").hide();
                             swal({
                                 title: Settings.err_something_went_wrong,
-                                text: res.msg,
+                                text: response,
                                 type: "error"
                             }, function() {
                                 location.reload();
                             });
                         });
 
-                    });
-
+                } else {
+                    swal.close();
                 }
-            },
-            error: function(res) {
-                swal({title: Settings.err_something_went_wrong,text: res,type: "error"});
-            }
-        });
-    });
-
-    $(".btn_remove_cart").on("click",function(e) {
-        e.preventDefault();
-        var href = $(this).attr("href");
-
-        swal({
-            title: Settings.confirm_msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            cancelButtonClass: "btn-warning",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            showLoaderOnConfirm: true
-        },
-        function(isConfirm) {
-            if (isConfirm) {
-
-                $.ajax({
-                    type: 'POST',
-                    url: href
-                })
-                .done(function(response) {
-
-                    var res = $.parseJSON(response);
-                    $(".process_loader").hide();
-                    if (res.success == '1') {
-                        swal({
-                            title: res.lbl_title,
-                            text: res.msg,
-                            type: "success"
-                        }, function() {
-                            location.reload();
-                        });
-                    } else {
-                        swal({
-                            title: Settings.err_something_went_wrong,
-                            text: res.msg,
-                            type: "error"
-                        }, function() {
-                            location.reload();
-                        });
-                    }
-
-                })
-                .fail(function(response) {
-                    $(".process_loader").hide();
-                    swal({
-                        title: Settings.err_something_went_wrong,
-                        text: response,
-                        type: "error"
-                    }, function() {
-                        location.reload();
-                    });
-                });
-
-            } else {
-                swal.close();
-            }
-        });
+            });
 
     });
 
     // for wishlist
 
-    $(".btn_wishlist").on("click",function(e) {
+    $(".btn_wishlist").on("click", function(e) {
         e.preventDefault();
         var btn = $(this);
         var _id = $(this).data("id");
@@ -264,7 +267,9 @@ $(document).ready(function(event) {
 
         $.ajax({
             url: href,
-            data: {"product_id": _id},
+            data: {
+                "product_id": _id
+            },
             type: 'post',
             success: function(res) {
                 if ($.trim(res) == 'login_now') {
@@ -282,7 +287,7 @@ $(document).ready(function(event) {
                                 position: "top center",
                                 className: 'success'
                             }
-                            );
+                        );
 
                     } else {
                         btn.css("background-color", "#363F4D");
@@ -293,12 +298,16 @@ $(document).ready(function(event) {
                                 position: "top center",
                                 className: 'success'
                             }
-                            );
+                        );
                     }
                 }
             },
             error: function(res) {
-                swal({title: Settings.err_something_went_wrong,text: res,type: "error"});
+                swal({
+                    title: Settings.err_something_went_wrong,
+                    text: res,
+                    type: "error"
+                });
             }
 
         });
@@ -307,68 +316,73 @@ $(document).ready(function(event) {
     $(".btn_remove_wishlist").click(function(e) {
         e.preventDefault();
 
-        var _id=$(this).data("id");
+        var _id = $(this).data("id");
 
         swal({
-            title: Settings.confirm_msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            cancelButtonClass: "btn-warning",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            showLoaderOnConfirm: true
-        },
-        function(isConfirm) {
-          if (isConfirm) {
-            var btn = $(this);
-
-            href = base_url + 'site/wishlist_action';
-            
-            $.ajax({
-              url:href,
-              data: {product_id: _id},
-              type:'post',
-              success:function(res){
-                  if(res=='login_now'){
-                    window.location.href = base_url + "login-register";
-                }
-                else{
-                    location.reload();
-                }
+                title: Settings.confirm_msg,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                cancelButtonClass: "btn-warning",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
             },
-            error : function(res) {
-                swal({title: Settings.err_something_went_wrong,text: res,type: "error"});
-            }
-        });
-        }else{
-            swal.close();
-        }
-    });
+            function(isConfirm) {
+                if (isConfirm) {
+                    var btn = $(this);
+
+                    href = base_url + 'site/wishlist_action';
+
+                    $.ajax({
+                        url: href,
+                        data: {
+                            product_id: _id
+                        },
+                        type: 'post',
+                        success: function(res) {
+                            if (res == 'login_now') {
+                                window.location.href = base_url + "login-register";
+                            } else {
+                                location.reload();
+                            }
+                        },
+                        error: function(res) {
+                            swal({
+                                title: Settings.err_something_went_wrong,
+                                text: res,
+                                type: "error"
+                            });
+                        }
+                    });
+                } else {
+                    swal.close();
+                }
+            });
 
     });
     // end wishlist
 
     // to all about address module
 
-    $(".address_radio").on("click",function(e) {
+    $(".address_radio").on("click", function(e) {
         $("input[name='order_address']").val($(this).val());
         $(".ceckout-form").hide();
         $(".bank_form").hide();
     });
 
 
-    $(".btn_new_address").on("click",function(e) {
+    $(".btn_new_address").on("click", function(e) {
         e.preventDefault();
         $(".ceckout-form").toggle();
         $(".bank_form").toggle();
     });
 
-    $(".btn_edit_address").on("click",function(e){
+    $(".btn_edit_address").on("click", function(e) {
 
-        var data=$(this).data('stuff');
+        var data = $(this).data('stuff');
         console.log(data['address_type']);
         $('#edit_address').find("input[name='address_id']").val(data['id']);
         $('#edit_address').find("input[name='billing_name']").val(data['name']);
@@ -383,9 +397,9 @@ $(document).ready(function(event) {
         $('#edit_address').find("input[name='city']").val(data['city']);
         $('#edit_address').find("input[name='district']").val(data['district']);
         $('#edit_address').find("input[name='state']").val(data['state']);
-        $('#edit_address').find('#country option[value="'+data['country']+'"]').prop('selected', true);
+        $('#edit_address').find('#country option[value="' + data['country'] + '"]').prop('selected', true);
 
-        $('#edit_address').find("input[name=address_type][value='"+data['address_type']+"']").prop("checked",true);
+        $('#edit_address').find("input[name=address_type][value='" + data['address_type'] + "']").prop("checked", true);
 
         $('#edit_address').modal({
             backdrop: 'static',
@@ -393,7 +407,7 @@ $(document).ready(function(event) {
         })
     });
 
-    $("#edit_address_form").submit(function(e){
+    $("#edit_address_form").submit(function(e) {
         e.preventDefault();
 
         $(".process_loader").show();
@@ -401,57 +415,67 @@ $(document).ready(function(event) {
         var formData = new FormData($(this)[0]);
 
         var href = base_url + 'site/edit_address';
-        
+
         $.ajax({
             url: href,
             processData: false,
             contentType: false,
             type: 'POST',
             data: formData,
-            success: function(data){
+            success: function(data) {
 
-              var obj = $.parseJSON(atob(data));
-              $(".process_loader").hide();
-              $('#edit_address').modal("hide");
+                var obj = $.parseJSON(atob(data));
+                $(".process_loader").hide();
+                $('#edit_address').modal("hide");
 
-              if(obj.status==1){
-                swal({ title: obj.title, text: obj.msg, type: obj.class}, function(){ location.reload(); });
+                if (obj.status == 1) {
+                    swal({
+                        title: obj.title,
+                        text: obj.msg,
+                        type: obj.class
+                    }, function() {
+                        location.reload();
+                    });
+                } else {
+                    swal({
+                        title: Settings.err_something_went_wrong,
+                        text: obj.msg,
+                        type: 'error'
+                    });
+                }
+
             }
-            else{
-                swal({ title: Settings.err_something_went_wrong, text: obj.msg, type: 'error'});
-            }
+        });
 
-        }
     });
 
-    });
-
-    var max_unit_buy=$(".quantity").find(".max_unit_buy").val();
+    var max_unit_buy = $(".quantity").find(".max_unit_buy").val();
 
     $(".plus").on("click", function(event) {
 
         var qty = parseInt($(this).parents().parents(".quantity").find(".product_qty").val());
 
-        if(qty <= 0){
+        if (qty <= 0) {
             $(this).parents().parents(".quantity").find(".product_qty").val(1);
-        }
-        else{
-            qty=qty+1;
+        } else {
+            qty = qty + 1;
 
-            if(qty > max_unit_buy){
+            if (qty > max_unit_buy) {
 
-                var limit_items=Settings.err_cart_item_buy;
+                var limit_items = Settings.err_cart_item_buy;
 
                 $('.notifyjs-corner').empty();
-                $.notify(limit_items.replace("###", $(".max_unit_buy").val()), { position:"top center",className: 'error' }); 
+                $.notify(limit_items.replace("###", $(".max_unit_buy").val()), {
+                    position: "top center",
+                    className: 'error'
+                });
 
-                $(this).parents().parents(".quantity").find(".product_qty").val(max_unit_buy);  
-            }
-            else{
+                $(this).parents().parents(".quantity").find(".product_qty").val(max_unit_buy);
+            } else {
 
                 $("#buy_now_form").find("input[name='qty']").val(qty);
 
-                $(this).parents().parents(".quantity").find(".product_qty").val(qty);   
+                $(this).parents().parents(".quantity").find(".product_qty").val(qty);
             }
         }
     });
@@ -460,13 +484,12 @@ $(document).ready(function(event) {
 
         var qty = parseInt($(this).parents().parents(".quantity").find(".product_qty").val());
 
-        qty=qty-1;
+        qty = qty - 1;
 
-        if(qty <= 0){
+        if (qty <= 0) {
             $("#buy_now_form").find("input[name='qty']").val(1);
             $(this).parents().parents(".quantity").find(".product_qty").val(1);
-        }
-        else{
+        } else {
             $("#buy_now_form").find("input[name='qty']").val(qty);
             $(this).parents().parents(".quantity").find(".product_qty").val(qty);
         }
@@ -474,61 +497,67 @@ $(document).ready(function(event) {
 
     // end address module
 
-    $(".btn_new_account").on("click",function(e) {
+    $(".btn_new_account").on("click", function(e) {
         e.preventDefault();
         $(".bank_form_new").toggle();
         $(".bank_form").toggle();
     });
 
     // remove bank account
-    $(".btn_remove_bank").on("click",function(e) {
+    $(".btn_remove_bank").on("click", function(e) {
         e.preventDefault();
 
         var _id = $(this).data("id");
 
         swal({
-            title: Settings.confirm_msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger btn_edit",
-            cancelButtonClass: "btn-warning btn_edit",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            showLoaderOnConfirm: true
-        },
-        function(isConfirm) {
-            if (isConfirm) {
+                title: Settings.confirm_msg,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger btn_edit",
+                cancelButtonClass: "btn-warning btn_edit",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
 
-                href = base_url + 'site/remove_bank_account';
+                    href = base_url + 'site/remove_bank_account';
 
-                $.ajax({
-                    type: 'POST',
-                    url: href,
-                    data: {
-                        bank_id: _id
-                    },
-                    success: function(res) {
-                        var obj = $.parseJSON(res);
-                        if (obj.success == '1') {
-                            swal({
-                                title: "Deleted!",
-                                text: obj.message,
-                                type: "success"
-                            }, function() {
-                                location.reload();
-                            });
-                        } else {
-                            swal({ title: Settings.err_something_went_wrong, text: obj.message, type: "error" }, function(){ location.reload(); });
+                    $.ajax({
+                        type: 'POST',
+                        url: href,
+                        data: {
+                            bank_id: _id
+                        },
+                        success: function(res) {
+                            var obj = $.parseJSON(res);
+                            if (obj.success == '1') {
+                                swal({
+                                    title: "Deleted!",
+                                    text: obj.message,
+                                    type: "success"
+                                }, function() {
+                                    location.reload();
+                                });
+                            } else {
+                                swal({
+                                    title: Settings.err_something_went_wrong,
+                                    text: obj.message,
+                                    type: "error"
+                                }, function() {
+                                    location.reload();
+                                });
+                            }
                         }
-                    }
-                });
-            } else {
-                swal.close();
-            }
+                    });
+                } else {
+                    swal.close();
+                }
 
-        });
+            });
 
     });
 
@@ -545,95 +574,103 @@ $(document).ready(function(event) {
         var _form = $(this);
 
         $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: formData
-        })
-        .done(function(response) {
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData
+            })
+            .done(function(response) {
 
-            var res = $.parseJSON(response);
+                var res = $.parseJSON(response);
 
-            $('.notifyjs-corner').empty();
+                $('.notifyjs-corner').empty();
 
-            $(".process_loader").hide();
+                $(".process_loader").hide();
 
-            if (res.success == '1') {
+                if (res.success == '1') {
 
-                _form.find("input").val('');
-                _form.find("textarea").val('');
+                    _form.find("input").val('');
+                    _form.find("textarea").val('');
 
-                _form.find("select").val('');
+                    _form.find("select").val('');
 
-                swal({
-                    title: "Done!",
-                    text: res.msg,
-                    type: "success"
-                }, function() {
-                    location.reload();
-                });
-            } else {
-                swal({title: Settings.err_something_went_wrong,text: res.msg,type: "error"});
-                $('.btn_send').attr("disabled", false);
-            }
+                    swal({
+                        title: "Done!",
+                        text: res.msg,
+                        type: "success"
+                    }, function() {
+                        location.reload();
+                    });
+                } else {
+                    swal({
+                        title: Settings.err_something_went_wrong,
+                        text: res.msg,
+                        type: "error"
+                    });
+                    $('.btn_send').attr("disabled", false);
+                }
 
-        })
-        .fail(function(data) {
+            })
+            .fail(function(data) {
 
-        });
+            });
 
     });
 
     // remove review
-    $(".btn_remove_review").on("click",function(e) {
+    $(".btn_remove_review").on("click", function(e) {
         e.preventDefault();
 
         var _id = $(this).data("id");
 
         swal({
-            title: Settings.confirm_msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger btn_edit",
-            cancelButtonClass: "btn-warning btn_edit",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            showLoaderOnConfirm: true
-        },
-        function(isConfirm) {
-            if (isConfirm) {
+                title: Settings.confirm_msg,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger btn_edit",
+                cancelButtonClass: "btn-warning btn_edit",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
 
-                href = base_url + 'site/remove_review';
+                    href = base_url + 'site/remove_review';
 
-                $.ajax({
-                    type: 'POST',
-                    url: href,
-                    data: {
-                        review_id: _id
-                    },
-                    success: function(res) {
-                        var obj = $.parseJSON(res);
-                        if (obj.success == '1') {
-                            swal({
-                                title: "Deleted!",
-                                text: obj.message,
-                                type: "success"
-                            }, function() {
-                                location.reload();
-                            });
-                        } else {
-                            swal({title: Settings.err_something_went_wrong,text: obj.message,type: "error"});
+                    $.ajax({
+                        type: 'POST',
+                        url: href,
+                        data: {
+                            review_id: _id
+                        },
+                        success: function(res) {
+                            var obj = $.parseJSON(res);
+                            if (obj.success == '1') {
+                                swal({
+                                    title: "Deleted!",
+                                    text: obj.message,
+                                    type: "success"
+                                }, function() {
+                                    location.reload();
+                                });
+                            } else {
+                                swal({
+                                    title: Settings.err_something_went_wrong,
+                                    text: obj.message,
+                                    type: "error"
+                                });
+                            }
                         }
-                    }
-                });
-            } else {
-                swal.close();
-            }
-        });
+                    });
+                } else {
+                    swal.close();
+                }
+            });
     });
 
-    $(".btn_cancel_form").on("click",function(e) {
+    $(".btn_cancel_form").on("click", function(e) {
         e.preventDefault();
         $(".bank_form").hide();
     });
@@ -641,39 +678,39 @@ $(document).ready(function(event) {
 
 
     // to close address form
-    $(".close_form").on("click",function(e) {
+    $(".close_form").on("click", function(e) {
         e.preventDefault();
         $('form[name="address_form"]')[0].reset();
         $(".add_addresss_block").hide();
     });
 
 
-    $(".btn_delete_address").on("click",function(e) {
+    $(".btn_delete_address").on("click", function(e) {
 
         e.preventDefault();
 
         var _id = $(this).data("id");
 
         swal({
-            title: Settings.confirm_msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger btn_edit",
-            cancelButtonClass: "btn-warning btn_edit",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            showLoaderOnConfirm: true
-        },
-        function(isConfirm) {
-            if (isConfirm) {
-                href = base_url + 'site/delete_address/' + _id;
-                window.location.href = href;
-            } else {
-                swal.close();
-            }
-        });
+                title: Settings.confirm_msg,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger btn_edit",
+                cancelButtonClass: "btn-warning btn_edit",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    href = base_url + 'site/delete_address/' + _id;
+                    window.location.href = href;
+                } else {
+                    swal.close();
+                }
+            });
 
     });
 
@@ -718,28 +755,35 @@ $(document).ready(function(event) {
 
     // for coupon code
 
-    $(".btn_apply_coupon").on("click",function(e) {
+    $(".btn_apply_coupon").on("click", function(e) {
 
         e.preventDefault();
 
         href = base_url + 'site/apply_coupon';
 
-        var coupon_id=$(this).data("coupon");
-        var cart_ids=$(this).data("cart");
-        var cart_type=$(this).data("type");
-        
+        var coupon_id = $(this).data("coupon");
+        var cart_ids = $(this).data("cart");
+        var cart_type = $(this).data("type");
+
         $.ajax({
             url: href,
             type: 'post',
-            data: {'coupon_id' : coupon_id, 'cart_ids' : cart_ids, 'cart_type' : cart_type},
+            data: {
+                'coupon_id': coupon_id,
+                'cart_ids': cart_ids,
+                'cart_type': cart_type
+            },
             success: function(data) {
                 var obj = $.parseJSON(data);
                 $("#coupons_detail").modal("hide");
                 $(".code_err").hide();
-                
-                if(obj.success == '1') {
+
+                if (obj.success == '1') {
                     $('.notifyjs-corner').empty();
-                    $.notify(obj.msg, {position: "top center",className: 'success'});
+                    $.notify(obj.msg, {
+                        position: "top center",
+                        className: 'success'
+                    });
 
                     $(".order-total").find("span").html(currency_code + ' ' + obj.payable_amt);
                     $(".msg_2").html(obj.you_save_msg);
@@ -747,11 +791,15 @@ $(document).ready(function(event) {
                     $("input[name='coupon_id']").val(obj.coupon_id);
                     $(".apply_button").hide();
                     $(".remove_coupon").show();
-                }
-                else if(obj.success=='-1'){
-                    swal({ title: Settings.err_something_went_wrong, text: obj.msg, type: "error" }, function(){ location.reload(); });
-                }
-                else {
+                } else if (obj.success == '-1') {
+                    swal({
+                        title: Settings.err_something_went_wrong,
+                        text: obj.msg,
+                        type: "error"
+                    }, function() {
+                        location.reload();
+                    });
+                } else {
                     swal(obj.msg);
                 }
             },
@@ -760,79 +808,88 @@ $(document).ready(function(event) {
             }
 
         });
-        
+
     });
 
     // for remove coupon code
 
-    $(".remove_coupon a").on("click",function(e) {
+    $(".remove_coupon a").on("click", function(e) {
         e.preventDefault();
 
-        var cart_type='';
-        if($("input[name='buy_now']").val()=='false'){
-            cart_type='main_cart';
-        }
-        else{
-            cart_type='temp_cart';
+        var cart_type = '';
+        if ($("input[name='buy_now']").val() == 'false') {
+            cart_type = 'main_cart';
+        } else {
+            cart_type = 'temp_cart';
         }
 
-        href = base_url + 'site/remove_coupon/'+cart_type;
+        href = base_url + 'site/remove_coupon/' + cart_type;
 
-        var coupon_id=$("input[name='coupon_id']").val();
-        var cart_ids=$("input[name='cart_ids']").val();
+        var coupon_id = $("input[name='coupon_id']").val();
+        var cart_ids = $("input[name='cart_ids']").val();
 
         swal({
-            title: Settings.confirm_msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger btn_edit",
-            cancelButtonClass: "btn-warning btn_edit",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            showLoaderOnConfirm: true
-        },
-        function(isConfirm) {
-            if (isConfirm) {
+                title: Settings.confirm_msg,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger btn_edit",
+                cancelButtonClass: "btn-warning btn_edit",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
 
-                $.ajax({
-                    url: href,
-                    type: 'post',
-                    data: {'coupon_id' : coupon_id, 'cart_ids' : cart_ids},
-                    success: function(data){
+                    $.ajax({
+                        url: href,
+                        type: 'post',
+                        data: {
+                            'coupon_id': coupon_id,
+                            'cart_ids': cart_ids
+                        },
+                        success: function(data) {
 
-                        swal.close();
+                            swal.close();
 
-                        var obj = $.parseJSON(data);
+                            var obj = $.parseJSON(data);
 
-                        $(".code_err").hide();
+                            $(".code_err").hide();
 
-                        if(obj.success == '1'){
-                            $('.notifyjs-corner').empty();
-                            $.notify(obj.msg, {position: "top center",className: 'success'});
+                            if (obj.success == '1') {
+                                $('.notifyjs-corner').empty();
+                                $.notify(obj.msg, {
+                                    position: "top center",
+                                    className: 'success'
+                                });
 
-                            $(".order-total").find("span").html(currency_code + ' ' + obj.payable_amt);
+                                $(".order-total").find("span").html(currency_code + ' ' + obj.payable_amt);
 
-                            $(".msg_2").html(obj.you_save_msg);
+                                $(".msg_2").html(obj.you_save_msg);
 
-                            $(".apply_msg").show();
+                                $(".apply_msg").show();
 
-                            $(".apply_button").show();
-                            $(".remove_coupon").hide();
+                                $(".apply_button").show();
+                                $(".remove_coupon").hide();
+                            } else if (obj.success == '-1') {
+                                swal({
+                                    title: Settings.err_something_went_wrong,
+                                    text: obj.msg,
+                                    type: "error"
+                                }, function() {
+                                    location.reload();
+                                });
+                            } else {
+                                swal(obj.msg);
+                            }
                         }
-                        else if(obj.success=='-1'){
-                            swal({ title: Settings.err_something_went_wrong, text: obj.msg, type: "error" }, function(){ location.reload(); });
-                        }
-                        else {
-                            swal(obj.msg);
-                        }
-                    }
-                });
-            } else {
-                swal.close();
-            }
-        });
+                    });
+                } else {
+                    swal.close();
+                }
+            });
 
     });
 
@@ -876,7 +933,11 @@ $(document).ready(function(event) {
                 } else {
                     _count++;
                     $(".input_txt").css("border-color", "red");
-                    swal({title: 'Required', text:'Enter correct value!',type: "error"});
+                    swal({
+                        title: 'Required',
+                        text: 'Enter correct value!',
+                        type: "error"
+                    });
                     btn.attr("disabled", false);
                 }
 
@@ -902,20 +963,21 @@ $(document).ready(function(event) {
 
                                 $("#orderConfirm .ord_no_lbl").text(obj.order_unique_id);
 
-                                $("#orderConfirm .btn_track").on("click",function(e) {
+                                $("#orderConfirm .btn_track").on("click", function(e) {
                                     window.location.href = base_url + 'my-orders/' + obj.order_unique_id;
                                 });
 
                                 $("#orderConfirm").fadeIn();
 
-                                if(_formData[0]['value']=='true'){
+                                if (_formData[0]['value'] == 'true') {
                                     if (history.pushState) {
-                                        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + location.search + '&order_unique_id='+obj.order_unique_id;
-                                        window.history.pushState({path:newurl},'',newurl);
+                                        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + location.search + '&order_unique_id=' + obj.order_unique_id;
+                                        window.history.pushState({
+                                            path: newurl
+                                        }, '', newurl);
                                     }
                                 }
-                            }
-                            else if (obj.success == '-2') {
+                            } else if (obj.success == '-2') {
                                 swal({
                                     title: Settings.err_something_went_wrong,
                                     text: obj.msg,
@@ -923,9 +985,7 @@ $(document).ready(function(event) {
                                 }, function() {
                                     window.location.href = base_url + "my-cart";
                                 });
-                            }
-                            else
-                            {
+                            } else {
                                 swal({
                                     title: Settings.err_something_went_wrong,
                                     text: obj.msg,
@@ -936,7 +996,7 @@ $(document).ready(function(event) {
                             }
 
                         },
-                        error: function (jqXHR, exception) {
+                        error: function(jqXHR, exception) {
 
                             $(".process_loader").hide();
 
@@ -960,21 +1020,17 @@ $(document).ready(function(event) {
                         },
                     });
                 }
-            } 
-            else if (_payment_method == 'paypal') {
+            } else if (_payment_method == 'paypal') {
                 $(this).attr("disabled", true);
                 $(".process_loader").show();
                 $(".input_txt").css("border-color", "#ccc");
                 href = base_url + 'paypal/create_payment_with_paypal';
                 $("form[name='place_order']").attr("action", href).submit();
-            } 
-            else if (_payment_method == 'stripe') {
+            } else if (_payment_method == 'stripe') {
                 btn.attr("disabled", true);
                 $(".input_txt").css("border-color", "#ccc");
                 $("#stripeModal").modal("show");
-            }
-            else if (_payment_method == 'razorpay')
-            {
+            } else if (_payment_method == 'razorpay') {
                 $(this).attr("disabled", true);
                 $(".input_txt").css("border-color", "#ccc");
 
@@ -989,10 +1045,9 @@ $(document).ready(function(event) {
                         btn.attr("disabled", false);
 
                         var obj = $.parseJSON(res);
-                        if(obj.success=='1'){
+                        if (obj.success == '1') {
                             callRazorPayScript(obj.key, obj.site_name, obj.description, obj.logo, obj.amount, obj.user_name, obj.user_email, obj.user_phone, obj.theme_color, obj.razorpay_order_id)
-                        }
-                        else if(obj.success=='-2'){
+                        } else if (obj.success == '-2') {
                             swal({
                                 title: Settings.err_something_went_wrong,
                                 text: obj.message,
@@ -1000,8 +1055,7 @@ $(document).ready(function(event) {
                             }, function() {
                                 window.location.href = base_url + "my-cart";
                             });
-                        }
-                        else{
+                        } else {
                             swal({
                                 title: Settings.err_something_went_wrong,
                                 text: obj.message,
@@ -1014,14 +1068,18 @@ $(document).ready(function(event) {
                     }
                 });
             }
-        }else {
-            swal({title: Settings.err_something_went_wrong, text:Settings.err_shipping_address,type: "error"});
+        } else {
+            swal({
+                title: Settings.err_something_went_wrong,
+                text: Settings.err_shipping_address,
+                type: "error"
+            });
         }
 
     });
 
     // download invoice button
-    $(".btn_download").on("click",function(e) {
+    $(".btn_download").on("click", function(e) {
         e.preventDefault();
         var _id = $(this).data("id");
 
@@ -1032,7 +1090,7 @@ $(document).ready(function(event) {
 
 
     // for order progress timeline
-    $(".dot").on("click",function(e) {
+    $(".dot").on("click", function(e) {
 
         if ($(this).data("status") != 'disable_dot') {
             $(this).addClass('active_dot').siblings().removeClass('active_dot');
@@ -1055,7 +1113,7 @@ $(document).ready(function(event) {
         $("textarea").val('');
     });
 
-    $(".product_cancel").on("click",function(e) {
+    $(".product_cancel").on("click", function(e) {
 
         e.preventDefault();
 
@@ -1090,11 +1148,11 @@ $(document).ready(function(event) {
 
     // single product cancel
 
-    $(".cancel_order").on("click",function(e) {
+    $(".cancel_order").on("click", function(e) {
         e.preventDefault();
         var _btn = $(this);
 
-        var dataStaff=$(this).data('stuff');
+        var dataStaff = $(this).data('stuff');
 
         _btn.attr("disabled", true);
 
@@ -1116,7 +1174,7 @@ $(document).ready(function(event) {
                     position: "top center",
                     className: 'error'
                 }
-                );
+            );
         }
 
         if ((_bank_id == '' || typeof _bank_id == "undefined") && $(this).parents("#orderCancel").find("input[name='gateway']").val() != 'cod') {
@@ -1127,7 +1185,7 @@ $(document).ready(function(event) {
                     position: "top center",
                     className: 'error'
                 }
-                );
+            );
         }
 
         if (flag) {
@@ -1135,7 +1193,7 @@ $(document).ready(function(event) {
             _btn.text(dataStaff['cancel_ord_btn']);
         }
 
-        if(!flag) {
+        if (!flag) {
 
             $(".process_loader").show();
 
@@ -1180,7 +1238,7 @@ $(document).ready(function(event) {
     });
 
 
-    $(".btn_claim").on("click",function(e) {
+    $(".btn_claim").on("click", function(e) {
         e.preventDefault();
 
         if ($(this).data("gateway") != 'cod') {
@@ -1201,12 +1259,12 @@ $(document).ready(function(event) {
 
     });
 
-    $(".claim_refund").on("click",function(e) {
+    $(".claim_refund").on("click", function(e) {
         e.preventDefault();
 
         var _btn = $(this);
 
-        var dataStaff=$(this).data('stuff');
+        var dataStaff = $(this).data('stuff');
 
         $(".process_loader").show();
 
@@ -1226,7 +1284,7 @@ $(document).ready(function(event) {
                     position: "top center",
                     className: 'error'
                 }
-                );
+            );
         }
 
         if (!flag) {
@@ -1251,7 +1309,7 @@ $(document).ready(function(event) {
                     if (obj.success == 1) {
 
                         $("#claimRefund").modal("hide");
-                        
+
                         swal({
                             title: dataStaff['done_lbl'],
                             text: obj.msg,
@@ -1264,13 +1322,13 @@ $(document).ready(function(event) {
             });
         }
 
-        
+
     });
 
 
     // for quick view
 
-    $(".btn_quick_view").on("click",function(e) {
+    $(".btn_quick_view").on("click", function(e) {
 
         e.preventDefault();
 
@@ -1282,9 +1340,11 @@ $(document).ready(function(event) {
 
         $.ajax({
             url: href,
-            data: {"product_id": _id},
+            data: {
+                "product_id": _id
+            },
             type: 'post',
-            dataType:'json',
+            dataType: 'json',
             success: function(obj) {
 
                 $(".process_loader").fadeOut();
@@ -1305,7 +1365,7 @@ $(document).ready(function(event) {
                     $('.modal-tab-menu-active').resize();
                 });
 
-                $(".img_click > a").on("click",function(e) {
+                $(".img_click > a").on("click", function(e) {
                     var _id = $(this).attr("href");
 
                     $("#productQuickView").find(".tab-pane").removeClass("active");
@@ -1317,32 +1377,33 @@ $(document).ready(function(event) {
                 });
 
 
-                var max_unit_buy=$(".quantity").find(".max_unit_buy").val();
+                var max_unit_buy = $(".quantity").find(".max_unit_buy").val();
 
                 $(".plus").on("click", function(event) {
 
                     var qty = parseInt($(this).parents().parents(".quantity").find(".product_qty").val());
 
-                    if(qty <= 0){
+                    if (qty <= 0) {
                         $(this).parents().parents(".quantity").find(".product_qty").val(1);
-                    }
-                    else{
-                        qty=qty+1;
+                    } else {
+                        qty = qty + 1;
 
-                        if(qty > max_unit_buy){
+                        if (qty > max_unit_buy) {
 
-                            var limit_items=Settings.err_cart_item_buy;
+                            var limit_items = Settings.err_cart_item_buy;
 
                             $('.notifyjs-corner').empty();
-                            $.notify(limit_items.replace("###", $(".max_unit_buy").val()), { position:"top center",className: 'error' }); 
+                            $.notify(limit_items.replace("###", $(".max_unit_buy").val()), {
+                                position: "top center",
+                                className: 'error'
+                            });
 
-                            $(this).parents().parents(".quantity").find(".product_qty").val(max_unit_buy);  
-                        }
-                        else{
+                            $(this).parents().parents(".quantity").find(".product_qty").val(max_unit_buy);
+                        } else {
 
                             $("#buy_now_form").find("input[name='qty']").val(qty);
 
-                            $(this).parents().parents(".quantity").find(".product_qty").val(qty);   
+                            $(this).parents().parents(".quantity").find(".product_qty").val(qty);
                         }
                     }
                 });
@@ -1351,21 +1412,19 @@ $(document).ready(function(event) {
 
                     var qty = parseInt($(this).parents().parents(".quantity").find(".product_qty").val());
 
-                    qty=qty-1;
+                    qty = qty - 1;
 
-                    if(qty <= 0){
+                    if (qty <= 0) {
                         $("#buy_now_form").find("input[name='qty']").val(1);
                         $(this).parents().parents(".quantity").find(".product_qty").val(1);
-                    }
-                    else{
+                    } else {
                         $("#buy_now_form").find("input[name='qty']").val(qty);
                         $(this).parents().parents(".quantity").find(".product_qty").val(qty);
                     }
                 });
 
                 // for cart form submit
-                $("#cartForm").submit(function(event) 
-                {
+                $("#cartForm").submit(function(event) {
                     event.preventDefault();
                     $(".process_loader").show();
 
@@ -1373,24 +1432,34 @@ $(document).ready(function(event) {
                     var _form = $(this);
 
                     $.ajax({
-                        type: 'POST',
-                        url: base_url + 'site/add_to_cart',
-                        data: formData
-                    })
-                    .done(function(response) {
+                            type: 'POST',
+                            url: base_url + 'site/add_to_cart',
+                            data: formData
+                        })
+                        .done(function(response) {
 
-                        var res = $.parseJSON(response);
-                        $(".process_loader").hide();
-                        if(res.success == '1') {
-                            swal({
-                                title: res.lbl_title,
-                                text: res.msg,
-                                type: "success"
-                            }, function() {
-                                location.reload();
-                            });
-                        }
-                        else{
+                            var res = $.parseJSON(response);
+                            $(".process_loader").hide();
+                            if (res.success == '1') {
+                                swal({
+                                    title: res.lbl_title,
+                                    text: res.msg,
+                                    type: "success"
+                                }, function() {
+                                    location.reload();
+                                });
+                            } else {
+                                swal({
+                                    title: Settings.err_something_went_wrong,
+                                    text: res.msg,
+                                    type: "error"
+                                }, function() {
+                                    location.reload();
+                                });
+                            }
+                        })
+                        .fail(function(response) {
+                            $(".process_loader").hide();
                             swal({
                                 title: Settings.err_something_went_wrong,
                                 text: res.msg,
@@ -1398,24 +1467,13 @@ $(document).ready(function(event) {
                             }, function() {
                                 location.reload();
                             });
-                        }
-                    })
-                    .fail(function(response) {
-                        $(".process_loader").hide();
-                        swal({
-                            title: Settings.err_something_went_wrong,
-                            text: res.msg,
-                            type: "error"
-                        }, function() {
-                            location.reload();
                         });
-                    });
 
                 });
                 // end cart form
 
 
-                $('.radio-group .radio_btn').click(function(){
+                $('.radio-group .radio_btn').click(function() {
 
                     $(this).parent().find('.radio_btn').removeClass('selected');
                     $(this).addClass('selected');
@@ -1429,20 +1487,19 @@ $(document).ready(function(event) {
 
                 // for size chart modal open
 
-                $(".size_chart").click(function(e){
+                $(".size_chart").click(function(e) {
                     e.preventDefault();
 
                     $(".size_chart_img").hide();
                     $(".no_data").hide();
 
-                    if($(this).data("img")==''){
+                    if ($(this).data("img") == '') {
                         $(".no_data").show();
-                    }
-                    else{
+                    } else {
                         $(".size_chart_img").show();
-                        $(".size_chart_img").attr("src",$(this).data("img"));
+                        $(".size_chart_img").attr("src", $(this).data("img"));
                     }
-                    
+
                     $("#size_chart").modal("show")
 
                 });
@@ -1455,21 +1512,23 @@ $(document).ready(function(event) {
 
     $(".list_order").change(function(e) {
 
-        var param=$('#sort_filter_form').serialize();
-        
-        if(history.pushState) {
-          var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+param;
-          window.history.pushState({path:newurl},'',newurl);
-      }
+        var param = $('#sort_filter_form').serialize();
 
-      var target = "#products_list";
+        if (history.pushState) {
+            var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + param;
+            window.history.pushState({
+                path: newurl
+            }, '', newurl);
+        }
 
-      $('html, body').animate({
-        scrollTop: ($(target).offset().top)
-    }, 100);
+        var target = "#products_list";
 
-      setTimeout(location.reload(), 1000);
-  });
+        $('html, body').animate({
+            scrollTop: ($(target).offset().top)
+        }, 100);
+
+        setTimeout(location.reload(), 1000);
+    });
 
     $('.shop-tab a[data-toggle="tab"]').on('show.bs.tab', function(e) {
         localStorage.setItem('activeTabProduct', $(e.target).attr('href'));
@@ -1482,7 +1541,7 @@ $(document).ready(function(event) {
         $(".shop-product-area .tab-content").find("div").removeClass("active");
         $(".shop-product-area .tab-content").find(activeTabProduct).addClass('active');
     }
-    
+
     $('.discription-tab-menu a[data-toggle="tab"]').on('show.bs.tab', function(e) {
         localStorage.setItem('activeTabDiscription', $(e.target).attr('href'));
     });
@@ -1498,11 +1557,9 @@ $(document).ready(function(event) {
 
     $("form input").blur(function(e) {
 
-        if($(this).val()!= '')
-        {
+        if ($(this).val() != '') {
             $(this).parents(".wizard-form-input").find("p").fadeOut();
-        }
-        else{
+        } else {
 
             $(this).parents(".wizard-form-input").find("p").fadeIn();
         }
@@ -1536,7 +1593,7 @@ $(document).ready(function(event) {
     }
 
 
-    $(".remove_filter").on("click",function(e) {
+    $(".remove_filter").on("click", function(e) {
         e.preventDefault();
 
         localStorage.removeItem("products_list");
@@ -1553,11 +1610,11 @@ $(document).ready(function(event) {
         } else if (action == 'price') {
             url = removeURLParameter(uri, 'price_filter');
             window.location.href = url;
-        }else if (action == 'brands') {
+        } else if (action == 'brands') {
             id = $(this).data("id");
             $('.brand_sort[value=' + id + ']').prop('checked', false);
             $("#brand_sort").submit();
-        }else if (action == 'size') {
+        } else if (action == 'size') {
             id = $(this).data("id");
             $('.size_sort[value=' + id + ']').prop('checked', false);
             $("#size_sort").submit();
@@ -1569,94 +1626,187 @@ $(document).ready(function(event) {
 
 
     // for logout
-    $(".btn_logout").on("click",function(e) {
+    $(".btn_logout").on("click", function(e) {
         e.preventDefault();
         var href = $(this).attr("href");
         swal({
-            title: Settings.confirm_msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger btn_edit",
-            cancelButtonClass: "btn-warning btn_edit",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false,
-            showLoaderOnConfirm: true
+                title: Settings.confirm_msg,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger btn_edit",
+                cancelButtonClass: "btn-warning btn_edit",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                            type: 'POST',
+                            url: href
+                        })
+                        .done(function(response) {
+                            $(".process_loader").hide();
+                            location.reload();
+                        })
+                        .fail(function(response) {
+                            $(".process_loader").hide();
+                            swal({
+                                title: Settings.err_something_went_wrong,
+                                text: response,
+                                type: "error"
+                            });
+                        });
+
+                } else {
+                    swal.close();
+                }
+            });
+
+    });
+
+
+    //for address checkout 
+    $(".province").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: base_url + "admin/getprovinceautocomplete",
+                data: {
+                    "searchTerm": request.term,
+
+                },
+                datatype: "json",
+                type: "GET",
+                success: function(data) {
+                    if (data.total == 0) {
+
+                        var result = [{
+                            label: 'No matches found',
+                            value: response.term
+                        }];
+                        response(result);
+                        $("#btnsubmiteventmember").attr("disabled", true);
+                    } else {
+                        $("#btnsubmiteventmember").attr("disabled", false);
+                        response($.map(JSON.parse(data), function(item) {
+                            return item;
+                        }))
+                    }
+
+                },
+                error: function(response) {
+                    alert(response.responseText);
+                },
+                failure: function(response) {
+                    alert(response.responseText);
+                }
+            });
         },
-        function(isConfirm) {
-            if (isConfirm) {
+        select: function(e, i) {
+            $("#id_web_province").val(i.item.val);
 
-                $.ajax({
-                    type: 'POST',
-                    url: href
-                })
-                .done(function(response) {
-                    $(".process_loader").hide();
-                    location.reload();
-                })
-                .fail(function(response) {
-                    $(".process_loader").hide();
-                    swal({title: Settings.err_something_went_wrong,text: response,type: "error"});
-                });
 
-            } else {
-                swal.close();
-            }
-        });
+        },
+        minLength: 3
+    });
 
+    $("#web_city").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: base_url + "admin/getcityautocomplete",
+                data: {
+                    "searchTerm": request.term,
+                    "id_province": $("#id_web_province").val()
+                },
+                datatype: "json",
+                type: "GET",
+                success: function(data) {
+                    if (data.total == 0) {
+
+                        var result = [{
+                            label: 'No matches found',
+                            value: response.term
+                        }];
+                        response(result);
+
+                    } else {
+
+                        response($.map(JSON.parse(data), function(item) {
+                            return item;
+                        }))
+                    }
+
+                },
+                error: function(response) {
+                    alert(response.responseText);
+                },
+                failure: function(response) {
+                    alert(response.responseText);
+                }
+            });
+        },
+        select: function(e, i) {
+            $("#id_web_city").val(i.item.val);
+            $("#web_pcode").val(i.item.postal_code);
+        },
+        minLength: 3
     });
 });
 
 var loadExternalScript = function(path) {
     var result = $.Deferred(),
-    script = document.createElement("script");
+        script = document.createElement("script");
 
     script.async = "async";
     script.type = "text/javascript";
     script.src = path;
     script.onload = script.onreadystatechange = function(_, isAbort) {
-      if (!script.readyState || /loaded|complete/.test(script.readyState)) {
-        if (isAbort)
-          result.reject();
-      else
-          result.resolve();
-  }
-};
+        if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+            if (isAbort)
+                result.reject();
+            else
+                result.resolve();
+        }
+    };
 
-script.onerror = function() {
-  result.reject();
-};
+    script.onerror = function() {
+        result.reject();
+    };
 
-$("head")[0].appendChild(script);
+    $("head")[0].appendChild(script);
 
-return result.promise();
+    return result.promise();
 };
 
 var callRazorPayScript = function(key, title, desc, logo, amount, name, email, contact, theme, order_id) {
 
-  loadExternalScript('https://checkout.razorpay.com/v1/checkout.js').then(function() { 
-    var options = {
-      key: key,
-      protocol: 'https',
-      hostname: 'api.razorpay.com',
-      amount: amount,
-      order_id: order_id,
-      name: title,
-      description: desc,
-      image: logo,
-      prefill: {
-        name: name,
-        email: email,
-        contact: contact,
-    },
-    theme: { color: theme},
-    handler: function (transaction, response){
-        $("#razorpayForm").append("<input name='razorpay_payment_id' type='hidden' value='"+transaction.razorpay_payment_id+"'>");
-        $("#razorpayForm").submit();
-    }
-};
-window.rzpay = new Razorpay(options);
-rzpay.open();
-});
+    loadExternalScript('https://checkout.razorpay.com/v1/checkout.js').then(function() {
+        var options = {
+            key: key,
+            protocol: 'https',
+            hostname: 'api.razorpay.com',
+            amount: amount,
+            order_id: order_id,
+            name: title,
+            description: desc,
+            image: logo,
+            prefill: {
+                name: name,
+                email: email,
+                contact: contact,
+            },
+            theme: {
+                color: theme
+            },
+            handler: function(transaction, response) {
+                $("#razorpayForm").append("<input name='razorpay_payment_id' type='hidden' value='" + transaction.razorpay_payment_id + "'>");
+                $("#razorpayForm").submit();
+            }
+        };
+        window.rzpay = new Razorpay(options);
+        rzpay.open();
+    });
 }

@@ -55,4 +55,13 @@ CREATE TABLE `tbl_shipping` (
 	PRIMARY KEY (`id`)
 )
 COLLATE='utf8mb4_general_ci'
-ENGINE=InnoDB
+ENGINE=InnoDB;
+
+ALTER TABLE `tbl_addresses`
+	ALTER `building_name` DROP DEFAULT;
+ALTER TABLE `tbl_addresses`
+	CHANGE COLUMN `building_name` `building_name` TEXT NULL AFTER `pincode`,
+	CHANGE COLUMN `road_area_colony` `road_area_colony` TEXT NULL AFTER `building_name`,
+	CHANGE COLUMN `landmark` `landmark` VARCHAR(100) NULL AFTER `country`;
+	
+	

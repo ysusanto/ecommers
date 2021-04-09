@@ -17,7 +17,36 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
           <div class="checkout-title">
             <h3><?= $this->lang->line('billing_section_lbl') ?></h3>
           </div>
+          <div class="shipping_block">
+            <div class="header_shipping">
+              <h3><?= $this->lang->line('shipping_lbl') ?> :</h3>
+            </div>
+            <div class="add_shipping">
+              <a href="" class="btn_add_shipping" onclick="" style="font-size: 16px">
+                <div class="add_shiping" style="padding: 15px 5px">
+                  <i class="fa fa-plus"></i> <?= $this->lang->line('choose_shipping') ?>
+                </div>
+              </a>
+            </div>
+            <div class="list_shipping address_details_item">
+              <label class="container">
+                <input type="radio" name="radio" class="address_radio" value="<?= $value->id ?>" <?php echo $value->is_default == 'true' ? 'checked="checked"' : ''; ?>>
+                <span class="checkmark"></span>
+              </label>
+              <div class="address_list">
+                <span>Tiki</span>
+
+                <p>
+                  reguler
+                </p>
+              </div>
+            </div>
+          </div>
           <div class="address_details_block">
+            <div class="header_address">
+              <h3><?= $this->lang->line('destination_address_lbl') ?> :</h3>
+            </div>
+
             <?php
             $order_address_id = 0;
             foreach ($addresses as $key => $value) {
@@ -104,7 +133,7 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-12" style="display:none">
+                    <!-- <div class="col-md-12" style="display:none">
                       <div class="wizard-form-field">
                         <div class="wizard-form-input has-float-label">
                           <input type="text" name="road_area_colony" value="" required="" placeholder="<?= $this->lang->line('road_area_colony_lbl') ?>">
@@ -135,12 +164,12 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                         }
                         ?>
                       </select>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                       <div class="wizard-form-field">
                         <div class="wizard-form-input has-float-label">
                           <input type="hidden" id="id_web_province" name="id_web_province" value="">
-                          <input type="text" name="state" value="" id="state" required="" placeholder="<?= $this->lang->line('web_address_province_lbl') ?>">
+                          <input type="text" name="state" value="" class="province" id="state" required="" placeholder="<?= $this->lang->line('web_address_province_lbl') ?>">
                           <label><?= $this->lang->line('web_address_province_lbl') ?></label>
                         </div>
                       </div>
@@ -545,10 +574,10 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12" style="display:none">
+                  <!-- <div class="col-md-12" style="display:none">
                     <div class="wizard-form-field">
                       <div class="wizard-form-input has-float-label">
-                        <input type="text" name="road_area_colony" value="" required="" placeholder="<?= $this->lang->line('road_area_colony_place_lbl') ?>">
+                        <input type="text" name="road_area_colony" value="" placeholder="<?= $this->lang->line('road_area_colony_place_lbl') ?>">
                         <label><?= $this->lang->line('road_area_colony_place_lbl') ?></label>
                       </div>
                     </div>
@@ -575,12 +604,12 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                       }
                       ?>
                     </select>
-                  </div>
+                  </div> -->
                   <div class="col-md-6">
                     <div class="wizard-form-field">
                       <div class="wizard-form-input has-float-label">
                         <input type="hidden" id="id_web_province" name="id_web_province" value="">
-                        <input type="text" name="state" value="" required="" placeholder="<?= $this->lang->line('state_place_lbl') ?>">
+                        <input type="text" name="state" value="" class="province" required="" placeholder="<?= $this->lang->line('state_place_lbl') ?>">
                         <label><?= $this->lang->line('state_place_lbl') ?></label>
                       </div>
                     </div>
@@ -729,94 +758,6 @@ if ($this->db->get_where('tbl_settings', array('id' => '1'))->row()->stripe_stat
 
   <script src="https://js.stripe.com/v2/"></script>
   <script type="text/javascript">
-    <?php if (isset($is_rajaongkir) && $is_rajaongkir == "1") { ?>
-      $(document).ready(function() {
-        $("#address_form").find("#state").autocomplete({
-          source: function(request, response) {
-            $.ajax({
-              url: "<?= base_url() ?>admin/getprovinceautocomplete",
-              data: {
-                "searchTerm": request.term,
-
-              },
-              datatype: "json",
-              type: "GET",
-              success: function(data) {
-                if (data.total == 0) {
-
-                  var result = [{
-                    label: 'No matches found',
-                    value: response.term
-                  }];
-                  response(result);
-                  $("#btnsubmiteventmember").attr("disabled", true);
-                } else {
-                  $("#btnsubmiteventmember").attr("disabled", false);
-                  response($.map(JSON.parse(data), function(item) {
-                    return item;
-                  }))
-                }
-
-              },
-              error: function(response) {
-                alert(response.responseText);
-              },
-              failure: function(response) {
-                alert(response.responseText);
-              }
-            });
-          },
-          select: function(e, i) {
-            $("#id_web_province").val(i.item.val);
-
-
-          },
-          minLength: 3
-        });
-
-        $("#web_city").autocomplete({
-          source: function(request, response) {
-            $.ajax({
-              url: "<?= base_url() ?>admin/getcityautocomplete",
-              data: {
-                "searchTerm": request.term,
-                "id_province": $("#id_web_province").val()
-              },
-              datatype: "json",
-              type: "GET",
-              success: function(data) {
-                if (data.total == 0) {
-
-                  var result = [{
-                    label: 'No matches found',
-                    value: response.term
-                  }];
-                  response(result);
-
-                } else {
-
-                  response($.map(JSON.parse(data), function(item) {
-                    return item;
-                  }))
-                }
-
-              },
-              error: function(response) {
-                alert(response.responseText);
-              },
-              failure: function(response) {
-                alert(response.responseText);
-              }
-            });
-          },
-          select: function(e, i) {
-            $("#id_web_city").val(i.item.val);
-            $("#web_pcode").val(i.item.postal_code);
-          },
-          minLength: 3
-        });
-      });
-    <?php } ?>
     // for stripe payment
     var $form = $(".require-validation");
     $('form.require-validation').bind('submit', function(e) {

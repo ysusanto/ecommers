@@ -1741,11 +1741,11 @@ class Site extends CI_Controller
         $this->form_validation->set_rules('billing_name', $this->lang->line('name_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('billing_mobile_no', $this->lang->line('phone_no_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('building_name', $this->lang->line('address_place_lbl'), 'trim|required');
-        $this->form_validation->set_rules('road_area_colony', $this->lang->line('road_area_colony_place_lbl'), 'trim|required');
+        // $this->form_validation->set_rules('road_area_colony', $this->lang->line('road_area_colony_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('pincode', $this->lang->line('zipcode_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('city', $this->lang->line('city_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('state', $this->lang->line('state_place_lbl'), 'trim|required');
-        $this->form_validation->set_rules('country', $this->lang->line('country_place_lbl'), 'trim|required');
+        // $this->form_validation->set_rules('country', $this->lang->line('country_place_lbl'), 'trim|required');
 
         if ($this->form_validation->run()) {
             if ($_POST) {
@@ -1766,12 +1766,12 @@ class Site extends CI_Controller
                     'user_id' => $this->user_id,
                     'pincode' => $this->input->post('pincode'),
                     'building_name' => $this->input->post('building_name'),
-                    'road_area_colony' => $this->input->post('road_area_colony'),
+                    // 'road_area_colony' => $this->input->post('road_area_colony'),
                     'city' => $this->input->post('city'),
                     'district' => $this->input->post('district'),
                     'state' => $this->input->post('state'),
-                    'country' => $this->input->post('country'),
-                    'landmark' => $this->input->post('landmark'),
+                    // 'country' => $this->input->post('country'),
+                    // 'landmark' => $this->input->post('landmark'),
                     'name' => $this->input->post('billing_name'),
                     'email' => $this->input->post('billing_email'),
                     'mobile_no' => $this->input->post('billing_mobile_no'),
