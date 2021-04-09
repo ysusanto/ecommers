@@ -320,7 +320,8 @@ class Pages extends CI_Controller
         $data['category_list'] = $this->api_model->category_list();
         $data['home_category'] = $this->common_model->selectByids(array('set_on_home' => 1), 'tbl_category');
         $data["is_rajaongkir"] = $this->Setting_model->get_web_details()->is_raja_ongkir;
-        $data["courier"] = $this->Shipping_model->get_list_Courier();
+        $data["courier"] = $this->Shipping_model->get_list_mst_Courier();
+        $data["shipping"] = $this->Shipping_model->get_courier();
         $data["redirectUrl"] = $this->redirectUrl;
 
         $this->template->load('admin/template', 'admin/page/settings', $data); // :blush:
@@ -1614,7 +1615,22 @@ class Pages extends CI_Controller
                 redirect(base_url() . 'admin/web-settings?page_settings&page=ads_place', 'refresh');
 
                 break;
+            case 'shipping':
 
+                $data = array(
+                    'shipping_mst'  =>  $this->input->post('shipping_mst') ? $this->input->post('shipping_mst') : 'false',
+
+                );
+
+                $data = $this->security->xss_clean($data);
+
+                if ($this->Shipping_model->InsertShippingWeb($data)) {
+                    $message = array('message' => $this->lang->line('update_msg'), 'class' => 'success');
+                    $this->session->set_flashdata('response_msg', $message);
+                }
+                redirect(base_url() . 'admin/settings', 'refresh');
+
+                break;
             default:
 
                 break;

@@ -179,7 +179,7 @@ class Shipping_model extends CI_Model
         $this->db->order_by($sortBy, $sort);
         return $this->db->get()->result();
     }
-    public function get_list_Courier()
+    public function get_list_mst_Courier()
     {
         $list_courier = array();
         $get_mst_courier = $this->get_mst_courier("0");
@@ -189,12 +189,16 @@ class Shipping_model extends CI_Model
                 $list_child = array();
                 $get_mst_child = $this->get_mst_courier($value->id);
                 if (count($get_mst_child) > 0) {
+                    $checked = "";
                     foreach ($get_mst_child as $v) {
                         # code...
+
+                        $checked =  sizeof($this->get_one_courier($v->id)) > 0 ? "checked" : "";
                         $child = array(
                             "id" => $v->id,
                             "name" => $v->name,
-                            "code"=>$v->code
+                            "code" => $v->code,
+                            "checked" => $checked
                         );
                         array_push($list_child, $child);
                     }
@@ -204,8 +208,8 @@ class Shipping_model extends CI_Model
                 $mst = array(
                     "id" => $value->id,
                     "name" => $value->name,
-                    "code"=>$value->code,
-                    "child"=>$list_child
+                    "code" => $value->code,
+                    "child" => $list_child
                 );
                 array_push($list_courier, $mst);
             }
@@ -220,5 +224,42 @@ class Shipping_model extends CI_Model
         $this->db->where('parent', $parent);
         $this->db->order_by($order, "asc");
         return $this->db->get()->result();
+    }
+    public function get_courier()
+    {
+
+        $this->db->select('*');
+        $this->db->from('tbl_shipping');
+
+        $this->db->order_by("2", "asc");
+        return $this->db->get()->result_array();
+    }
+    public function get_one_courier($id_mst_courier)
+    {
+
+        $this->db->select('*');
+        $this->db->from('tbl_shipping');
+        $this->db->where('id_mst_courier', $id_mst_courier);
+        $this->db->order_by("2", "asc");
+        return $this->db->get()->row_array();
+    }
+    function InsertShippingWeb($data)
+    {
+        $chekshipping = $this->get_courier();
+        if (count($chekshipping) > 0) {
+            $this->db->truncate('tbl_shipping');
+        }
+
+        if (sizeof($data['shipping_mst']) > 0) {
+            foreach ($data['shipping_mst'] as $value) {
+                # code...
+                $datainsert = array(
+                    "id_mst_courier" => $value
+                );
+
+                $this->db->insert('tbl_shipping', $datainsert);
+            }
+        }
+        return true;
     }
 }

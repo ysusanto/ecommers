@@ -867,16 +867,32 @@ foreach ($home_category as $key => $value) {
                                       <a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $row["code"]; ?>">
                                         <?php echo $row["name"]; ?></a>
 
+
                                     </h5>
+                                    <?php if (isset($row["child"]) && count($row['child']) > 0) {
+
+                                      foreach ($row["child"] as $c) {
+                                        if (isset($shipping) && count($shipping)) {
+                                          foreach ($shipping as $s) {
+
+                                            if ($c['id'] == $s['id_mst_courier']) { ?>
+                                              <small> <?= $c["name"]; ?></small> |
+                                    <?php   }
+                                          }
+                                        }
+                                      }
+                                    } ?>
+
                                   </div>
                                   <div id="<?php echo $row["code"]; ?>" class="panel-collapse collapse">
                                     <div class="panel-body">
                                       <ul class="list-group">
                                         <?php if (isset($row["child"]) && count($row['child']) > 0) {
-                                          foreach ($row["child"] as $child) { ?>
+                                          foreach ($row["child"] as $child) {
+                                        ?>
                                             <li class="list-group-item" style="border: none">
-                                              <div class="checkbox" >
-                                                <input type="checkbox" id=" <?= $child["code"]; ?>" value="<?= $child['id'] ?>" name="shipping_mst[]">
+                                              <div class="checkbox">
+                                                <input type="checkbox" <?= $child['checked'] ?> id=" <?= $child["code"]; ?>" value="<?= $child['id'] ?>" name="shipping_mst[]">
                                                 <label for=" <?= $child["code"]; ?>">
                                                   <?= $child["name"]; ?>
                                                 </label>
@@ -899,6 +915,13 @@ foreach ($home_category as $key => $value) {
                               }
                             } ?>
                           </div>
+                        </div>
+                      </div>
+                      <br />
+                      <div class="form-group">&nbsp;</div>
+                      <div class="form-group">
+                        <div class="col-md-8 col-md-offset-4">
+                          <button type="submit" name="submit" class="btn btn-primary"><?= $this->lang->line('save_btn') ?></button>
                         </div>
                       </div>
                     </div>
