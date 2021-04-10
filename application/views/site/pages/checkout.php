@@ -17,20 +17,23 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
           <div class="checkout-title">
             <h3><?= $this->lang->line('billing_section_lbl') ?></h3>
           </div>
+<?php if(isset($is_rajaongkir) && $is_rajaongkir=="1"){ ?> 
           <div class="shipping_block">
             <div class="header_shipping">
               <h3><?= $this->lang->line('shipping_lbl') ?> :</h3>
             </div>
             <div class="add_shipping">
+              <input type="hidden" value="<?php echo  $this->session->userdata('user_id') ?>" id="user_id_shipping">
               <a href="" class="btn_add_shipping" onclick="" style="font-size: 16px">
                 <div class="add_shiping" style="padding: 15px 5px">
                   <i class="fa fa-plus"></i> <?= $this->lang->line('choose_shipping') ?>
                 </div>
               </a>
             </div>
-            <div class="list_shipping address_details_item">
+
+            <div class="list_shipping address_details_item" style="display :none">
               <label class="container">
-                <input type="radio" name="radio" class="address_radio" value="<?= $value->id ?>" <?php echo $value->is_default == 'true' ? 'checked="checked"' : ''; ?>>
+                <input type="hidden" name="id_courier" class="id_courier" value="" id="id_courier">
                 <span class="checkmark"></span>
               </label>
               <div class="address_list">
@@ -42,6 +45,7 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
               </div>
             </div>
           </div>
+          <?php } ?>
           <div class="address_details_block">
             <div class="header_address">
               <h3><?= $this->lang->line('destination_address_lbl') ?> :</h3>
@@ -165,7 +169,7 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                         ?>
                       </select>
                     </div> -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <div class="wizard-form-field">
                         <div class="wizard-form-input has-float-label">
                           <input type="hidden" id="id_web_province" name="id_web_province" value="">
@@ -182,7 +186,7 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <div class="wizard-form-field">
                         <div class="wizard-form-input has-float-label">
                           <input type="hidden" id="id_web_city" name="id_web_city" value="<?php echo $web_settings_row->id_ro_city; ?>">
@@ -191,9 +195,10 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <div class="wizard-form-field">
                         <div class="wizard-form-input has-float-label">
+
                           <input type="text" name="pincode" value="" required="" placeholder="<?= $this->lang->line('zipcode_place_lbl') ?>" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="7">
                           <label><?= $this->lang->line('zipcode_place_lbl') ?></label>
                         </div>
@@ -605,7 +610,7 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                       ?>
                     </select>
                   </div> -->
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="wizard-form-field">
                       <div class="wizard-form-input has-float-label">
                         <input type="hidden" id="id_web_province" name="id_web_province" value="">
@@ -622,7 +627,7 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="wizard-form-field">
                       <div class="wizard-form-input has-float-label">
                         <input type="hidden" id="id_web_city" name="id_web_city" value="">
@@ -631,7 +636,7 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="wizard-form-field">
                       <div class="wizard-form-input has-float-label">
                         <input type="text" name="pincode" value="" required="" placeholder="<?= $this->lang->line('zipcode_place_lbl') ?>" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="7">
@@ -669,7 +674,27 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
   </div>
 </div>
 <!-- end edit address -->
-
+<!-- start  add shipping modal -->
+<?php if(isset($is_rajaongkir) && $is_rajaongkir=="1"){ ?> 
+<div id="edit_address" class="modal fade" role="dialog" style="z-index: 99999">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-details">
+          <div style="background: none;border:none;">
+          <div class="divlistshipping"></div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
+<!-- end modal shipping -->
 <?php
 if ($this->db->get_where('tbl_settings', array('id' => '1'))->row()->stripe_status != 'false' and $this->db->get_where('tbl_settings', array('id' => '1'))->row()->stripe_key != '' and $this->db->get_where('tbl_settings', array('id' => '1'))->row()->stripe_secret != '') {
 ?>

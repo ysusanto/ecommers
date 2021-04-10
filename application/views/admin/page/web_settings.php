@@ -742,6 +742,7 @@
 <!-- End -->
 
 <script type="text/javascript">
+//start raja ongkir
   $(document).ready(function() {
     $("#web_province").autocomplete({
       source: function(request, response) {
@@ -837,7 +838,7 @@
       }
     });
   });
-
+//end rajaongkir
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();

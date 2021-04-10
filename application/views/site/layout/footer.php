@@ -296,7 +296,7 @@
   echo put_footers();
   ?>
 
-  <!-- <script type="text/javascript" src="<?= base_url('assets/site_assets/js/jquery-ui.min.js') ?>"></script> -->
+  <script type="text/javascript" src="<?= base_url('assets/site_assets/js/jquery-ui1.min.js') ?>"></script>
 
   <script type="text/javascript" src="<?= base_url('assets/sweetalert/sweetalert.min.js') ?>"></script>
 
@@ -305,7 +305,8 @@
   <script type="text/javascript" src="<?= base_url('assets/site_assets/js/plugins.js') ?>"></script>
 
   <script type="text/javascript" src="<?= base_url('assets/site_assets/js/custom_jquery.js') ?>"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> -->
   <script src="<?= base_url('assets/site_assets/js/cust_javascript.js') ?>"></script>
 
   <?= html_entity_decode($this->db->get_where('tbl_web_settings', array('id' => '1'))->row()->footer_code) ?>

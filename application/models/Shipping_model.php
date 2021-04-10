@@ -262,4 +262,87 @@ class Shipping_model extends CI_Model
         }
         return true;
     }
+    function GetListshipping()
+    {
+        $list_courier = array();
+        $get_mst_courier = $this->get_mst_courier("0");
+        if (count($get_mst_courier) > 0) {
+            foreach ($get_mst_courier as $value) {
+                # code...
+                $list_child = array();
+                $get_mst_child = $this->get_mst_courier($value->id);
+                if (count($get_mst_child) > 0) {
+                    $checked = "";
+                    foreach ($get_mst_child as $v) {
+                        # code...
+                        if (sizeof($this->get_one_courier($v->id)) > 0) {
+                            $checked =  sizeof($this->get_one_courier($v->id)) > 0 ? "checked" : "";
+                            $child = array(
+                                "id" => $v->id,
+                                "name" => $v->name,
+                                "code" => $v->code,
+
+                            );
+                            array_push($list_child, $child);
+                        }
+                    }
+                } else {
+                    continue;
+                }
+                $mst = array(
+                    "id" => $value->id,
+                    "name" => $value->name,
+                    "code" => $value->code,
+                    "path" => $value->path_img,
+                    "child" => $list_child
+
+                );
+                if (sizeof($list_child) > 0) {
+                    array_push($list_courier, $mst);
+                }
+            }
+        }
+        return $list_courier;
+    }
+    function GetAddressTo($id_address)
+    {
+        $address = $this->get_one_address($id_address);
+        $getcityro = $this->get_list_city_ro('id', 'ASC', '', '', $address['city'], '');
+        if (count($getcityro) > 0) {
+            return $getcityro[0]->id_ro_city;
+        }
+        return "0";
+    }
+
+    function get_one_address($id_address)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_addresses');
+        $this->db->where('id', $id_address);
+        $this->db->order_by("1", "asc");
+        return $this->db->get()->row_array();
+    }
+    function GetCostShippingRo($id_from,$id_to,$weight,$courier){
+        $data=array(
+            "id_kota_pengirim"=>$id_from,
+            "id_kota_tujuan"=>$id_to,
+            "berat"=>$weight,
+            "id_courier"=>$courier
+        );
+        return $this->RajaOngkir($data, "cost");
+
+    }
+    function GetWeight($user_id){
+        $sql= "select user_id, sum(total_weight) ttl_weight from (cart.* , product.weight * cart.product_qty as total_weight from  tbl_cart cart" .
+        " left join tbl_product product on cart.product_id = product.id  " . 
+        " where cart.user_id=".$user_id. 
+        " group by user_id ";
+        $query=$this->db->query($sql);
+
+        if($query->num_rows()>0){
+            return $query->row_array();
+        }else{
+            return false;
+        }
+    }
 }
