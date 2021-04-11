@@ -17,34 +17,37 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
           <div class="checkout-title">
             <h3><?= $this->lang->line('billing_section_lbl') ?></h3>
           </div>
-<?php if(isset($is_rajaongkir) && $is_rajaongkir=="1"){ ?> 
-          <div class="shipping_block">
-            <div class="header_shipping">
-              <h3><?= $this->lang->line('shipping_lbl') ?> :</h3>
-            </div>
-            <div class="add_shipping">
-              <input type="hidden" value="<?php echo  $this->session->userdata('user_id') ?>" id="user_id_shipping">
-              <a href="" class="btn_add_shipping" onclick="" style="font-size: 16px">
-                <div class="add_shiping" style="padding: 15px 5px">
+          <?php if (isset($is_rajaongkir) && $is_rajaongkir == "1") { ?>
+            <div class="shipping_block">
+              <div class="header_shipping">
+                <h3><?= $this->lang->line('shipping_lbl') ?> :</h3>
+              </div>
+              <div class="add_shipping">
+                <input type="hidden" id="btnaddlbl" value=" <?= $this->lang->line('choose_shipping') ?>">
+                <input type="hidden" value="<?php echo  $this->session->userdata('user_id') ?>" id="user_id_shipping">
+                <!-- <a href="" class="btn_add_shipping" onclick="" style="font-size: 16px"> -->
+                <div class="add_shiping btn_add_shipping" style="padding: 15px 5px">
                   <i class="fa fa-plus"></i> <?= $this->lang->line('choose_shipping') ?>
                 </div>
-              </a>
-            </div>
+                <!-- </a> -->
+              </div>
 
-            <div class="list_shipping address_details_item" style="display :none">
-              <label class="container">
-                <input type="hidden" name="id_courier" class="id_courier" value="" id="id_courier">
-                <span class="checkmark"></span>
-              </label>
-              <div class="address_list">
-                <span>Tiki</span>
+              <div class="list_shipping address_details_item" style="display :none">
+                <label class="container imgshipping">
 
-                <p>
-                  reguler
-                </p>
+                  <span class="checkmark"></span>
+                </label>
+                <div class="address_list">
+                  <input type="hidden" name="id_courier" class="id_courier" value="" id="id_courier">
+                  <input type="hidden" name="price_courier" class="price_courier" value="" id="price_courier">
+                  <span class="parentname_lbl">Tiki</span>
+
+                  <p class="desc_lbl">
+                    reguler
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
           <?php } ?>
           <div class="address_details_block">
             <div class="header_address">
@@ -315,12 +318,12 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
               <tfoot>
                 <tr class="cart-subtotal">
                   <th><?= $this->lang->line('sub_total_lbl') ?></th>
-                  <td nowrap=""><span class="amount"><?= CURRENCY_CODE . ' ' . number_format(($total_cart_amt - $delivery_charge), 2); ?></span></td>
+                  <td nowrap=""><span class="amount"><?= CURRENCY_CODE . ' ' . number_format(($total_cart_amt - $delivery_charge), 2); ?></span><input type="hidden" id="totalamount" value="<?php echo ($total_cart_amt - $delivery_charge); ?>" </td>
                 </tr>
                 <tr class="shipping">
                   <th><?= $this->lang->line('delivery_charge_lbl') ?></th>
                   <td nowrap="" data-title="<?= $this->lang->line('delivery_charge_lbl') ?>">
-                    <p><?= ($delivery_charge != 0) ? '+ ' . CURRENCY_CODE . number_format($delivery_charge, 2) : $this->lang->line('free_lbl'); ?></p>
+                    <p id="shippingtotal"><?= ($delivery_charge != 0) ? '+ ' . CURRENCY_CODE . number_format($delivery_charge, 2) : $this->lang->line('free_lbl'); ?></p>
                   </td>
                 </tr>
                 <tr class="order-total">
@@ -362,6 +365,8 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
             <input type="hidden" name="coupon_id" value="<?= $coupon_id ?>">
             <input type="hidden" name="order_address" value="<?= $order_address_id ?>">
             <input type="hidden" name="cart_ids" value="<?= $cart_ids ?>">
+            <input type="hidden" name="id_courier" class="id_courier" value="" >
+            <input type="hidden" name="price_courier" class="price_courier" value="" >
             <ul>
               <?php
               if ($this->db->get_where('tbl_settings', array('id' => '1'))->row()->cod_status != 'false') {
@@ -614,19 +619,12 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
                     <div class="wizard-form-field">
                       <div class="wizard-form-input has-float-label">
                         <input type="hidden" id="id_web_province" name="id_web_province" value="">
-                        <input type="text" name="state" value="" class="province" required="" placeholder="<?= $this->lang->line('state_place_lbl') ?>">
-                        <label><?= $this->lang->line('state_place_lbl') ?></label>
+                        <input type="text" name="state" value="" class="province" required="" placeholder="<?= $this->lang->line('web_address_province_lbl') ?>">
+                        <label><?= $this->lang->line('web_address_province_lbl') ?></label>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6" style="display:none">
-                    <div class="wizard-form-field">
-                      <div class="wizard-form-input has-float-label">
-                        <input type="text" name="district" value="" placeholder="<?= $this->lang->line('district_place_lbl') ?>">
-                        <label><?= $this->lang->line('district_place_lbl') ?></label>
-                      </div>
-                    </div>
-                  </div>
+
                   <div class="col-md-12">
                     <div class="wizard-form-field">
                       <div class="wizard-form-input has-float-label">
@@ -675,24 +673,58 @@ $cart_type = ($buy_now == 'true') ? 'temp_cart' : 'main_cart';
 </div>
 <!-- end edit address -->
 <!-- start  add shipping modal -->
-<?php if(isset($is_rajaongkir) && $is_rajaongkir=="1"){ ?> 
-<div id="edit_address" class="modal fade" role="dialog" style="z-index: 99999">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-details">
-          <div style="background: none;border:none;">
-          <div class="divlistshipping"></div>
-            
+<?php if (isset($is_rajaongkir) && $is_rajaongkir == "1") { ?>
+  <div id="add_shipping_modal" class="modal fade" role="dialog" style="z-index: 99999">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-details">
+            <div style="background: none;border:none;">
+              <div class="divlistshipping"></div>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <script type="text/javascript">
+    function onclickchoosecourier(id) {
+      var rawprice = $("#rawprice" + id).val();
+      var price = $("#price" + id).val();
+      var est = $("#est" + id).val();
+      var parentname = $("#parentname" + id).val();
+      var name = $("#childname" + id).val();
+      var imgpath = $("#imgpath" + id).val();
+      var totalamount = $("#totalamount").val();
+      console.log(price);
+
+      var img = imgpath != "" ? '<img src="' + imgpath + '" width="30" class="rounded">' : "";
+      $(".parentname_lbl").text(parentname);
+      $(".desc_lbl").text(name);
+      $("#shippingtotal").html("");
+      $("#shippingtotal").html("Rp. " + price);
+      $(".id_courier").val(id);
+      $(".imgshipping").html(img);
+      $(".price_courier").val(rawprice);
+      total = parseInt(rawprice) + parseInt(totalamount);
+      console.log(totalamount);
+      console.log(total);
+      $(".total-amount").html("");
+      $(".total-amount").text("Rp. " + numberWithCommas(total));
+      // var idcourier=this.data()
+      $(".add_shipping").hide();
+      $(".address_details_item").show();
+      $("#add_shipping_modal").modal("hide");
+    }
+
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  </script>
 <?php } ?>
 <!-- end modal shipping -->
 <?php

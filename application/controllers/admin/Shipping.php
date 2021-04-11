@@ -75,43 +75,70 @@ class Shipping extends CI_Controller
         );
         echo json_encode($json);
     }
-    public function getcouriersite($id_address)
+    public function getcouriersite()
     {
         $html = "";
         $id_address = $this->input->post('id_address');
         $user_id = $this->input->post("user_id");
+        $listcourir = array();
         $getcourier = $this->shipping_model->GetListshipping();
+
         $addressfrom = $this->Setting_model->get_web_details();
+
         $addressto = $this->shipping_model->GetAddressTo($id_address);
+
         $getweight = $this->shipping_model->GetWeight($user_id);
+
         $cost = 0;
         if (sizeof($getcourier) > 0) {
+            $html = '<ul  class="list-group">';
             foreach ($getcourier as $key => $value) {
                 # code...
                 $id_from = $addressfrom->id_ro_city;
                 $id_to = $addressto != "0" ? $addressto : "0";
                 $weight = sizeof($getweight) > 0 ?  $getweight['ttl_weight'] : "1";
                 $courier = $value["code"];
-                $html .= "<li><span>" . $value["name"] . "</span><ul>";
                 $getcostro = $this->shipping_model->GetCostShippingRo($id_from, $id_to, $weight, $courier);
+                // echo json_encode($getcostro);die();
+               
+                $listchild = array();
                 if (isset($getcostro["rajaongkir"]["results"]) && count($getcostro["rajaongkir"]["results"]) > 0) {
                     $datacostcourier = $getcostro["rajaongkir"]["results"][0];
                     $courierparent = $datacostcourier["code"];
-                    foreach ($datacostcourier["costs"] as $v) {
-                        $service = strtolower($courierparent . "-" . $v["service"]);
-                        foreach ($value["child"] as  $c) {
+                    foreach ($value["child"] as  $c) {
+                  
+                      
+                       
+                        foreach ($datacostcourier["costs"] as $v) {
+                            $service = strtolower($courierparent . "-" . $v["service"]);
+                            $c["code"] = $value["code"] == "pos" && $c["code"] == "pos-kilat" ?  $datacostcourier["code"] . "-" . $v["service"] : $c["code"];
                             # code... 
                             if (strtolower($c["code"]) == $service) {
-                                $html .= "<li><span> " . $c["name"] . "</span> <span>Rp. " . number_format($v[0]["value"], 2, ",", ".") . "</span><span>" . $v[0]["etd"] . " day</span></li>";
+
+                                $datachild = array(
+                                    "name" => $c["name"],
+                                    "id" => $c["id"],
+                                    "price" => number_format($v['cost'][0]["value"], 2, ",", "."),
+                                    "rawprice"=> $v['cost'][0]["value"],
+                                    "est" => $v['cost'][0]["etd"] . " day"
+                                );
+                                array_push($listchild, $datachild);
                             }
                         }
                         # code...
 
                     }
+                }else{
+                    continue;
                 }
-                $html .= "</ul></li>";
+                $datacourir = array(
+                    "name" => $value["name"],
+                    "path" => $value["path_img"],
+                    "child" => $listchild
+                );
+                array_push($listcourir, $datacourir);
             }
         }
-        echo json_encode($html);
+        echo json_encode($listcourir);
     }
 }

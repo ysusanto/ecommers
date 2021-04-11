@@ -655,6 +655,7 @@ class Product extends CI_Controller
             'seo_title' => $this->input->post('seo_title'),
             'seo_meta_description' => $this->input->post('seo_meta_description'),
             'seo_keywords' => $this->input->post('seo_keywords'),
+            'weight' => $this->input->post('weight'),// tambahan baru untuk shiping
         );
 
         $data = $this->security->xss_clean($data);

@@ -1671,38 +1671,53 @@ $(document).ready(function (event) {
 
 	//for address checkout 
 
-	$("#btn_add_shipping").on("click", function () {
-        var id_address = $(".address_radio:checked").val();
-        var user_id = $("#user_id_shipping").val();
+	$(".btn_add_shipping").on("click", function () {
+		var id_address = $(".address_radio:checked").val();
+		var user_id = $("#user_id_shipping").val();
 		$.ajax({
 			type: 'POST',
-			url: base_url + "admin/shipping/getcouriersite/" + id_address,
-            data: "id_address="+id_address+"&user_id="+user_id,
+			url: base_url + "admin/shipping/getcouriersite",
+			data: "id_address=" + id_address + "&user_id=" + user_id,
 			beforeSend: function () {
-				$('#btnsyncro').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').attr('disabled', true);
+				$('.btn_add_shipping').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...');
 
 			},
 			success: function (res) {
-				$('#btnsyncro').html('Sync Data Raja Ongkir').attr('disabled', false);
-				if ($.trim(res) == 'success') {
-					swal({
-						title: "Success",
-						text: "Sync Raja Ongkir Success",
-						type: "success"
-					}, function () {
-						swal.close()
-						// $(btn).closest('.item_holder').fadeOut("200");
-					});
-				} else {
-					swal.close();
-					$('.notifyjs-corner').empty();
-					$.notify(
-						$.trim(res), {
-							position: "top center",
-							className: 'warn'
+				var data = JSON.parse(res);
+				$newli = $("<ul>", {
+					"class": "list-group"
+				})
+                $(".btn_add_shipping").html('<i class="fa fa-plus"></i>' + $("#btnaddlbl").val())
+				var x = "<ul>";
+				if (data.length > 0) {
+					for (let index = 0; index < data.length; index++) {
+						const element = data[index];
+                        var img = element.path !=""  ? '<img src="' + element.path + '" width="30" class="rounded">':"";
+						x = x + "<li >" + img + element.name;
+						console.log(element);
+						if (element.child.length > 0) {
+							x = x + "<div class='list-group'>"
+							for (let y = 0; y < element.child.length; y++) {
+								const e = element.child[y];
+								x = x + "<a href='javascript:onclickchoosecourier(" + e.id + ")' data-id='" + e.id + "' data-price='" + e.price + "' data-est='" + e.est + "' class='list-group-item list-group-item-action'>  ";
+								x = x + "<label>" + e.name + "</label> <br>  ";
+								x = x + "<small>Price : " + e.price + "</small><br>  ";
+                                x = x + "<input type='hidden' id='rawprice" + e.id + "' value='" + e.rawprice + "'> ";
+                                  x = x + "<input type='hidden' id='price" + e.id + "' value='" + e.price + "'> ";
+                                x = x + "<input type='hidden' id='est" + e.id + "' value='" + e.est + "'> ";
+                                 x = x + "<input type='hidden' id='childname" + e.id + "' value='" + e.name + "'> ";
+                                  x = x + "<input type='hidden' id='parentname" + e.id + "' value='" + element.name + "'> ";
+                                    x = x + "<input type='hidden' id='imgpath" + e.id + "' value='" + element.path + "'> ";
+								x = x + "<small>Est : " + e.est + "</small>  ";
+								x = x + "</a>  ";
+							}
+							x = x + "</ul>"
 						}
-					);
+						x = x + "</li>"
+					}
 				}
+				$("#add_shipping_modal").modal("show");
+				$(".divlistshipping").html(x);
 
 			}
 		});

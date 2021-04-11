@@ -322,26 +322,31 @@ class Shipping_model extends CI_Model
         $this->db->order_by("1", "asc");
         return $this->db->get()->row_array();
     }
-    function GetCostShippingRo($id_from,$id_to,$weight,$courier){
-        $data=array(
-            "id_kota_pengirim"=>$id_from,
-            "id_kota_tujuan"=>$id_to,
-            "berat"=>$weight,
-            "id_courier"=>$courier
+    function GetCostShippingRo($id_from, $id_to, $weight, $courier)
+    {
+        $data = array(
+            "id_kota_pengirim" => $id_from,
+            "id_kota_tujuan" => $id_to,
+            "berat" => $weight,
+            "id_kurir" => $courier
         );
+        // print_r($data);die();
         return $this->RajaOngkir($data, "cost");
-
     }
-    function GetWeight($user_id){
-        $sql= "select user_id, sum(total_weight) ttl_weight from (cart.* , product.weight * cart.product_qty as total_weight from  tbl_cart cart" .
-        " left join tbl_product product on cart.product_id = product.id  " . 
-        " where cart.user_id=".$user_id. 
-        " group by user_id ";
-        $query=$this->db->query($sql);
+    function GetWeight($user_id)
+    {
+        $sql = "select user_id, sum(total_weight) ttl_weight 
+from (select cart.* , product.weight * cart.product_qty as total_weight 
+from tbl_cart cart 
+left join tbl_product product on cart.product_id = product.id 
+where cart.user_id=" . $user_id .
+            ")a group by user_id ";
 
-        if($query->num_rows()>0){
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows() > 0) {
             return $query->row_array();
-        }else{
+        } else {
             return false;
         }
     }

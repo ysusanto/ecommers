@@ -1816,11 +1816,11 @@ class Site extends CI_Controller
         $this->form_validation->set_rules('billing_name', $this->lang->line('name_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('billing_mobile_no', $this->lang->line('phone_no_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('building_name', $this->lang->line('address_place_lbl'), 'trim|required');
-        $this->form_validation->set_rules('road_area_colony', $this->lang->line('road_area_colony_place_lbl'), 'trim|required');
+        // $this->form_validation->set_rules('road_area_colony', $this->lang->line('road_area_colony_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('pincode', $this->lang->line('zipcode_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('city', $this->lang->line('city_place_lbl'), 'trim|required');
         $this->form_validation->set_rules('state', $this->lang->line('state_place_lbl'), 'trim|required');
-        $this->form_validation->set_rules('country', $this->lang->line('country_place_lbl'), 'trim|required');
+        // $this->form_validation->set_rules('country', $this->lang->line('country_place_lbl'), 'trim|required');
 
         if ($this->form_validation->run()) {
             if ($_POST) {
@@ -1839,12 +1839,12 @@ class Site extends CI_Controller
                 $data_arr = array(
                     'pincode' => $this->input->post('pincode'),
                     'building_name' => $this->input->post('building_name'),
-                    'road_area_colony' => $this->input->post('road_area_colony'),
+                    // 'road_area_colony' => $this->input->post('road_area_colony'),
                     'city' => $this->input->post('city'),
-                    'district' => $this->input->post('district'),
+                    // 'district' => $this->input->post('district'),
                     'state' => $this->input->post('state'),
-                    'country' => $this->input->post('country'),
-                    'landmark' => $this->input->post('landmark'),
+                    // 'country' => $this->input->post('country'),
+                    // 'landmark' => $this->input->post('landmark'),
                     'name' => $this->input->post('billing_name'),
                     'email' => $this->input->post('billing_email'),
                     'mobile_no' => $this->input->post('billing_mobile_no'),
@@ -2748,7 +2748,7 @@ class Site extends CI_Controller
                         }
 
                         $total_cart_amt += $value->selling_price * $value->product_qty;
-                        $delivery_charge += $value->delivery_charge;
+                        $delivery_charge = $this->input->post('price_courier');
                         $you_save += $value->you_save_amt * $value->product_qty;
                     }
 
@@ -2795,7 +2795,8 @@ class Site extends CI_Controller
                         'email' => $row_address->email,
                         'mobile_no' => $row_address->mobile_no,
                         'alter_mobile_no' => $row_address->alter_mobile_no,
-                        'address_type' => $row_address->address_type
+                        'address_type' => $row_address->address_type,
+                        'id_mst_courier'=> $this->input->post('id_courier')
                     );
 
                     $data_ord = $this->security->xss_clean($data_arr);
